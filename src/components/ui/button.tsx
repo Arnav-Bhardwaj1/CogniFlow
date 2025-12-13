@@ -48,10 +48,16 @@ function Button({
   }) {
   const Comp = asChild ? Slot : "button"
 
+  const devHydrationProps =
+    process.env.NODE_ENV !== "production" && !asChild
+      ? { suppressHydrationWarning: true }
+      : {}
+
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      {...devHydrationProps}
       {...props}
     />
   )
