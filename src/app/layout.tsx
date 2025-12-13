@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { TRPCReactProvider } from "../trpc/client";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,9 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+      <TRPCReactProvider>
         {children}
+      </TRPCReactProvider>
       </body>
     </html>
   );
