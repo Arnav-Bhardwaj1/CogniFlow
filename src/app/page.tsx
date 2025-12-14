@@ -1,18 +1,17 @@
-"use client";
 
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
+import { LogoutButton } from "@/components/logout-button";
+import { requireAuth } from "@/lib/auth-utils";
+import { caller } from "@/trpc/server";
 
-export default function Home() {
-  const {data} = authClient.useSession(); // useSession is used to check if user is logged in
+export default async function Home() {
+  await requireAuth(); // Ensure the user is authenticated before rendering the page, server-side session check and secure route
+
+  // const {data} = authClient.useSession(); // useSession is used to check if user is logged in
+  const data = await caller.getUsers();
   return (
     <div className="min-h-screen min-w-screen flex items-center justify-center">
       {JSON.stringify(data)}
-      {data && (
-        <Button onClick={()=> authClient.signOut()}>
-          Logout
-        </Button>
-      )}
+      {data && <LogoutButton />}
     </div>
   );
 }

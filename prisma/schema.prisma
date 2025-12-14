@@ -71,7 +71,12 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
+    
   @@index([identifier])
   @@map("verification")
+}
+
+model workflow {
+  id          String    @id @default(cuid())
+  name        String
 }

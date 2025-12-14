@@ -107,7 +107,8 @@ export function RegisterForm() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="email"
-                                                        placeholder="example@gmail.com" />
+                                                        placeholder="example@gmail.com" 
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -122,7 +123,8 @@ export function RegisterForm() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="password"
-                                                        placeholder="*********" />
+                                                        placeholder="*********" 
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -137,7 +139,8 @@ export function RegisterForm() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="password"
-                                                        placeholder="*********" />
+                                                        placeholder="*********" 
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

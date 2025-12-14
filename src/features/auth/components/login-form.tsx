@@ -26,6 +26,7 @@ import {
 import { Input } from "@/components/ui/input";
 // import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email address"),
@@ -42,7 +43,19 @@ export function LoginForm() {
     },
   });
     const onSubmit = async (values: LoginFormValues) => {
-    console.log(values);
+        await authClient.signIn.email({
+            email: values.email,
+            password: values.password,
+            callbackURL: "/",
+        }, 
+        {
+            onSuccess: () => {
+            router.push("/");
+            },
+            onError: (ctx) => {
+            toast.error(ctx.error.message);
+            },
+        });
   };
   const isPending = form.formState.isSubmitting;
   return (
@@ -84,9 +97,11 @@ export function LoginForm() {
                                             <FormItem>
                                                 <FormLabel>Email</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field}
+                                                    <Input {...field} 
                                                         type="email"
-                                                        placeholder="example@gmail.com" />
+                                                        placeholder="example@gmail.com" 
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2" />
+                                                        
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -101,7 +116,8 @@ export function LoginForm() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="password"
-                                                        placeholder="*********" />
+                                                        placeholder="*********" 
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
