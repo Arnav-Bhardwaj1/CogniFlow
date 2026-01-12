@@ -1,12 +1,23 @@
+import { WorkflowsList } from '@/features/workflows/components/workflows'
+import { prefetchWorkflows } from '@/features/workflows/server/prefetch'
 import { requireAuth } from '@/lib/auth-utils'
-import React from 'react'
+import { HydrateClient } from '@/trpc/server'
+import React, { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
 const page = async () => {
   await requireAuth()
-  return (
-    <div>
-      <p>Workflows Page</p>
-    </div>
+
+  prefetchWorkflows();
+
+  return(
+    <HydrateClient>
+      <ErrorBoundary fallback={<p>Error!</p>}>
+        <Suspense fallback={<p>Loading...</p>}>
+          <WorkflowsList />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrateClient>
   )
 }
 
