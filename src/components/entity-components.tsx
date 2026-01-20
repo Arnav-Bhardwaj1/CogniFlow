@@ -77,6 +77,11 @@ export const EntityContainer = ({
     <div className="p-4 sm:px-6 sm:py-6 lg:px-10 lg:py-8 h-full">
       <div className="flex flex-col w-full mx-auto max-w-screen-xl gap-y-6 lg:gap-y-8 h-full">
         {header}
+        <div className="flex flex-col gap-y-4 h-full">
+          {search}
+          {children}
+        </div>
+        {pagination}
       </div>
     </div>
   );
