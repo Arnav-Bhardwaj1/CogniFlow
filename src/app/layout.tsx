@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { TRPCReactProvider } from "../trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import { Exo_2, Roboto_Slab, Fira_Code } from "next/font/google";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -34,8 +34,10 @@ export default function RootLayout({
     >
       <body className="antialiased">
         <TRPCReactProvider>
+          <NuqsAdapter>
           {children}
           <Toaster />
+          </NuqsAdapter>
         </TRPCReactProvider>
       </body>
     </html>
