@@ -1,6 +1,6 @@
 "use client";
 
-import { EntityContainer, EntityHeader, EntityPagination, EntitySearch } from "@/components/entity-components";
+import { EmptyView, EntityContainer, EntityHeader, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
 import { useCreateWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,11 @@ export const WorkflowsSearch = () => {
 
 export const WorkflowsList = () => {
   const workflows = useSuspenseWorkflows();
+
+  if (workflows.data.items.length === 0) {
+    return <WorkflowsEmpty />;
+  }
+
   return (
     <div className="flex-1 flex justify-center items-center">
       <p>
@@ -73,7 +78,7 @@ export const WorkflowsPagination = () => {
       page={workflows.data.page}
       onPageChange={(page) => setParams({ ...params, page })}
   /> )
-}
+};
 
 // A function that returns JSX is a React component
 
@@ -91,4 +96,33 @@ export const WorkflowsContainer = ( {
       {children}
     </EntityContainer>
   )
+};
+
+export const WorkflowsLoading = () => {
+  return <LoadingView message="Loading workflows..." />;
+};
+
+export const WorkflowsError = () => {
+  return <ErrorView message="Failed to load workflows." />;
+}
+export const WorkflowsEmpty = () => {
+  const createWorkflow = useCreateWorkflow();
+  const { handleError, modal } = useUpgradeModal();
+  const handleCreate = () => {
+    createWorkflow.mutate(undefined, {
+      onError: (error) => {
+        handleError(error);
+      },
+    });
+  };
+  return (
+      <>      
+       {modal}   {/* Render the upgrade modal, may or may not be visible based on state */}
+      <EmptyView
+        onNew={handleCreate} 
+        message="No Workflows Found. Get started by
+        creating a new workflow."
+      />
+    </>
+  );
 };
