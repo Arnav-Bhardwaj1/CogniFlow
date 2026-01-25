@@ -1,4 +1,4 @@
-import { AlertTriangleIcon, Loader2Icon, PackageOpenIcon, PlusIcon, SearchIcon } from "lucide-react";
+import { AlertTriangleIcon, Loader2Icon, MoreVerticalIcon, PackageOpenIcon, PlusIcon, SearchIcon, Trash2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
@@ -10,6 +10,22 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "./ui/empty";
+import { cn } from "@/lib/utils";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type EntityHeaderProps = {
   title: string;
@@ -205,5 +221,137 @@ export const EmptyView = ({ message, onNew }: EmptyViewProps) => {
         </EmptyContent>
       )}
     </Empty>
+  );
+};
+
+interface EntityListProps<T> {
+  items: T[];
+  renderItem: (item: T, index: number) => React.ReactNode;
+  getKey?: (item: T, index: number) => string | number;
+  emptyView?: React.ReactNode;
+  className?: string;
+}
+
+export const EntityList = <T,>({
+  items,
+  renderItem,
+  getKey,
+  emptyView,
+  className,
+}: EntityListProps<T>) => {
+  if (items.length === 0 && emptyView) {
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        <div className="max-w-sm mx-auto">{emptyView}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn( // cn is a utility function to conditionally join class names
+      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1",
+      className // Whoever uses this component can pass extra classes of CSS if they want
+    )}>
+      {items.map((item, index) => (
+        <div key={getKey ? getKey(item, index) : index}>
+          {renderItem(item, index)}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+interface EntityItemProps {
+  href?: string;
+  title: string;
+  subtitle?: string;
+  image?: React.ReactNode;
+  actions?: React.ReactNode;
+  onRemove?: () => void | Promise<void>;
+  isRemoving?: boolean;
+  className?: string;
+}
+
+export const EntityItem = ({
+  href,
+  title,
+  subtitle,
+  image,
+  actions,
+  onRemove,
+  isRemoving,
+  className,
+}: EntityItemProps) => {
+  const handleRemove = async (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent the default link behavior
+    e.stopPropagation(); // Stop the event from bubbling up to parent elements, which means that clicking the remove button won’t trigger any click handlers on parent elements.
+
+    if (isRemoving) {
+      return;
+    }
+
+    if (onRemove){
+      await onRemove();
+    }
+  };
+
+  return (
+    <Link href={href || "#"} prefetch>
+      <Card
+        className={cn(
+          "h-full p-4 sm:p-6 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-200 border-border/50",
+          isRemoving && "opacity-50 cursor-not-allowed"
+        )}
+      >
+        <CardContent className="flex flex-col h-full p-0">
+          <div className="flex items-start gap-4 flex-1">
+            {image && (
+              <div className="shrink-0">
+                {image}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-base font-semibold leading-tight mb-2">
+                {title}
+              </CardTitle>
+              {!!subtitle && (
+                <CardDescription className="text-sm text-muted-foreground leading-relaxed">
+                  {subtitle}
+                </CardDescription>
+              )}
+            </div>
+          </div>
+          {(actions || onRemove) && (
+            <div className="flex items-center justify-end">
+              {actions}
+              {onRemove && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      disabled={isRemoving}
+                      onClick={(e) => e.stopPropagation()} // By default in the browser: Clicking any child triggers the parent click. This is called event bubbling. So WITHOUT stopPropagation(): ❌ Clicking Delete would: Trigger delete & ALSO trigger <Link>
+                      className="h-8 w-8"
+                    >
+                      <MoreVerticalIcon className="size-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <DropdownMenuItem onClick={handleRemove}>
+                      <Trash2Icon className="size-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </Link>
   );
 };

@@ -1,11 +1,13 @@
 "use client";
 
-import { EmptyView, EntityContainer, EntityHeader, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
+import { EmptyView, EntityContainer, EntityHeader, EntityItem, EntityList, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
 import { useCreateWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import { useRouter } from "next/navigation";
 import { useWorkflowsParams } from "../hooks/use-workflows-params";
 import { useEntitySearch } from "@/hooks/use-entity-search";
+import { WorkflowIcon } from "lucide-react";
+import { Workflow } from "@/app/generated/prisma";
 
 export const WorkflowsSearch = () => {
   const [params, setParams] = useWorkflowsParams();
@@ -25,18 +27,14 @@ export const WorkflowsSearch = () => {
 
 export const WorkflowsList = () => {
   const workflows = useSuspenseWorkflows();
-
-  if (workflows.data.items.length === 0) {
-    return <WorkflowsEmpty />;
-  }
-
   return (
-    <div className="flex-1 flex justify-center items-center">
-      <p>
-        {JSON.stringify(workflows.data, null, 2)}
-      </p>
-    </div>
-  );  
+    <EntityList
+      items={workflows.data.items}
+      getKey={(workflow) => workflow.id}
+      renderItem={(workflow) => <WorkflowItem data={workflow} />} // why is superjson needed here?
+      emptyView={<WorkflowsEmpty />}
+    />
+  )
 };
 
 export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) =>
@@ -107,12 +105,16 @@ export const WorkflowsError = () => {
 }
 export const WorkflowsEmpty = () => {
   const createWorkflow = useCreateWorkflow();
+  const router = useRouter();
   const { handleError, modal } = useUpgradeModal();
   const handleCreate = () => {
     createWorkflow.mutate(undefined, {
       onError: (error) => {
         handleError(error);
       },
+      onSuccess: (data) => {
+        router.push(`/workflows/${data.id}`);
+      }
     });
   };
   return (
@@ -124,5 +126,32 @@ export const WorkflowsEmpty = () => {
         creating a new workflow."
       />
     </>
+  );
+};
+
+export const WorkflowItem = ({
+  data,
+}: {
+  data: Workflow
+}) => {
+  return (
+    <EntityItem
+      href={`/workflows/${data.id}`}
+      title={data.name}
+      subtitle={
+        <>
+          Updated TODO{" "}
+          &bull; Created{" "}
+          TODO
+        </>
+      }
+      image={
+        <div className="size-8 flex items-center justify-center">
+          <WorkflowIcon className="size-5 text-muted-foreground" />
+        </div>
+      }
+      onRemove={() => {}}
+      isRemoving={false}
+    />
   );
 };
