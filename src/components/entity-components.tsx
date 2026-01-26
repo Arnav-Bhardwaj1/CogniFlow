@@ -26,6 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import React from "react";
 
 type EntityHeaderProps = {
   title: string;
@@ -264,7 +265,7 @@ export const EntityList = <T,>({
 interface EntityItemProps {
   href?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   image?: React.ReactNode;
   actions?: React.ReactNode;
   onRemove?: () => void | Promise<void>;

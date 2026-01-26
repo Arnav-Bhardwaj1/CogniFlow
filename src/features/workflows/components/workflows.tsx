@@ -1,13 +1,14 @@
 "use client";
 
 import { EmptyView, EntityContainer, EntityHeader, EntityItem, EntityList, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
-import { useCreateWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows";
+import { useCreateWorkflow, useRemoveWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import { useRouter } from "next/navigation";
 import { useWorkflowsParams } from "../hooks/use-workflows-params";
 import { useEntitySearch } from "@/hooks/use-entity-search";
 import { WorkflowIcon } from "lucide-react";
 import { Workflow } from "@/app/generated/prisma";
+import { formatDistanceToNow } from "date-fns";
 
 export const WorkflowsSearch = () => {
   const [params, setParams] = useWorkflowsParams();
@@ -31,7 +32,7 @@ export const WorkflowsList = () => {
     <EntityList
       items={workflows.data.items}
       getKey={(workflow) => workflow.id}
-      renderItem={(workflow) => <WorkflowItem data={workflow} />} // why is superjson needed here?
+      renderItem={(workflow) => <WorkflowItem data={workflow} />} // why is superjson needed here? you know
       emptyView={<WorkflowsEmpty />}
     />
   )
@@ -134,24 +135,29 @@ export const WorkflowItem = ({
 }: {
   data: Workflow
 }) => {
+  const removeWorkflow = useRemoveWorkflow();
+  const handleRemove = () => {
+    removeWorkflow.mutate({id: data.id});
+  };
   return (
     <EntityItem
       href={`/workflows/${data.id}`}
       title={data.name}
-      subtitle={
+
+      subtitle={ 
         <>
-          Updated TODO{" "}
+          Updated {formatDistanceToNow(data.updatedAt, { addSuffix: true })}{""}
           &bull; Created{" "}
-          TODO
+          {formatDistanceToNow(data.createdAt, { addSuffix: true })} {/* how long ago it was created, relative to now */}
         </>
-      }
+      } 
       image={
         <div className="size-8 flex items-center justify-center">
           <WorkflowIcon className="size-5 text-muted-foreground" />
         </div>
       }
-      onRemove={() => {}}
-      isRemoving={false}
+      onRemove={handleRemove}
+      isRemoving={removeWorkflow.isPending}
     />
   );
 };

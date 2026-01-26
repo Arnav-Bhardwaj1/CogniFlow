@@ -7,5 +7,10 @@ type Input = inferInput<typeof trpc.workflows.getMany>;
 export const prefetchWorkflows = (params: Input) => {
     return prefetch(trpc.workflows.getMany.queryOptions (params));
 };
-
+/**
+ * Prefetch a single workflow by ID
+ */
+export const prefetchWorkflow = (id: string) => {
+  return prefetch(trpc.workflows.getOne.queryOptions({ id }));
+}
 // queryOptions builds a fully configured React Query query object for a tRPC procedure. It tells React Query how to fetch, cache, and identify this query.
