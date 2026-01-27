@@ -38,6 +38,34 @@ export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
  * 
  */
 export type Workflow = $Result.DefaultSelection<Prisma.$WorkflowPayload>
+/**
+ * Model Node
+ * 
+ */
+export type Node = $Result.DefaultSelection<Prisma.$NodePayload>
+/**
+ * Model Connection
+ * 
+ */
+export type Connection = $Result.DefaultSelection<Prisma.$ConnectionPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const NodeType: {
+  INITIAL: 'INITIAL',
+  MANUAL_TRIGGER: 'MANUAL_TRIGGER',
+  HTTP_REQUEST: 'HTTP_REQUEST'
+};
+
+export type NodeType = (typeof NodeType)[keyof typeof NodeType]
+
+}
+
+export type NodeType = $Enums.NodeType
+
+export const NodeType: typeof $Enums.NodeType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -211,6 +239,26 @@ export class PrismaClient<
     * ```
     */
   get workflow(): Prisma.WorkflowDelegate<ExtArgs>;
+
+  /**
+   * `prisma.node`: Exposes CRUD operations for the **Node** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Nodes
+    * const nodes = await prisma.node.findMany()
+    * ```
+    */
+  get node(): Prisma.NodeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.connection`: Exposes CRUD operations for the **Connection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Connections
+    * const connections = await prisma.connection.findMany()
+    * ```
+    */
+  get connection(): Prisma.ConnectionDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -656,7 +704,9 @@ export namespace Prisma {
     Session: 'Session',
     Account: 'Account',
     Verification: 'Verification',
-    Workflow: 'Workflow'
+    Workflow: 'Workflow',
+    Node: 'Node',
+    Connection: 'Connection'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -672,7 +722,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "workflow"
+      modelProps: "user" | "session" | "account" | "verification" | "workflow" | "node" | "connection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1026,6 +1076,146 @@ export namespace Prisma {
           }
         }
       }
+      Node: {
+        payload: Prisma.$NodePayload<ExtArgs>
+        fields: Prisma.NodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          findFirst: {
+            args: Prisma.NodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          findMany: {
+            args: Prisma.NodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>[]
+          }
+          create: {
+            args: Prisma.NodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          createMany: {
+            args: Prisma.NodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>[]
+          }
+          delete: {
+            args: Prisma.NodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          update: {
+            args: Prisma.NodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          deleteMany: {
+            args: Prisma.NodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NodePayload>
+          }
+          aggregate: {
+            args: Prisma.NodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNode>
+          }
+          groupBy: {
+            args: Prisma.NodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NodeCountArgs<ExtArgs>
+            result: $Utils.Optional<NodeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Connection: {
+        payload: Prisma.$ConnectionPayload<ExtArgs>
+        fields: Prisma.ConnectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConnectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConnectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          findFirst: {
+            args: Prisma.ConnectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConnectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          findMany: {
+            args: Prisma.ConnectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>[]
+          }
+          create: {
+            args: Prisma.ConnectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          createMany: {
+            args: Prisma.ConnectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConnectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>[]
+          }
+          delete: {
+            args: Prisma.ConnectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          update: {
+            args: Prisma.ConnectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ConnectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConnectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ConnectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConnectionPayload>
+          }
+          aggregate: {
+            args: Prisma.ConnectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConnection>
+          }
+          groupBy: {
+            args: Prisma.ConnectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConnectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConnectionCountArgs<ExtArgs>
+            result: $Utils.Optional<ConnectionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1228,6 +1418,86 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWorkflowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WorkflowWhereInput
+  }
+
+
+  /**
+   * Count Type WorkflowCountOutputType
+   */
+
+  export type WorkflowCountOutputType = {
+    connections: number
+    nodes: number
+  }
+
+  export type WorkflowCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    connections?: boolean | WorkflowCountOutputTypeCountConnectionsArgs
+    nodes?: boolean | WorkflowCountOutputTypeCountNodesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WorkflowCountOutputType without action
+   */
+  export type WorkflowCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowCountOutputType
+     */
+    select?: WorkflowCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WorkflowCountOutputType without action
+   */
+  export type WorkflowCountOutputTypeCountConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConnectionWhereInput
+  }
+
+  /**
+   * WorkflowCountOutputType without action
+   */
+  export type WorkflowCountOutputTypeCountNodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NodeWhereInput
+  }
+
+
+  /**
+   * Count Type NodeCountOutputType
+   */
+
+  export type NodeCountOutputType = {
+    outputConnections: number
+    inputConnections: number
+  }
+
+  export type NodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    outputConnections?: boolean | NodeCountOutputTypeCountOutputConnectionsArgs
+    inputConnections?: boolean | NodeCountOutputTypeCountInputConnectionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * NodeCountOutputType without action
+   */
+  export type NodeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NodeCountOutputType
+     */
+    select?: NodeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * NodeCountOutputType without action
+   */
+  export type NodeCountOutputTypeCountOutputConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConnectionWhereInput
+  }
+
+  /**
+   * NodeCountOutputType without action
+   */
+  export type NodeCountOutputTypeCountInputConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConnectionWhereInput
   }
 
 
@@ -5307,7 +5577,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
+    connections?: boolean | Workflow$connectionsArgs<ExtArgs>
+    nodes?: boolean | Workflow$nodesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | WorkflowCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workflow"]>
 
   export type WorkflowSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5328,7 +5601,10 @@ export namespace Prisma {
   }
 
   export type WorkflowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    connections?: boolean | Workflow$connectionsArgs<ExtArgs>
+    nodes?: boolean | Workflow$nodesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | WorkflowCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkflowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5337,6 +5613,8 @@ export namespace Prisma {
   export type $WorkflowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Workflow"
     objects: {
+      connections: Prisma.$ConnectionPayload<ExtArgs>[]
+      nodes: Prisma.$NodePayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5709,6 +5987,8 @@ export namespace Prisma {
    */
   export interface Prisma__WorkflowClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    connections<T extends Workflow$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany"> | Null>
+    nodes<T extends Workflow$nodesArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$nodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findMany"> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6062,6 +6342,46 @@ export namespace Prisma {
   }
 
   /**
+   * Workflow.connections
+   */
+  export type Workflow$connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    where?: ConnectionWhereInput
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    cursor?: ConnectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Workflow.nodes
+   */
+  export type Workflow$nodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    where?: NodeWhereInput
+    orderBy?: NodeOrderByWithRelationInput | NodeOrderByWithRelationInput[]
+    cursor?: NodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NodeScalarFieldEnum | NodeScalarFieldEnum[]
+  }
+
+  /**
    * Workflow without action
    */
   export type WorkflowDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6073,6 +6393,1998 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: WorkflowInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Node
+   */
+
+  export type AggregateNode = {
+    _count: NodeCountAggregateOutputType | null
+    _min: NodeMinAggregateOutputType | null
+    _max: NodeMaxAggregateOutputType | null
+  }
+
+  export type NodeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    type: $Enums.NodeType | null
+    workflowId: string | null
+  }
+
+  export type NodeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    type: $Enums.NodeType | null
+    workflowId: string | null
+  }
+
+  export type NodeCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    type: number
+    position: number
+    data: number
+    workflowId: number
+    _all: number
+  }
+
+
+  export type NodeMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    type?: true
+    workflowId?: true
+  }
+
+  export type NodeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    type?: true
+    workflowId?: true
+  }
+
+  export type NodeCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    type?: true
+    position?: true
+    data?: true
+    workflowId?: true
+    _all?: true
+  }
+
+  export type NodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Node to aggregate.
+     */
+    where?: NodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Nodes to fetch.
+     */
+    orderBy?: NodeOrderByWithRelationInput | NodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Nodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Nodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Nodes
+    **/
+    _count?: true | NodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NodeMaxAggregateInputType
+  }
+
+  export type GetNodeAggregateType<T extends NodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateNode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNode[P]>
+      : GetScalarType<T[P], AggregateNode[P]>
+  }
+
+
+
+
+  export type NodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NodeWhereInput
+    orderBy?: NodeOrderByWithAggregationInput | NodeOrderByWithAggregationInput[]
+    by: NodeScalarFieldEnum[] | NodeScalarFieldEnum
+    having?: NodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NodeCountAggregateInputType | true
+    _min?: NodeMinAggregateInputType
+    _max?: NodeMaxAggregateInputType
+  }
+
+  export type NodeGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    type: $Enums.NodeType
+    position: JsonValue
+    data: JsonValue
+    workflowId: string
+    _count: NodeCountAggregateOutputType | null
+    _min: NodeMinAggregateOutputType | null
+    _max: NodeMaxAggregateOutputType | null
+  }
+
+  type GetNodeGroupByPayload<T extends NodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NodeGroupByOutputType[P]>
+            : GetScalarType<T[P], NodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    type?: boolean
+    position?: boolean
+    data?: boolean
+    workflowId?: boolean
+    outputConnections?: boolean | Node$outputConnectionsArgs<ExtArgs>
+    inputConnections?: boolean | Node$inputConnectionsArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+    _count?: boolean | NodeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["node"]>
+
+  export type NodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    type?: boolean
+    position?: boolean
+    data?: boolean
+    workflowId?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["node"]>
+
+  export type NodeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    type?: boolean
+    position?: boolean
+    data?: boolean
+    workflowId?: boolean
+  }
+
+  export type NodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    outputConnections?: boolean | Node$outputConnectionsArgs<ExtArgs>
+    inputConnections?: boolean | Node$inputConnectionsArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+    _count?: boolean | NodeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type NodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $NodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Node"
+    objects: {
+      outputConnections: Prisma.$ConnectionPayload<ExtArgs>[]
+      inputConnections: Prisma.$ConnectionPayload<ExtArgs>[]
+      workflow: Prisma.$WorkflowPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+      type: $Enums.NodeType
+      position: Prisma.JsonValue
+      data: Prisma.JsonValue
+      workflowId: string
+    }, ExtArgs["result"]["node"]>
+    composites: {}
+  }
+
+  type NodeGetPayload<S extends boolean | null | undefined | NodeDefaultArgs> = $Result.GetResult<Prisma.$NodePayload, S>
+
+  type NodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<NodeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: NodeCountAggregateInputType | true
+    }
+
+  export interface NodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Node'], meta: { name: 'Node' } }
+    /**
+     * Find zero or one Node that matches the filter.
+     * @param {NodeFindUniqueArgs} args - Arguments to find a Node
+     * @example
+     * // Get one Node
+     * const node = await prisma.node.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NodeFindUniqueArgs>(args: SelectSubset<T, NodeFindUniqueArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Node that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {NodeFindUniqueOrThrowArgs} args - Arguments to find a Node
+     * @example
+     * // Get one Node
+     * const node = await prisma.node.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NodeFindUniqueOrThrowArgs>(args: SelectSubset<T, NodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Node that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeFindFirstArgs} args - Arguments to find a Node
+     * @example
+     * // Get one Node
+     * const node = await prisma.node.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NodeFindFirstArgs>(args?: SelectSubset<T, NodeFindFirstArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Node that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeFindFirstOrThrowArgs} args - Arguments to find a Node
+     * @example
+     * // Get one Node
+     * const node = await prisma.node.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NodeFindFirstOrThrowArgs>(args?: SelectSubset<T, NodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Nodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Nodes
+     * const nodes = await prisma.node.findMany()
+     * 
+     * // Get first 10 Nodes
+     * const nodes = await prisma.node.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const nodeWithIdOnly = await prisma.node.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NodeFindManyArgs>(args?: SelectSubset<T, NodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Node.
+     * @param {NodeCreateArgs} args - Arguments to create a Node.
+     * @example
+     * // Create one Node
+     * const Node = await prisma.node.create({
+     *   data: {
+     *     // ... data to create a Node
+     *   }
+     * })
+     * 
+     */
+    create<T extends NodeCreateArgs>(args: SelectSubset<T, NodeCreateArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Nodes.
+     * @param {NodeCreateManyArgs} args - Arguments to create many Nodes.
+     * @example
+     * // Create many Nodes
+     * const node = await prisma.node.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NodeCreateManyArgs>(args?: SelectSubset<T, NodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Nodes and returns the data saved in the database.
+     * @param {NodeCreateManyAndReturnArgs} args - Arguments to create many Nodes.
+     * @example
+     * // Create many Nodes
+     * const node = await prisma.node.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Nodes and only return the `id`
+     * const nodeWithIdOnly = await prisma.node.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NodeCreateManyAndReturnArgs>(args?: SelectSubset<T, NodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Node.
+     * @param {NodeDeleteArgs} args - Arguments to delete one Node.
+     * @example
+     * // Delete one Node
+     * const Node = await prisma.node.delete({
+     *   where: {
+     *     // ... filter to delete one Node
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NodeDeleteArgs>(args: SelectSubset<T, NodeDeleteArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Node.
+     * @param {NodeUpdateArgs} args - Arguments to update one Node.
+     * @example
+     * // Update one Node
+     * const node = await prisma.node.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NodeUpdateArgs>(args: SelectSubset<T, NodeUpdateArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Nodes.
+     * @param {NodeDeleteManyArgs} args - Arguments to filter Nodes to delete.
+     * @example
+     * // Delete a few Nodes
+     * const { count } = await prisma.node.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NodeDeleteManyArgs>(args?: SelectSubset<T, NodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Nodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Nodes
+     * const node = await prisma.node.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NodeUpdateManyArgs>(args: SelectSubset<T, NodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Node.
+     * @param {NodeUpsertArgs} args - Arguments to update or create a Node.
+     * @example
+     * // Update or create a Node
+     * const node = await prisma.node.upsert({
+     *   create: {
+     *     // ... data to create a Node
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Node we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NodeUpsertArgs>(args: SelectSubset<T, NodeUpsertArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Nodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeCountArgs} args - Arguments to filter Nodes to count.
+     * @example
+     * // Count the number of Nodes
+     * const count = await prisma.node.count({
+     *   where: {
+     *     // ... the filter for the Nodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends NodeCountArgs>(
+      args?: Subset<T, NodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Node.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NodeAggregateArgs>(args: Subset<T, NodeAggregateArgs>): Prisma.PrismaPromise<GetNodeAggregateType<T>>
+
+    /**
+     * Group by Node.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NodeGroupByArgs['orderBy'] }
+        : { orderBy?: NodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Node model
+   */
+  readonly fields: NodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Node.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    outputConnections<T extends Node$outputConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Node$outputConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany"> | Null>
+    inputConnections<T extends Node$inputConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Node$inputConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany"> | Null>
+    workflow<T extends WorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowDefaultArgs<ExtArgs>>): Prisma__WorkflowClient<$Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Node model
+   */ 
+  interface NodeFieldRefs {
+    readonly id: FieldRef<"Node", 'String'>
+    readonly name: FieldRef<"Node", 'String'>
+    readonly createdAt: FieldRef<"Node", 'DateTime'>
+    readonly updatedAt: FieldRef<"Node", 'DateTime'>
+    readonly type: FieldRef<"Node", 'NodeType'>
+    readonly position: FieldRef<"Node", 'Json'>
+    readonly data: FieldRef<"Node", 'Json'>
+    readonly workflowId: FieldRef<"Node", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Node findUnique
+   */
+  export type NodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter, which Node to fetch.
+     */
+    where: NodeWhereUniqueInput
+  }
+
+  /**
+   * Node findUniqueOrThrow
+   */
+  export type NodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter, which Node to fetch.
+     */
+    where: NodeWhereUniqueInput
+  }
+
+  /**
+   * Node findFirst
+   */
+  export type NodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter, which Node to fetch.
+     */
+    where?: NodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Nodes to fetch.
+     */
+    orderBy?: NodeOrderByWithRelationInput | NodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Nodes.
+     */
+    cursor?: NodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Nodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Nodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Nodes.
+     */
+    distinct?: NodeScalarFieldEnum | NodeScalarFieldEnum[]
+  }
+
+  /**
+   * Node findFirstOrThrow
+   */
+  export type NodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter, which Node to fetch.
+     */
+    where?: NodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Nodes to fetch.
+     */
+    orderBy?: NodeOrderByWithRelationInput | NodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Nodes.
+     */
+    cursor?: NodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Nodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Nodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Nodes.
+     */
+    distinct?: NodeScalarFieldEnum | NodeScalarFieldEnum[]
+  }
+
+  /**
+   * Node findMany
+   */
+  export type NodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter, which Nodes to fetch.
+     */
+    where?: NodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Nodes to fetch.
+     */
+    orderBy?: NodeOrderByWithRelationInput | NodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Nodes.
+     */
+    cursor?: NodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Nodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Nodes.
+     */
+    skip?: number
+    distinct?: NodeScalarFieldEnum | NodeScalarFieldEnum[]
+  }
+
+  /**
+   * Node create
+   */
+  export type NodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Node.
+     */
+    data: XOR<NodeCreateInput, NodeUncheckedCreateInput>
+  }
+
+  /**
+   * Node createMany
+   */
+  export type NodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Nodes.
+     */
+    data: NodeCreateManyInput | NodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Node createManyAndReturn
+   */
+  export type NodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Nodes.
+     */
+    data: NodeCreateManyInput | NodeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Node update
+   */
+  export type NodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Node.
+     */
+    data: XOR<NodeUpdateInput, NodeUncheckedUpdateInput>
+    /**
+     * Choose, which Node to update.
+     */
+    where: NodeWhereUniqueInput
+  }
+
+  /**
+   * Node updateMany
+   */
+  export type NodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Nodes.
+     */
+    data: XOR<NodeUpdateManyMutationInput, NodeUncheckedUpdateManyInput>
+    /**
+     * Filter which Nodes to update
+     */
+    where?: NodeWhereInput
+  }
+
+  /**
+   * Node upsert
+   */
+  export type NodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Node to update in case it exists.
+     */
+    where: NodeWhereUniqueInput
+    /**
+     * In case the Node found by the `where` argument doesn't exist, create a new Node with this data.
+     */
+    create: XOR<NodeCreateInput, NodeUncheckedCreateInput>
+    /**
+     * In case the Node was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NodeUpdateInput, NodeUncheckedUpdateInput>
+  }
+
+  /**
+   * Node delete
+   */
+  export type NodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+    /**
+     * Filter which Node to delete.
+     */
+    where: NodeWhereUniqueInput
+  }
+
+  /**
+   * Node deleteMany
+   */
+  export type NodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Nodes to delete
+     */
+    where?: NodeWhereInput
+  }
+
+  /**
+   * Node.outputConnections
+   */
+  export type Node$outputConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    where?: ConnectionWhereInput
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    cursor?: ConnectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Node.inputConnections
+   */
+  export type Node$inputConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    where?: ConnectionWhereInput
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    cursor?: ConnectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Node without action
+   */
+  export type NodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Node
+     */
+    select?: NodeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NodeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Connection
+   */
+
+  export type AggregateConnection = {
+    _count: ConnectionCountAggregateOutputType | null
+    _min: ConnectionMinAggregateOutputType | null
+    _max: ConnectionMaxAggregateOutputType | null
+  }
+
+  export type ConnectionMinAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    fromNodeId: string | null
+    toNodeId: string | null
+    fromOutput: string | null
+    toInput: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConnectionMaxAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    fromNodeId: string | null
+    toNodeId: string | null
+    fromOutput: string | null
+    toInput: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConnectionCountAggregateOutputType = {
+    id: number
+    workflowId: number
+    fromNodeId: number
+    toNodeId: number
+    fromOutput: number
+    toInput: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ConnectionMinAggregateInputType = {
+    id?: true
+    workflowId?: true
+    fromNodeId?: true
+    toNodeId?: true
+    fromOutput?: true
+    toInput?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConnectionMaxAggregateInputType = {
+    id?: true
+    workflowId?: true
+    fromNodeId?: true
+    toNodeId?: true
+    fromOutput?: true
+    toInput?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConnectionCountAggregateInputType = {
+    id?: true
+    workflowId?: true
+    fromNodeId?: true
+    toNodeId?: true
+    fromOutput?: true
+    toInput?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ConnectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Connection to aggregate.
+     */
+    where?: ConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Connections to fetch.
+     */
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Connections
+    **/
+    _count?: true | ConnectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConnectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConnectionMaxAggregateInputType
+  }
+
+  export type GetConnectionAggregateType<T extends ConnectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateConnection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConnection[P]>
+      : GetScalarType<T[P], AggregateConnection[P]>
+  }
+
+
+
+
+  export type ConnectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConnectionWhereInput
+    orderBy?: ConnectionOrderByWithAggregationInput | ConnectionOrderByWithAggregationInput[]
+    by: ConnectionScalarFieldEnum[] | ConnectionScalarFieldEnum
+    having?: ConnectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConnectionCountAggregateInputType | true
+    _min?: ConnectionMinAggregateInputType
+    _max?: ConnectionMaxAggregateInputType
+  }
+
+  export type ConnectionGroupByOutputType = {
+    id: string
+    workflowId: string
+    fromNodeId: string
+    toNodeId: string
+    fromOutput: string
+    toInput: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ConnectionCountAggregateOutputType | null
+    _min: ConnectionMinAggregateOutputType | null
+    _max: ConnectionMaxAggregateOutputType | null
+  }
+
+  type GetConnectionGroupByPayload<T extends ConnectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConnectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConnectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConnectionGroupByOutputType[P]>
+            : GetScalarType<T[P], ConnectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConnectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    fromNodeId?: boolean
+    toNodeId?: boolean
+    fromOutput?: boolean
+    toInput?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    fromNode?: boolean | NodeDefaultArgs<ExtArgs>
+    toNode?: boolean | NodeDefaultArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["connection"]>
+
+  export type ConnectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    fromNodeId?: boolean
+    toNodeId?: boolean
+    fromOutput?: boolean
+    toInput?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    fromNode?: boolean | NodeDefaultArgs<ExtArgs>
+    toNode?: boolean | NodeDefaultArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["connection"]>
+
+  export type ConnectionSelectScalar = {
+    id?: boolean
+    workflowId?: boolean
+    fromNodeId?: boolean
+    toNodeId?: boolean
+    fromOutput?: boolean
+    toInput?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fromNode?: boolean | NodeDefaultArgs<ExtArgs>
+    toNode?: boolean | NodeDefaultArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type ConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fromNode?: boolean | NodeDefaultArgs<ExtArgs>
+    toNode?: boolean | NodeDefaultArgs<ExtArgs>
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $ConnectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Connection"
+    objects: {
+      fromNode: Prisma.$NodePayload<ExtArgs>
+      toNode: Prisma.$NodePayload<ExtArgs>
+      workflow: Prisma.$WorkflowPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowId: string
+      fromNodeId: string
+      toNodeId: string
+      fromOutput: string
+      toInput: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["connection"]>
+    composites: {}
+  }
+
+  type ConnectionGetPayload<S extends boolean | null | undefined | ConnectionDefaultArgs> = $Result.GetResult<Prisma.$ConnectionPayload, S>
+
+  type ConnectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ConnectionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ConnectionCountAggregateInputType | true
+    }
+
+  export interface ConnectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Connection'], meta: { name: 'Connection' } }
+    /**
+     * Find zero or one Connection that matches the filter.
+     * @param {ConnectionFindUniqueArgs} args - Arguments to find a Connection
+     * @example
+     * // Get one Connection
+     * const connection = await prisma.connection.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConnectionFindUniqueArgs>(args: SelectSubset<T, ConnectionFindUniqueArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Connection that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ConnectionFindUniqueOrThrowArgs} args - Arguments to find a Connection
+     * @example
+     * // Get one Connection
+     * const connection = await prisma.connection.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConnectionFindUniqueOrThrowArgs>(args: SelectSubset<T, ConnectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Connection that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionFindFirstArgs} args - Arguments to find a Connection
+     * @example
+     * // Get one Connection
+     * const connection = await prisma.connection.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConnectionFindFirstArgs>(args?: SelectSubset<T, ConnectionFindFirstArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Connection that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionFindFirstOrThrowArgs} args - Arguments to find a Connection
+     * @example
+     * // Get one Connection
+     * const connection = await prisma.connection.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConnectionFindFirstOrThrowArgs>(args?: SelectSubset<T, ConnectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Connections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Connections
+     * const connections = await prisma.connection.findMany()
+     * 
+     * // Get first 10 Connections
+     * const connections = await prisma.connection.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const connectionWithIdOnly = await prisma.connection.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConnectionFindManyArgs>(args?: SelectSubset<T, ConnectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Connection.
+     * @param {ConnectionCreateArgs} args - Arguments to create a Connection.
+     * @example
+     * // Create one Connection
+     * const Connection = await prisma.connection.create({
+     *   data: {
+     *     // ... data to create a Connection
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConnectionCreateArgs>(args: SelectSubset<T, ConnectionCreateArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Connections.
+     * @param {ConnectionCreateManyArgs} args - Arguments to create many Connections.
+     * @example
+     * // Create many Connections
+     * const connection = await prisma.connection.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConnectionCreateManyArgs>(args?: SelectSubset<T, ConnectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Connections and returns the data saved in the database.
+     * @param {ConnectionCreateManyAndReturnArgs} args - Arguments to create many Connections.
+     * @example
+     * // Create many Connections
+     * const connection = await prisma.connection.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Connections and only return the `id`
+     * const connectionWithIdOnly = await prisma.connection.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConnectionCreateManyAndReturnArgs>(args?: SelectSubset<T, ConnectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Connection.
+     * @param {ConnectionDeleteArgs} args - Arguments to delete one Connection.
+     * @example
+     * // Delete one Connection
+     * const Connection = await prisma.connection.delete({
+     *   where: {
+     *     // ... filter to delete one Connection
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConnectionDeleteArgs>(args: SelectSubset<T, ConnectionDeleteArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Connection.
+     * @param {ConnectionUpdateArgs} args - Arguments to update one Connection.
+     * @example
+     * // Update one Connection
+     * const connection = await prisma.connection.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConnectionUpdateArgs>(args: SelectSubset<T, ConnectionUpdateArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Connections.
+     * @param {ConnectionDeleteManyArgs} args - Arguments to filter Connections to delete.
+     * @example
+     * // Delete a few Connections
+     * const { count } = await prisma.connection.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConnectionDeleteManyArgs>(args?: SelectSubset<T, ConnectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Connections
+     * const connection = await prisma.connection.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConnectionUpdateManyArgs>(args: SelectSubset<T, ConnectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Connection.
+     * @param {ConnectionUpsertArgs} args - Arguments to update or create a Connection.
+     * @example
+     * // Update or create a Connection
+     * const connection = await prisma.connection.upsert({
+     *   create: {
+     *     // ... data to create a Connection
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Connection we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConnectionUpsertArgs>(args: SelectSubset<T, ConnectionUpsertArgs<ExtArgs>>): Prisma__ConnectionClient<$Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionCountArgs} args - Arguments to filter Connections to count.
+     * @example
+     * // Count the number of Connections
+     * const count = await prisma.connection.count({
+     *   where: {
+     *     // ... the filter for the Connections we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConnectionCountArgs>(
+      args?: Subset<T, ConnectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConnectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Connection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConnectionAggregateArgs>(args: Subset<T, ConnectionAggregateArgs>): Prisma.PrismaPromise<GetConnectionAggregateType<T>>
+
+    /**
+     * Group by Connection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConnectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConnectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConnectionGroupByArgs['orderBy'] }
+        : { orderBy?: ConnectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConnectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConnectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Connection model
+   */
+  readonly fields: ConnectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Connection.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConnectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    fromNode<T extends NodeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NodeDefaultArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    toNode<T extends NodeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NodeDefaultArgs<ExtArgs>>): Prisma__NodeClient<$Result.GetResult<Prisma.$NodePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    workflow<T extends WorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowDefaultArgs<ExtArgs>>): Prisma__WorkflowClient<$Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Connection model
+   */ 
+  interface ConnectionFieldRefs {
+    readonly id: FieldRef<"Connection", 'String'>
+    readonly workflowId: FieldRef<"Connection", 'String'>
+    readonly fromNodeId: FieldRef<"Connection", 'String'>
+    readonly toNodeId: FieldRef<"Connection", 'String'>
+    readonly fromOutput: FieldRef<"Connection", 'String'>
+    readonly toInput: FieldRef<"Connection", 'String'>
+    readonly createdAt: FieldRef<"Connection", 'DateTime'>
+    readonly updatedAt: FieldRef<"Connection", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Connection findUnique
+   */
+  export type ConnectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Connection to fetch.
+     */
+    where: ConnectionWhereUniqueInput
+  }
+
+  /**
+   * Connection findUniqueOrThrow
+   */
+  export type ConnectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Connection to fetch.
+     */
+    where: ConnectionWhereUniqueInput
+  }
+
+  /**
+   * Connection findFirst
+   */
+  export type ConnectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Connection to fetch.
+     */
+    where?: ConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Connections to fetch.
+     */
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Connections.
+     */
+    cursor?: ConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Connections.
+     */
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Connection findFirstOrThrow
+   */
+  export type ConnectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Connection to fetch.
+     */
+    where?: ConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Connections to fetch.
+     */
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Connections.
+     */
+    cursor?: ConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Connections.
+     */
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Connection findMany
+   */
+  export type ConnectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Connections to fetch.
+     */
+    where?: ConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Connections to fetch.
+     */
+    orderBy?: ConnectionOrderByWithRelationInput | ConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Connections.
+     */
+    cursor?: ConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Connections.
+     */
+    skip?: number
+    distinct?: ConnectionScalarFieldEnum | ConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Connection create
+   */
+  export type ConnectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Connection.
+     */
+    data: XOR<ConnectionCreateInput, ConnectionUncheckedCreateInput>
+  }
+
+  /**
+   * Connection createMany
+   */
+  export type ConnectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Connections.
+     */
+    data: ConnectionCreateManyInput | ConnectionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Connection createManyAndReturn
+   */
+  export type ConnectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Connections.
+     */
+    data: ConnectionCreateManyInput | ConnectionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Connection update
+   */
+  export type ConnectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Connection.
+     */
+    data: XOR<ConnectionUpdateInput, ConnectionUncheckedUpdateInput>
+    /**
+     * Choose, which Connection to update.
+     */
+    where: ConnectionWhereUniqueInput
+  }
+
+  /**
+   * Connection updateMany
+   */
+  export type ConnectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Connections.
+     */
+    data: XOR<ConnectionUpdateManyMutationInput, ConnectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Connections to update
+     */
+    where?: ConnectionWhereInput
+  }
+
+  /**
+   * Connection upsert
+   */
+  export type ConnectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Connection to update in case it exists.
+     */
+    where: ConnectionWhereUniqueInput
+    /**
+     * In case the Connection found by the `where` argument doesn't exist, create a new Connection with this data.
+     */
+    create: XOR<ConnectionCreateInput, ConnectionUncheckedCreateInput>
+    /**
+     * In case the Connection was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConnectionUpdateInput, ConnectionUncheckedUpdateInput>
+  }
+
+  /**
+   * Connection delete
+   */
+  export type ConnectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
+    /**
+     * Filter which Connection to delete.
+     */
+    where: ConnectionWhereUniqueInput
+  }
+
+  /**
+   * Connection deleteMany
+   */
+  export type ConnectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Connections to delete
+     */
+    where?: ConnectionWhereInput
+  }
+
+  /**
+   * Connection without action
+   */
+  export type ConnectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Connection
+     */
+    select?: ConnectionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConnectionInclude<ExtArgs> | null
   }
 
 
@@ -6159,12 +8471,47 @@ export namespace Prisma {
   export type WorkflowScalarFieldEnum = (typeof WorkflowScalarFieldEnum)[keyof typeof WorkflowScalarFieldEnum]
 
 
+  export const NodeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    type: 'type',
+    position: 'position',
+    data: 'data',
+    workflowId: 'workflowId'
+  };
+
+  export type NodeScalarFieldEnum = (typeof NodeScalarFieldEnum)[keyof typeof NodeScalarFieldEnum]
+
+
+  export const ConnectionScalarFieldEnum: {
+    id: 'id',
+    workflowId: 'workflowId',
+    fromNodeId: 'fromNodeId',
+    toNodeId: 'toNodeId',
+    fromOutput: 'fromOutput',
+    toInput: 'toInput',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -6181,6 +8528,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -6220,6 +8576,27 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'NodeType'
+   */
+  export type EnumNodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NodeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NodeType[]'
+   */
+  export type ListEnumNodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NodeType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
@@ -6542,6 +8919,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Workflow"> | Date | string
     updatedAt?: DateTimeFilter<"Workflow"> | Date | string
     userId?: StringFilter<"Workflow"> | string
+    connections?: ConnectionListRelationFilter
+    nodes?: NodeListRelationFilter
     user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
@@ -6551,6 +8930,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    connections?: ConnectionOrderByRelationAggregateInput
+    nodes?: NodeOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -6563,6 +8944,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Workflow"> | Date | string
     updatedAt?: DateTimeFilter<"Workflow"> | Date | string
     userId?: StringFilter<"Workflow"> | string
+    connections?: ConnectionListRelationFilter
+    nodes?: NodeListRelationFilter
     user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id">
 
@@ -6586,6 +8969,159 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Workflow"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Workflow"> | Date | string
     userId?: StringWithAggregatesFilter<"Workflow"> | string
+  }
+
+  export type NodeWhereInput = {
+    AND?: NodeWhereInput | NodeWhereInput[]
+    OR?: NodeWhereInput[]
+    NOT?: NodeWhereInput | NodeWhereInput[]
+    id?: StringFilter<"Node"> | string
+    name?: StringFilter<"Node"> | string
+    createdAt?: DateTimeFilter<"Node"> | Date | string
+    updatedAt?: DateTimeFilter<"Node"> | Date | string
+    type?: EnumNodeTypeFilter<"Node"> | $Enums.NodeType
+    position?: JsonFilter<"Node">
+    data?: JsonFilter<"Node">
+    workflowId?: StringFilter<"Node"> | string
+    outputConnections?: ConnectionListRelationFilter
+    inputConnections?: ConnectionListRelationFilter
+    workflow?: XOR<WorkflowRelationFilter, WorkflowWhereInput>
+  }
+
+  export type NodeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    type?: SortOrder
+    position?: SortOrder
+    data?: SortOrder
+    workflowId?: SortOrder
+    outputConnections?: ConnectionOrderByRelationAggregateInput
+    inputConnections?: ConnectionOrderByRelationAggregateInput
+    workflow?: WorkflowOrderByWithRelationInput
+  }
+
+  export type NodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NodeWhereInput | NodeWhereInput[]
+    OR?: NodeWhereInput[]
+    NOT?: NodeWhereInput | NodeWhereInput[]
+    name?: StringFilter<"Node"> | string
+    createdAt?: DateTimeFilter<"Node"> | Date | string
+    updatedAt?: DateTimeFilter<"Node"> | Date | string
+    type?: EnumNodeTypeFilter<"Node"> | $Enums.NodeType
+    position?: JsonFilter<"Node">
+    data?: JsonFilter<"Node">
+    workflowId?: StringFilter<"Node"> | string
+    outputConnections?: ConnectionListRelationFilter
+    inputConnections?: ConnectionListRelationFilter
+    workflow?: XOR<WorkflowRelationFilter, WorkflowWhereInput>
+  }, "id">
+
+  export type NodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    type?: SortOrder
+    position?: SortOrder
+    data?: SortOrder
+    workflowId?: SortOrder
+    _count?: NodeCountOrderByAggregateInput
+    _max?: NodeMaxOrderByAggregateInput
+    _min?: NodeMinOrderByAggregateInput
+  }
+
+  export type NodeScalarWhereWithAggregatesInput = {
+    AND?: NodeScalarWhereWithAggregatesInput | NodeScalarWhereWithAggregatesInput[]
+    OR?: NodeScalarWhereWithAggregatesInput[]
+    NOT?: NodeScalarWhereWithAggregatesInput | NodeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Node"> | string
+    name?: StringWithAggregatesFilter<"Node"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Node"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Node"> | Date | string
+    type?: EnumNodeTypeWithAggregatesFilter<"Node"> | $Enums.NodeType
+    position?: JsonWithAggregatesFilter<"Node">
+    data?: JsonWithAggregatesFilter<"Node">
+    workflowId?: StringWithAggregatesFilter<"Node"> | string
+  }
+
+  export type ConnectionWhereInput = {
+    AND?: ConnectionWhereInput | ConnectionWhereInput[]
+    OR?: ConnectionWhereInput[]
+    NOT?: ConnectionWhereInput | ConnectionWhereInput[]
+    id?: StringFilter<"Connection"> | string
+    workflowId?: StringFilter<"Connection"> | string
+    fromNodeId?: StringFilter<"Connection"> | string
+    toNodeId?: StringFilter<"Connection"> | string
+    fromOutput?: StringFilter<"Connection"> | string
+    toInput?: StringFilter<"Connection"> | string
+    createdAt?: DateTimeFilter<"Connection"> | Date | string
+    updatedAt?: DateTimeFilter<"Connection"> | Date | string
+    fromNode?: XOR<NodeRelationFilter, NodeWhereInput>
+    toNode?: XOR<NodeRelationFilter, NodeWhereInput>
+    workflow?: XOR<WorkflowRelationFilter, WorkflowWhereInput>
+  }
+
+  export type ConnectionOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    fromNodeId?: SortOrder
+    toNodeId?: SortOrder
+    fromOutput?: SortOrder
+    toInput?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fromNode?: NodeOrderByWithRelationInput
+    toNode?: NodeOrderByWithRelationInput
+    workflow?: WorkflowOrderByWithRelationInput
+  }
+
+  export type ConnectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    fromNodeId_toNodeId_fromOutput_toInput?: ConnectionFromNodeIdToNodeIdFromOutputToInputCompoundUniqueInput
+    AND?: ConnectionWhereInput | ConnectionWhereInput[]
+    OR?: ConnectionWhereInput[]
+    NOT?: ConnectionWhereInput | ConnectionWhereInput[]
+    workflowId?: StringFilter<"Connection"> | string
+    fromNodeId?: StringFilter<"Connection"> | string
+    toNodeId?: StringFilter<"Connection"> | string
+    fromOutput?: StringFilter<"Connection"> | string
+    toInput?: StringFilter<"Connection"> | string
+    createdAt?: DateTimeFilter<"Connection"> | Date | string
+    updatedAt?: DateTimeFilter<"Connection"> | Date | string
+    fromNode?: XOR<NodeRelationFilter, NodeWhereInput>
+    toNode?: XOR<NodeRelationFilter, NodeWhereInput>
+    workflow?: XOR<WorkflowRelationFilter, WorkflowWhereInput>
+  }, "id" | "fromNodeId_toNodeId_fromOutput_toInput">
+
+  export type ConnectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    fromNodeId?: SortOrder
+    toNodeId?: SortOrder
+    fromOutput?: SortOrder
+    toInput?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ConnectionCountOrderByAggregateInput
+    _max?: ConnectionMaxOrderByAggregateInput
+    _min?: ConnectionMinOrderByAggregateInput
+  }
+
+  export type ConnectionScalarWhereWithAggregatesInput = {
+    AND?: ConnectionScalarWhereWithAggregatesInput | ConnectionScalarWhereWithAggregatesInput[]
+    OR?: ConnectionScalarWhereWithAggregatesInput[]
+    NOT?: ConnectionScalarWhereWithAggregatesInput | ConnectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Connection"> | string
+    workflowId?: StringWithAggregatesFilter<"Connection"> | string
+    fromNodeId?: StringWithAggregatesFilter<"Connection"> | string
+    toNodeId?: StringWithAggregatesFilter<"Connection"> | string
+    fromOutput?: StringWithAggregatesFilter<"Connection"> | string
+    toInput?: StringWithAggregatesFilter<"Connection"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Connection"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Connection"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -6925,6 +9461,8 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    connections?: ConnectionCreateNestedManyWithoutWorkflowInput
+    nodes?: NodeCreateNestedManyWithoutWorkflowInput
     user: UserCreateNestedOneWithoutWorkflowsInput
   }
 
@@ -6934,6 +9472,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    connections?: ConnectionUncheckedCreateNestedManyWithoutWorkflowInput
+    nodes?: NodeUncheckedCreateNestedManyWithoutWorkflowInput
   }
 
   export type WorkflowUpdateInput = {
@@ -6941,6 +9481,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: ConnectionUpdateManyWithoutWorkflowNestedInput
+    nodes?: NodeUpdateManyWithoutWorkflowNestedInput
     user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
   }
 
@@ -6950,6 +9492,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    connections?: ConnectionUncheckedUpdateManyWithoutWorkflowNestedInput
+    nodes?: NodeUncheckedUpdateManyWithoutWorkflowNestedInput
   }
 
   export type WorkflowCreateManyInput = {
@@ -6973,6 +9517,164 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NodeCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionCreateNestedManyWithoutFromNodeInput
+    inputConnections?: ConnectionCreateNestedManyWithoutToNodeInput
+    workflow: WorkflowCreateNestedOneWithoutNodesInput
+  }
+
+  export type NodeUncheckedCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId: string
+    outputConnections?: ConnectionUncheckedCreateNestedManyWithoutFromNodeInput
+    inputConnections?: ConnectionUncheckedCreateNestedManyWithoutToNodeInput
+  }
+
+  export type NodeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionUpdateManyWithoutFromNodeNestedInput
+    inputConnections?: ConnectionUpdateManyWithoutToNodeNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutNodesNestedInput
+  }
+
+  export type NodeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId?: StringFieldUpdateOperationsInput | string
+    outputConnections?: ConnectionUncheckedUpdateManyWithoutFromNodeNestedInput
+    inputConnections?: ConnectionUncheckedUpdateManyWithoutToNodeNestedInput
+  }
+
+  export type NodeCreateManyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId: string
+  }
+
+  export type NodeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type NodeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConnectionCreateInput = {
+    id?: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromNode: NodeCreateNestedOneWithoutOutputConnectionsInput
+    toNode: NodeCreateNestedOneWithoutInputConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
+  }
+
+  export type ConnectionUncheckedCreateInput = {
+    id?: string
+    workflowId: string
+    fromNodeId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromNode?: NodeUpdateOneRequiredWithoutOutputConnectionsNestedInput
+    toNode?: NodeUpdateOneRequiredWithoutInputConnectionsNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutConnectionsNestedInput
+  }
+
+  export type ConnectionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionCreateManyInput = {
+    id?: string
+    workflowId: string
+    fromNodeId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -7282,6 +9984,26 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type ConnectionListRelationFilter = {
+    every?: ConnectionWhereInput
+    some?: ConnectionWhereInput
+    none?: ConnectionWhereInput
+  }
+
+  export type NodeListRelationFilter = {
+    every?: NodeWhereInput
+    some?: NodeWhereInput
+    none?: NodeWhereInput
+  }
+
+  export type ConnectionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NodeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type WorkflowCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -7304,6 +10026,149 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+  }
+
+  export type EnumNodeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NodeType | EnumNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNodeTypeFilter<$PrismaModel> | $Enums.NodeType
+  }
+  export type JsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type WorkflowRelationFilter = {
+    is?: WorkflowWhereInput
+    isNot?: WorkflowWhereInput
+  }
+
+  export type NodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    type?: SortOrder
+    position?: SortOrder
+    data?: SortOrder
+    workflowId?: SortOrder
+  }
+
+  export type NodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    type?: SortOrder
+    workflowId?: SortOrder
+  }
+
+  export type NodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    type?: SortOrder
+    workflowId?: SortOrder
+  }
+
+  export type EnumNodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NodeType | EnumNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.NodeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNodeTypeFilter<$PrismaModel>
+    _max?: NestedEnumNodeTypeFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type NodeRelationFilter = {
+    is?: NodeWhereInput
+    isNot?: NodeWhereInput
+  }
+
+  export type ConnectionFromNodeIdToNodeIdFromOutputToInputCompoundUniqueInput = {
+    fromNodeId: string
+    toNodeId: string
+    fromOutput: string
+    toInput: string
+  }
+
+  export type ConnectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    fromNodeId?: SortOrder
+    toNodeId?: SortOrder
+    fromOutput?: SortOrder
+    toInput?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConnectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    fromNodeId?: SortOrder
+    toNodeId?: SortOrder
+    fromOutput?: SortOrder
+    toInput?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConnectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    fromNodeId?: SortOrder
+    toNodeId?: SortOrder
+    fromOutput?: SortOrder
+    toInput?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -7480,10 +10345,66 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type ConnectionCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput> | ConnectionCreateWithoutWorkflowInput[] | ConnectionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutWorkflowInput | ConnectionCreateOrConnectWithoutWorkflowInput[]
+    createMany?: ConnectionCreateManyWorkflowInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type NodeCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput> | NodeCreateWithoutWorkflowInput[] | NodeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: NodeCreateOrConnectWithoutWorkflowInput | NodeCreateOrConnectWithoutWorkflowInput[]
+    createMany?: NodeCreateManyWorkflowInputEnvelope
+    connect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutWorkflowsInput = {
     create?: XOR<UserCreateWithoutWorkflowsInput, UserUncheckedCreateWithoutWorkflowsInput>
     connectOrCreate?: UserCreateOrConnectWithoutWorkflowsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type ConnectionUncheckedCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput> | ConnectionCreateWithoutWorkflowInput[] | ConnectionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutWorkflowInput | ConnectionCreateOrConnectWithoutWorkflowInput[]
+    createMany?: ConnectionCreateManyWorkflowInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type NodeUncheckedCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput> | NodeCreateWithoutWorkflowInput[] | NodeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: NodeCreateOrConnectWithoutWorkflowInput | NodeCreateOrConnectWithoutWorkflowInput[]
+    createMany?: NodeCreateManyWorkflowInputEnvelope
+    connect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+  }
+
+  export type ConnectionUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput> | ConnectionCreateWithoutWorkflowInput[] | ConnectionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutWorkflowInput | ConnectionCreateOrConnectWithoutWorkflowInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutWorkflowInput | ConnectionUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: ConnectionCreateManyWorkflowInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutWorkflowInput | ConnectionUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutWorkflowInput | ConnectionUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type NodeUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput> | NodeCreateWithoutWorkflowInput[] | NodeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: NodeCreateOrConnectWithoutWorkflowInput | NodeCreateOrConnectWithoutWorkflowInput[]
+    upsert?: NodeUpsertWithWhereUniqueWithoutWorkflowInput | NodeUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: NodeCreateManyWorkflowInputEnvelope
+    set?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    disconnect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    delete?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    connect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    update?: NodeUpdateWithWhereUniqueWithoutWorkflowInput | NodeUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: NodeUpdateManyWithWhereWithoutWorkflowInput | NodeUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: NodeScalarWhereInput | NodeScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutWorkflowsNestedInput = {
@@ -7492,6 +10413,178 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutWorkflowsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWorkflowsInput, UserUpdateWithoutWorkflowsInput>, UserUncheckedUpdateWithoutWorkflowsInput>
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput> | ConnectionCreateWithoutWorkflowInput[] | ConnectionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutWorkflowInput | ConnectionCreateOrConnectWithoutWorkflowInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutWorkflowInput | ConnectionUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: ConnectionCreateManyWorkflowInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutWorkflowInput | ConnectionUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutWorkflowInput | ConnectionUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type NodeUncheckedUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput> | NodeCreateWithoutWorkflowInput[] | NodeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: NodeCreateOrConnectWithoutWorkflowInput | NodeCreateOrConnectWithoutWorkflowInput[]
+    upsert?: NodeUpsertWithWhereUniqueWithoutWorkflowInput | NodeUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: NodeCreateManyWorkflowInputEnvelope
+    set?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    disconnect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    delete?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    connect?: NodeWhereUniqueInput | NodeWhereUniqueInput[]
+    update?: NodeUpdateWithWhereUniqueWithoutWorkflowInput | NodeUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: NodeUpdateManyWithWhereWithoutWorkflowInput | NodeUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: NodeScalarWhereInput | NodeScalarWhereInput[]
+  }
+
+  export type ConnectionCreateNestedManyWithoutFromNodeInput = {
+    create?: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput> | ConnectionCreateWithoutFromNodeInput[] | ConnectionUncheckedCreateWithoutFromNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutFromNodeInput | ConnectionCreateOrConnectWithoutFromNodeInput[]
+    createMany?: ConnectionCreateManyFromNodeInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type ConnectionCreateNestedManyWithoutToNodeInput = {
+    create?: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput> | ConnectionCreateWithoutToNodeInput[] | ConnectionUncheckedCreateWithoutToNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutToNodeInput | ConnectionCreateOrConnectWithoutToNodeInput[]
+    createMany?: ConnectionCreateManyToNodeInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type WorkflowCreateNestedOneWithoutNodesInput = {
+    create?: XOR<WorkflowCreateWithoutNodesInput, WorkflowUncheckedCreateWithoutNodesInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutNodesInput
+    connect?: WorkflowWhereUniqueInput
+  }
+
+  export type ConnectionUncheckedCreateNestedManyWithoutFromNodeInput = {
+    create?: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput> | ConnectionCreateWithoutFromNodeInput[] | ConnectionUncheckedCreateWithoutFromNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutFromNodeInput | ConnectionCreateOrConnectWithoutFromNodeInput[]
+    createMany?: ConnectionCreateManyFromNodeInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type ConnectionUncheckedCreateNestedManyWithoutToNodeInput = {
+    create?: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput> | ConnectionCreateWithoutToNodeInput[] | ConnectionUncheckedCreateWithoutToNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutToNodeInput | ConnectionCreateOrConnectWithoutToNodeInput[]
+    createMany?: ConnectionCreateManyToNodeInputEnvelope
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+  }
+
+  export type EnumNodeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NodeType
+  }
+
+  export type ConnectionUpdateManyWithoutFromNodeNestedInput = {
+    create?: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput> | ConnectionCreateWithoutFromNodeInput[] | ConnectionUncheckedCreateWithoutFromNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutFromNodeInput | ConnectionCreateOrConnectWithoutFromNodeInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutFromNodeInput | ConnectionUpsertWithWhereUniqueWithoutFromNodeInput[]
+    createMany?: ConnectionCreateManyFromNodeInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutFromNodeInput | ConnectionUpdateWithWhereUniqueWithoutFromNodeInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutFromNodeInput | ConnectionUpdateManyWithWhereWithoutFromNodeInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type ConnectionUpdateManyWithoutToNodeNestedInput = {
+    create?: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput> | ConnectionCreateWithoutToNodeInput[] | ConnectionUncheckedCreateWithoutToNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutToNodeInput | ConnectionCreateOrConnectWithoutToNodeInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutToNodeInput | ConnectionUpsertWithWhereUniqueWithoutToNodeInput[]
+    createMany?: ConnectionCreateManyToNodeInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutToNodeInput | ConnectionUpdateWithWhereUniqueWithoutToNodeInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutToNodeInput | ConnectionUpdateManyWithWhereWithoutToNodeInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type WorkflowUpdateOneRequiredWithoutNodesNestedInput = {
+    create?: XOR<WorkflowCreateWithoutNodesInput, WorkflowUncheckedCreateWithoutNodesInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutNodesInput
+    upsert?: WorkflowUpsertWithoutNodesInput
+    connect?: WorkflowWhereUniqueInput
+    update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutNodesInput, WorkflowUpdateWithoutNodesInput>, WorkflowUncheckedUpdateWithoutNodesInput>
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutFromNodeNestedInput = {
+    create?: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput> | ConnectionCreateWithoutFromNodeInput[] | ConnectionUncheckedCreateWithoutFromNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutFromNodeInput | ConnectionCreateOrConnectWithoutFromNodeInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutFromNodeInput | ConnectionUpsertWithWhereUniqueWithoutFromNodeInput[]
+    createMany?: ConnectionCreateManyFromNodeInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutFromNodeInput | ConnectionUpdateWithWhereUniqueWithoutFromNodeInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutFromNodeInput | ConnectionUpdateManyWithWhereWithoutFromNodeInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutToNodeNestedInput = {
+    create?: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput> | ConnectionCreateWithoutToNodeInput[] | ConnectionUncheckedCreateWithoutToNodeInput[]
+    connectOrCreate?: ConnectionCreateOrConnectWithoutToNodeInput | ConnectionCreateOrConnectWithoutToNodeInput[]
+    upsert?: ConnectionUpsertWithWhereUniqueWithoutToNodeInput | ConnectionUpsertWithWhereUniqueWithoutToNodeInput[]
+    createMany?: ConnectionCreateManyToNodeInputEnvelope
+    set?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    disconnect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    delete?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    connect?: ConnectionWhereUniqueInput | ConnectionWhereUniqueInput[]
+    update?: ConnectionUpdateWithWhereUniqueWithoutToNodeInput | ConnectionUpdateWithWhereUniqueWithoutToNodeInput[]
+    updateMany?: ConnectionUpdateManyWithWhereWithoutToNodeInput | ConnectionUpdateManyWithWhereWithoutToNodeInput[]
+    deleteMany?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+  }
+
+  export type NodeCreateNestedOneWithoutOutputConnectionsInput = {
+    create?: XOR<NodeCreateWithoutOutputConnectionsInput, NodeUncheckedCreateWithoutOutputConnectionsInput>
+    connectOrCreate?: NodeCreateOrConnectWithoutOutputConnectionsInput
+    connect?: NodeWhereUniqueInput
+  }
+
+  export type NodeCreateNestedOneWithoutInputConnectionsInput = {
+    create?: XOR<NodeCreateWithoutInputConnectionsInput, NodeUncheckedCreateWithoutInputConnectionsInput>
+    connectOrCreate?: NodeCreateOrConnectWithoutInputConnectionsInput
+    connect?: NodeWhereUniqueInput
+  }
+
+  export type WorkflowCreateNestedOneWithoutConnectionsInput = {
+    create?: XOR<WorkflowCreateWithoutConnectionsInput, WorkflowUncheckedCreateWithoutConnectionsInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutConnectionsInput
+    connect?: WorkflowWhereUniqueInput
+  }
+
+  export type NodeUpdateOneRequiredWithoutOutputConnectionsNestedInput = {
+    create?: XOR<NodeCreateWithoutOutputConnectionsInput, NodeUncheckedCreateWithoutOutputConnectionsInput>
+    connectOrCreate?: NodeCreateOrConnectWithoutOutputConnectionsInput
+    upsert?: NodeUpsertWithoutOutputConnectionsInput
+    connect?: NodeWhereUniqueInput
+    update?: XOR<XOR<NodeUpdateToOneWithWhereWithoutOutputConnectionsInput, NodeUpdateWithoutOutputConnectionsInput>, NodeUncheckedUpdateWithoutOutputConnectionsInput>
+  }
+
+  export type NodeUpdateOneRequiredWithoutInputConnectionsNestedInput = {
+    create?: XOR<NodeCreateWithoutInputConnectionsInput, NodeUncheckedCreateWithoutInputConnectionsInput>
+    connectOrCreate?: NodeCreateOrConnectWithoutInputConnectionsInput
+    upsert?: NodeUpsertWithoutInputConnectionsInput
+    connect?: NodeWhereUniqueInput
+    update?: XOR<XOR<NodeUpdateToOneWithWhereWithoutInputConnectionsInput, NodeUpdateWithoutInputConnectionsInput>, NodeUncheckedUpdateWithoutInputConnectionsInput>
+  }
+
+  export type WorkflowUpdateOneRequiredWithoutConnectionsNestedInput = {
+    create?: XOR<WorkflowCreateWithoutConnectionsInput, WorkflowUncheckedCreateWithoutConnectionsInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutConnectionsInput
+    upsert?: WorkflowUpsertWithoutConnectionsInput
+    connect?: WorkflowWhereUniqueInput
+    update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutConnectionsInput, WorkflowUpdateWithoutConnectionsInput>, WorkflowUncheckedUpdateWithoutConnectionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7641,6 +10734,45 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumNodeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NodeType | EnumNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNodeTypeFilter<$PrismaModel> | $Enums.NodeType
+  }
+
+  export type NestedEnumNodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NodeType | EnumNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NodeType[] | ListEnumNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.NodeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNodeTypeFilter<$PrismaModel>
+    _max?: NestedEnumNodeTypeFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type SessionCreateWithoutUserInput = {
     id: string
     expiresAt: Date | string
@@ -7716,6 +10848,8 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    connections?: ConnectionCreateNestedManyWithoutWorkflowInput
+    nodes?: NodeCreateNestedManyWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateWithoutUserInput = {
@@ -7723,6 +10857,8 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    connections?: ConnectionUncheckedCreateNestedManyWithoutWorkflowInput
+    nodes?: NodeUncheckedCreateNestedManyWithoutWorkflowInput
   }
 
   export type WorkflowCreateOrConnectWithoutUserInput = {
@@ -7955,6 +11091,70 @@ export namespace Prisma {
     workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type ConnectionCreateWithoutWorkflowInput = {
+    id?: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromNode: NodeCreateNestedOneWithoutOutputConnectionsInput
+    toNode: NodeCreateNestedOneWithoutInputConnectionsInput
+  }
+
+  export type ConnectionUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    fromNodeId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionCreateOrConnectWithoutWorkflowInput = {
+    where: ConnectionWhereUniqueInput
+    create: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type ConnectionCreateManyWorkflowInputEnvelope = {
+    data: ConnectionCreateManyWorkflowInput | ConnectionCreateManyWorkflowInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NodeCreateWithoutWorkflowInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionCreateNestedManyWithoutFromNodeInput
+    inputConnections?: ConnectionCreateNestedManyWithoutToNodeInput
+  }
+
+  export type NodeUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionUncheckedCreateNestedManyWithoutFromNodeInput
+    inputConnections?: ConnectionUncheckedCreateNestedManyWithoutToNodeInput
+  }
+
+  export type NodeCreateOrConnectWithoutWorkflowInput = {
+    where: NodeWhereUniqueInput
+    create: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type NodeCreateManyWorkflowInputEnvelope = {
+    data: NodeCreateManyWorkflowInput | NodeCreateManyWorkflowInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutWorkflowsInput = {
     id: string
     name: string
@@ -7982,6 +11182,66 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutWorkflowsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutWorkflowsInput, UserUncheckedCreateWithoutWorkflowsInput>
+  }
+
+  export type ConnectionUpsertWithWhereUniqueWithoutWorkflowInput = {
+    where: ConnectionWhereUniqueInput
+    update: XOR<ConnectionUpdateWithoutWorkflowInput, ConnectionUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<ConnectionCreateWithoutWorkflowInput, ConnectionUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type ConnectionUpdateWithWhereUniqueWithoutWorkflowInput = {
+    where: ConnectionWhereUniqueInput
+    data: XOR<ConnectionUpdateWithoutWorkflowInput, ConnectionUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type ConnectionUpdateManyWithWhereWithoutWorkflowInput = {
+    where: ConnectionScalarWhereInput
+    data: XOR<ConnectionUpdateManyMutationInput, ConnectionUncheckedUpdateManyWithoutWorkflowInput>
+  }
+
+  export type ConnectionScalarWhereInput = {
+    AND?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+    OR?: ConnectionScalarWhereInput[]
+    NOT?: ConnectionScalarWhereInput | ConnectionScalarWhereInput[]
+    id?: StringFilter<"Connection"> | string
+    workflowId?: StringFilter<"Connection"> | string
+    fromNodeId?: StringFilter<"Connection"> | string
+    toNodeId?: StringFilter<"Connection"> | string
+    fromOutput?: StringFilter<"Connection"> | string
+    toInput?: StringFilter<"Connection"> | string
+    createdAt?: DateTimeFilter<"Connection"> | Date | string
+    updatedAt?: DateTimeFilter<"Connection"> | Date | string
+  }
+
+  export type NodeUpsertWithWhereUniqueWithoutWorkflowInput = {
+    where: NodeWhereUniqueInput
+    update: XOR<NodeUpdateWithoutWorkflowInput, NodeUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<NodeCreateWithoutWorkflowInput, NodeUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type NodeUpdateWithWhereUniqueWithoutWorkflowInput = {
+    where: NodeWhereUniqueInput
+    data: XOR<NodeUpdateWithoutWorkflowInput, NodeUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type NodeUpdateManyWithWhereWithoutWorkflowInput = {
+    where: NodeScalarWhereInput
+    data: XOR<NodeUpdateManyMutationInput, NodeUncheckedUpdateManyWithoutWorkflowInput>
+  }
+
+  export type NodeScalarWhereInput = {
+    AND?: NodeScalarWhereInput | NodeScalarWhereInput[]
+    OR?: NodeScalarWhereInput[]
+    NOT?: NodeScalarWhereInput | NodeScalarWhereInput[]
+    id?: StringFilter<"Node"> | string
+    name?: StringFilter<"Node"> | string
+    createdAt?: DateTimeFilter<"Node"> | Date | string
+    updatedAt?: DateTimeFilter<"Node"> | Date | string
+    type?: EnumNodeTypeFilter<"Node"> | $Enums.NodeType
+    position?: JsonFilter<"Node">
+    data?: JsonFilter<"Node">
+    workflowId?: StringFilter<"Node"> | string
   }
 
   export type UserUpsertWithoutWorkflowsInput = {
@@ -8017,6 +11277,330 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ConnectionCreateWithoutFromNodeInput = {
+    id?: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    toNode: NodeCreateNestedOneWithoutInputConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
+  }
+
+  export type ConnectionUncheckedCreateWithoutFromNodeInput = {
+    id?: string
+    workflowId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionCreateOrConnectWithoutFromNodeInput = {
+    where: ConnectionWhereUniqueInput
+    create: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput>
+  }
+
+  export type ConnectionCreateManyFromNodeInputEnvelope = {
+    data: ConnectionCreateManyFromNodeInput | ConnectionCreateManyFromNodeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConnectionCreateWithoutToNodeInput = {
+    id?: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromNode: NodeCreateNestedOneWithoutOutputConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
+  }
+
+  export type ConnectionUncheckedCreateWithoutToNodeInput = {
+    id?: string
+    workflowId: string
+    fromNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionCreateOrConnectWithoutToNodeInput = {
+    where: ConnectionWhereUniqueInput
+    create: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput>
+  }
+
+  export type ConnectionCreateManyToNodeInputEnvelope = {
+    data: ConnectionCreateManyToNodeInput | ConnectionCreateManyToNodeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkflowCreateWithoutNodesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    connections?: ConnectionCreateNestedManyWithoutWorkflowInput
+    user: UserCreateNestedOneWithoutWorkflowsInput
+  }
+
+  export type WorkflowUncheckedCreateWithoutNodesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    connections?: ConnectionUncheckedCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type WorkflowCreateOrConnectWithoutNodesInput = {
+    where: WorkflowWhereUniqueInput
+    create: XOR<WorkflowCreateWithoutNodesInput, WorkflowUncheckedCreateWithoutNodesInput>
+  }
+
+  export type ConnectionUpsertWithWhereUniqueWithoutFromNodeInput = {
+    where: ConnectionWhereUniqueInput
+    update: XOR<ConnectionUpdateWithoutFromNodeInput, ConnectionUncheckedUpdateWithoutFromNodeInput>
+    create: XOR<ConnectionCreateWithoutFromNodeInput, ConnectionUncheckedCreateWithoutFromNodeInput>
+  }
+
+  export type ConnectionUpdateWithWhereUniqueWithoutFromNodeInput = {
+    where: ConnectionWhereUniqueInput
+    data: XOR<ConnectionUpdateWithoutFromNodeInput, ConnectionUncheckedUpdateWithoutFromNodeInput>
+  }
+
+  export type ConnectionUpdateManyWithWhereWithoutFromNodeInput = {
+    where: ConnectionScalarWhereInput
+    data: XOR<ConnectionUpdateManyMutationInput, ConnectionUncheckedUpdateManyWithoutFromNodeInput>
+  }
+
+  export type ConnectionUpsertWithWhereUniqueWithoutToNodeInput = {
+    where: ConnectionWhereUniqueInput
+    update: XOR<ConnectionUpdateWithoutToNodeInput, ConnectionUncheckedUpdateWithoutToNodeInput>
+    create: XOR<ConnectionCreateWithoutToNodeInput, ConnectionUncheckedCreateWithoutToNodeInput>
+  }
+
+  export type ConnectionUpdateWithWhereUniqueWithoutToNodeInput = {
+    where: ConnectionWhereUniqueInput
+    data: XOR<ConnectionUpdateWithoutToNodeInput, ConnectionUncheckedUpdateWithoutToNodeInput>
+  }
+
+  export type ConnectionUpdateManyWithWhereWithoutToNodeInput = {
+    where: ConnectionScalarWhereInput
+    data: XOR<ConnectionUpdateManyMutationInput, ConnectionUncheckedUpdateManyWithoutToNodeInput>
+  }
+
+  export type WorkflowUpsertWithoutNodesInput = {
+    update: XOR<WorkflowUpdateWithoutNodesInput, WorkflowUncheckedUpdateWithoutNodesInput>
+    create: XOR<WorkflowCreateWithoutNodesInput, WorkflowUncheckedCreateWithoutNodesInput>
+    where?: WorkflowWhereInput
+  }
+
+  export type WorkflowUpdateToOneWithWhereWithoutNodesInput = {
+    where?: WorkflowWhereInput
+    data: XOR<WorkflowUpdateWithoutNodesInput, WorkflowUncheckedUpdateWithoutNodesInput>
+  }
+
+  export type WorkflowUpdateWithoutNodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: ConnectionUpdateManyWithoutWorkflowNestedInput
+    user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
+  }
+
+  export type WorkflowUncheckedUpdateWithoutNodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    connections?: ConnectionUncheckedUpdateManyWithoutWorkflowNestedInput
+  }
+
+  export type NodeCreateWithoutOutputConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    inputConnections?: ConnectionCreateNestedManyWithoutToNodeInput
+    workflow: WorkflowCreateNestedOneWithoutNodesInput
+  }
+
+  export type NodeUncheckedCreateWithoutOutputConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId: string
+    inputConnections?: ConnectionUncheckedCreateNestedManyWithoutToNodeInput
+  }
+
+  export type NodeCreateOrConnectWithoutOutputConnectionsInput = {
+    where: NodeWhereUniqueInput
+    create: XOR<NodeCreateWithoutOutputConnectionsInput, NodeUncheckedCreateWithoutOutputConnectionsInput>
+  }
+
+  export type NodeCreateWithoutInputConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionCreateNestedManyWithoutFromNodeInput
+    workflow: WorkflowCreateNestedOneWithoutNodesInput
+  }
+
+  export type NodeUncheckedCreateWithoutInputConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId: string
+    outputConnections?: ConnectionUncheckedCreateNestedManyWithoutFromNodeInput
+  }
+
+  export type NodeCreateOrConnectWithoutInputConnectionsInput = {
+    where: NodeWhereUniqueInput
+    create: XOR<NodeCreateWithoutInputConnectionsInput, NodeUncheckedCreateWithoutInputConnectionsInput>
+  }
+
+  export type WorkflowCreateWithoutConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    nodes?: NodeCreateNestedManyWithoutWorkflowInput
+    user: UserCreateNestedOneWithoutWorkflowsInput
+  }
+
+  export type WorkflowUncheckedCreateWithoutConnectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    nodes?: NodeUncheckedCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type WorkflowCreateOrConnectWithoutConnectionsInput = {
+    where: WorkflowWhereUniqueInput
+    create: XOR<WorkflowCreateWithoutConnectionsInput, WorkflowUncheckedCreateWithoutConnectionsInput>
+  }
+
+  export type NodeUpsertWithoutOutputConnectionsInput = {
+    update: XOR<NodeUpdateWithoutOutputConnectionsInput, NodeUncheckedUpdateWithoutOutputConnectionsInput>
+    create: XOR<NodeCreateWithoutOutputConnectionsInput, NodeUncheckedCreateWithoutOutputConnectionsInput>
+    where?: NodeWhereInput
+  }
+
+  export type NodeUpdateToOneWithWhereWithoutOutputConnectionsInput = {
+    where?: NodeWhereInput
+    data: XOR<NodeUpdateWithoutOutputConnectionsInput, NodeUncheckedUpdateWithoutOutputConnectionsInput>
+  }
+
+  export type NodeUpdateWithoutOutputConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    inputConnections?: ConnectionUpdateManyWithoutToNodeNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutNodesNestedInput
+  }
+
+  export type NodeUncheckedUpdateWithoutOutputConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId?: StringFieldUpdateOperationsInput | string
+    inputConnections?: ConnectionUncheckedUpdateManyWithoutToNodeNestedInput
+  }
+
+  export type NodeUpsertWithoutInputConnectionsInput = {
+    update: XOR<NodeUpdateWithoutInputConnectionsInput, NodeUncheckedUpdateWithoutInputConnectionsInput>
+    create: XOR<NodeCreateWithoutInputConnectionsInput, NodeUncheckedCreateWithoutInputConnectionsInput>
+    where?: NodeWhereInput
+  }
+
+  export type NodeUpdateToOneWithWhereWithoutInputConnectionsInput = {
+    where?: NodeWhereInput
+    data: XOR<NodeUpdateWithoutInputConnectionsInput, NodeUncheckedUpdateWithoutInputConnectionsInput>
+  }
+
+  export type NodeUpdateWithoutInputConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionUpdateManyWithoutFromNodeNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutNodesNestedInput
+  }
+
+  export type NodeUncheckedUpdateWithoutInputConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    workflowId?: StringFieldUpdateOperationsInput | string
+    outputConnections?: ConnectionUncheckedUpdateManyWithoutFromNodeNestedInput
+  }
+
+  export type WorkflowUpsertWithoutConnectionsInput = {
+    update: XOR<WorkflowUpdateWithoutConnectionsInput, WorkflowUncheckedUpdateWithoutConnectionsInput>
+    create: XOR<WorkflowCreateWithoutConnectionsInput, WorkflowUncheckedCreateWithoutConnectionsInput>
+    where?: WorkflowWhereInput
+  }
+
+  export type WorkflowUpdateToOneWithWhereWithoutConnectionsInput = {
+    where?: WorkflowWhereInput
+    data: XOR<WorkflowUpdateWithoutConnectionsInput, WorkflowUncheckedUpdateWithoutConnectionsInput>
+  }
+
+  export type WorkflowUpdateWithoutConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    nodes?: NodeUpdateManyWithoutWorkflowNestedInput
+    user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
+  }
+
+  export type WorkflowUncheckedUpdateWithoutConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    nodes?: NodeUncheckedUpdateManyWithoutWorkflowNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -8131,6 +11715,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: ConnectionUpdateManyWithoutWorkflowNestedInput
+    nodes?: NodeUpdateManyWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateWithoutUserInput = {
@@ -8138,11 +11724,177 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: ConnectionUncheckedUpdateManyWithoutWorkflowNestedInput
+    nodes?: NodeUncheckedUpdateManyWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionCreateManyWorkflowInput = {
+    id?: string
+    fromNodeId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NodeCreateManyWorkflowInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type: $Enums.NodeType
+    position: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type ConnectionUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromNode?: NodeUpdateOneRequiredWithoutOutputConnectionsNestedInput
+    toNode?: NodeUpdateOneRequiredWithoutInputConnectionsNestedInput
+  }
+
+  export type ConnectionUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NodeUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionUpdateManyWithoutFromNodeNestedInput
+    inputConnections?: ConnectionUpdateManyWithoutToNodeNestedInput
+  }
+
+  export type NodeUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+    outputConnections?: ConnectionUncheckedUpdateManyWithoutFromNodeNestedInput
+    inputConnections?: ConnectionUncheckedUpdateManyWithoutToNodeNestedInput
+  }
+
+  export type NodeUncheckedUpdateManyWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumNodeTypeFieldUpdateOperationsInput | $Enums.NodeType
+    position?: JsonNullValueInput | InputJsonValue
+    data?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type ConnectionCreateManyFromNodeInput = {
+    id?: string
+    workflowId: string
+    toNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionCreateManyToNodeInput = {
+    id?: string
+    workflowId: string
+    fromNodeId: string
+    fromOutput?: string
+    toInput?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConnectionUpdateWithoutFromNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    toNode?: NodeUpdateOneRequiredWithoutInputConnectionsNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutConnectionsNestedInput
+  }
+
+  export type ConnectionUncheckedUpdateWithoutFromNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutFromNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    toNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionUpdateWithoutToNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromNode?: NodeUpdateOneRequiredWithoutOutputConnectionsNestedInput
+    workflow?: WorkflowUpdateOneRequiredWithoutConnectionsNestedInput
+  }
+
+  export type ConnectionUncheckedUpdateWithoutToNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConnectionUncheckedUpdateManyWithoutToNodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    fromNodeId?: StringFieldUpdateOperationsInput | string
+    fromOutput?: StringFieldUpdateOperationsInput | string
+    toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8156,6 +11908,14 @@ export namespace Prisma {
      * @deprecated Use UserCountOutputTypeDefaultArgs instead
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use WorkflowCountOutputTypeDefaultArgs instead
+     */
+    export type WorkflowCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WorkflowCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NodeCountOutputTypeDefaultArgs instead
+     */
+    export type NodeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NodeCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -8176,6 +11936,14 @@ export namespace Prisma {
      * @deprecated Use WorkflowDefaultArgs instead
      */
     export type WorkflowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WorkflowDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NodeDefaultArgs instead
+     */
+    export type NodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NodeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ConnectionDefaultArgs instead
+     */
+    export type ConnectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConnectionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

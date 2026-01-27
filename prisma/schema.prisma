@@ -82,8 +82,47 @@ model Workflow {
   id          String    @id @default(cuid())
   name        String
 
-  createdAt DateTime @default (now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
   userId String
+  connections Connection[]
+  nodes       Node[] // does not store anything in the database, just a relation field to get all nodes related to this workflow. syntax to get the nodes of a workflow: workflow.nodes. To access workflow.nodes, you must explicitly include it in the Prisma query using include: { nodes: true }
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Node {
+  id                String       @id @default(cuid())
+  name              String
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  type              NodeType
+  position          Json
+  data              Json         @default("{}") // why default "{}": to avoid null values
+  workflowId        String
+  outputConnections Connection[] @relation("FromNode") // These are the Connection records where this node is the source (fromNodeId). This field pairs with Connection.fromNode via the relation name FromNode so Prisma knows which foreign key to use.
+  inputConnections  Connection[] @relation("ToNode") // These are the Connection records where this node is the target (toNodeId). This field pairs with Connection.toNode via the relation name ToNode so Prisma knows which foreign key to use.
+  workflow          Workflow     @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+}
+
+model Connection { // represents the edge/connection between two nodes in a workflow
+  id         String   @id @default(cuid())
+  workflowId String
+  fromNodeId String
+  toNodeId   String
+  fromOutput String   @default("main") // explain this? this indicates the output port of the source node from which the connection originates. Default name is "main". Port means the "black dot" on the ends of the connection line.
+  toInput    String   @default("main") 
+  createdAt  DateTime @default(now()) 
+  updatedAt  DateTime @updatedAt
+  fromNode   Node     @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade) //explain this? this sets up a relation to the Node model using the fromNodeId field as the foreign key, referencing the id field in the Node model. The relation is named "FromNode" to distinguish it from other relations to the Node model.
+  toNode     Node     @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@unique([fromNodeId, toNodeId, fromOutput, toInput]) // explain this? to prevent duplicate connections
+}
+// fromNode means the source node of the connection, toNode means the target node of the connection, toNodeId means the id of the target node of the connection
+
+enum NodeType { 
+  INITIAL // the starting node of a workflow
+  MANUAL_TRIGGER // a node that triggers the workflow manually
+  HTTP_REQUEST // a node that makes an HTTP request
+}      
