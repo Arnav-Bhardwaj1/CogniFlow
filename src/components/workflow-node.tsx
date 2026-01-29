@@ -25,7 +25,7 @@ export function WorkflowNode({
     return (
         <>
             {showToolbar && (
-                <NodeToolbar>
+                <NodeToolbar> { /* Top toolbar for delete/settings */ }
                   <div className="flex items-center gap-1">
                     <Button size="sm" variant="secondary" onClick={onSettings}>
                       <SettingsIcon className="size-4" />
@@ -39,10 +39,10 @@ export function WorkflowNode({
             )}
             {children}
             {name && (
-                <NodeToolbar
+                <NodeToolbar // Bottom toolbar for name/description
                 position={Position.Bottom}
                 isVisible
-                className="max-w-[200px] text-center"
+                className="max-w-50 text-center"
                 >
                     <p className="font-medium text-sm text-foreground">{name}</p>
                     {description && <p className="text-sm text-muted-foreground truncate">
