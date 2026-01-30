@@ -7,6 +7,8 @@ import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Node, Edge, Nod
 import '@xyflow/react/dist/style.css';
 import { nodeComponents } from "@/config/node-components";
 import { AddNodeButton } from "./add-node-button";
+import { useSetAtom } from "jotai";
+import { editorAtom } from "../store/atom";
 
 export const EditorLoading = () => {
   return <LoadingView message="Loading editor..." />;
@@ -19,7 +21,9 @@ export const EditorError = () => {
 export const Editor = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useSuspenseWorkflow(workflowId);
 
-  const [nodes, setNodes] = useState<Node[]>(workflow.nodes);
+  const setEditor = useSetAtom(editorAtom); // to store the ReactFlow instance in Jotai atom. means other components can access the editor instance via the atom. Instance means the ReactFlow state reference
+
+  const [nodes, setNodes] = useState<Node[]>(workflow.nodes); // initialize with workflow nodes
   const [edges, setEdges] = useState<Edge[]>(workflow.edges);
       
   const onNodesChange = useCallback( // useCallback to memoize the function, preventing unnecessary re-renders
@@ -43,11 +47,14 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        fitView
         nodeTypes={nodeComponents}
-        proOptions={
-          {hideAttribution:true}
-        }
+        onInit={setEditor} // store the ReactFlow instance in Jotai atom
+        fitView
+        snapGrid={[10, 10]}
+        snapToGrid
+        panOnScroll 
+        // panOnDrag={false} // this prevents panning when dragging nodes. panning means moving the whole canvas
+        // selectionOnDrag // this selects multiple nodes when dragging on empty space
       >
       <Background />
       <Controls />

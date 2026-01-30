@@ -34,10 +34,12 @@ export const BaseTriggerNode = memo(
     onSettings,
     onDoubleClick,
   }: BaseTriggerNodeProps) => {
+
     const { setNodes, setEdges } = useReactFlow();
+
     const handleDelete = () => {
       setNodes((currentNodes) => {
-        const updatedNodes = currentNodes.filter((node) => node.id !== id);
+        const updatedNodes = currentNodes.filter((node) => node.id !== id); // remove the node with the matching id
         return updatedNodes;
       });
       setEdges((currentEdges) => {
