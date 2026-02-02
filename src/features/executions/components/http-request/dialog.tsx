@@ -55,7 +55,7 @@ const formSchema = z.object({
   // .refine()
 });
 
-export type FormType = z.infer<typeof formSchema>;
+export type HTTPRequestFormValues = z.infer<typeof formSchema>;
 
 export const HTTPRequestDialog = ({
   open,
