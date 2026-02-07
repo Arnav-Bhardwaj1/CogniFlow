@@ -7,6 +7,7 @@ import { BaseExecutionNode } from "../base-execution-node";
 import { HTTPRequestFormValues, HTTPRequestDialog } from "./dialog";
 
 type HttpRequestNodeData = {
+  variableName?: string; // This allows subsequent nodes in the workflow to access the response data using this variable name.
   endpoint?: string; // endpoint is the URL that the HTTP Request node will call.
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
@@ -38,7 +39,7 @@ export const HttpRequestNode = memo(
     const nodeStatus = "initial";
     const nodeData = props.data;
     const description = nodeData?.endpoint
-      ? `${nodeData.method || "GET"}: ${nodeData.endpoint}`
+      ? `${nodeData.variableName || "name"}, ${nodeData.method || "GET"}: ${nodeData.endpoint}`
       : "Not configured";
 
     return (

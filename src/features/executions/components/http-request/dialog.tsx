@@ -113,11 +113,14 @@ export const HTTPRequestDialog = ({
                 <FormItem>
                   <FormLabel>Variable Name</FormLabel>
                   <FormDescription>
-                   What you&apos;ll call the result in other nodes:&nbsp;
-                    <code>{`{{ ${watchVariableName || "variableName"} }}`}</code>
+                    Use this name to reference the result in
+                    other nodes:{" "}
+                    {`{{${watchVariableName || "name"}.httpResponse.data}}`}
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <Input 
+                      placeholder="name"
+                      {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
