@@ -1,11 +1,18 @@
 import { NodeExecutor } from "@/features/executions/types";
 import { NonRetriableError } from "inngest";
 import ky, { type Options as KyOptions } from "ky";
+import  Handlebars  from "handlebars";
+
+Handlebars.registerHelper("json", (context) => {
+  const jsonString = JSON.stringify(context, null, 2);
+  const safeString = new Handlebars. SafeString(jsonString);
+  return safeString;
+});
 
 type HttpRequestData = {
-  variableName?: string;
-  endpoint?: string;  
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  variableName: string;
+  endpoint: string;  
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
 }
 
@@ -24,14 +31,20 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async( {
   if(!data.variableName) {
     throw new NonRetriableError("HTTP Request node: No variable name configured");
   }
+  if(!data.method){
+    throw new NonRetriableError("HTTP Request node: No HTTP method configured");
+  }
 
   const result = await step.run("http-request",
     async () => {
-      const endpoint = data.endpoint!;
-      const method = data.method || "GET";
+      const endpoint = Handlebars.compile(data.endpoint)(context); // Process endpoint with Handlebars to allow dynamic URLs based on context variables. This enables users to include placeholders in the endpoint that will be replaced with actual values from the execution context at runtime.
+      const method = data.method;
       const options: KyOptions = { method }; // KyOptions = typed request configuration for ky. configuration means the options that can be passed to ky when making a request. method is the HTTP method to use for the request (e.g., GET, POST, etc.). By default, it will use "GET" if no method is specified in the data.
+
       if (["POST", "PUT", "PATCH"]. includes (method)) {
-        options.body = data.body; // Attach request payload if present. Prevent sending body for methods that typically don't have it (e.g., GET, DELETE).
+        const resolved = Handlebars.compile(data.body || "{}") (context);
+        JSON.parse(resolved); // Validate that the body is valid JSON after processing with Handlebars. This ensures that any dynamic content in the body is correctly formatted as JSON before sending the request. If the body is not valid JSON, this will throw an error, preventing the request from being sent with an invalid payload.
+        options.body = resolved; // Attach request payload if present. Prevent sending body for methods that typically don't have it (e.g., GET, DELETE).
         options.headers = { "Content-Type": "application/json" }; // Set content type for JSON payloads. This is important for the server to correctly parse the request body.
       }
       const response = await ky(endpoint, options);
@@ -48,18 +61,11 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async( {
         }
       };
 
-      if (data.variableName) {
-        return {
-          ...context,
-          [data.variableName]: responsePayload,
-        }
-      }
-
-      // Fallback to direct httpResponse for backward compatibility, meaning if variableName is not provided, the response will be stored under httpResponse key in the context.
       return {
         ...context,
-        ...responsePayload,
-      };
+        [data.variableName]: responsePayload,
+      }
+
     });
   // TODO: Publish "success" state for HTTP request
   return result;
