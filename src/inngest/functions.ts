@@ -5,11 +5,15 @@ import prisma from "@/lib/db";
 import { topologicalSort } from "./utils";
 import { NodeType } from "@/app/generated/prisma";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
+import { httpRequestChannel } from "./channels/http-request";
 
 export const executeWorkflow = inngest.createFunction(
   { id: "execute-workflow" },
-  { event: "workflows/execute.workflow" }, // Triggered when a workflow execution is requested
-  async ({ event, step }) => {
+  {
+    event: "workflows/execute.workflow", // Triggered when a workflow execution is requested.
+    channels: [httpRequestChannel()], // This allows the workflow execution function to publish real-time updates to the "http-request-execution" channel, which can be listened to by the frontend to update the UI with the status of HTTP request nodes as they are executed.
+  }, 
+  async ({ event, step, publish }) => {
     const workflowId = event.data.workflowId;
 
     if (!workflowId) {
@@ -32,12 +36,13 @@ export const executeWorkflow = inngest.createFunction(
 
   // Execute each node
   for (const node of sortedNodes) {
-    const executor = getExecutor (node.type as NodeType);
+    const executor = getExecutor(node.type as NodeType);
     context = await executor({
       data: node.data as Record<string, unknown>,
       nodeId: node.id,
       context,
       step,
+      publish, // publish function allows executors to send real-time updates to the frontend via channels, enabling features like live status updates for HTTP request nodes.
     });
   }
 
