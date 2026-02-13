@@ -194,8 +194,10 @@ export const HTTPRequestDialog = ({
               />
             )}
             <DialogFooter className="mt-4">
-              <DialogClose className="mr-2 bg-accent p-2 rounded-md">Cancel</DialogClose>
-              <Button type="submit" className="bg-primary p-2 rounded-md">Save</Button>
+              <DialogClose asChild>
+                <Button type="button" variant="secondary">Cancel</Button>
+              </DialogClose>
+              <Button type="submit">Save</Button>
             </DialogFooter>
           </form> 
         </Form>

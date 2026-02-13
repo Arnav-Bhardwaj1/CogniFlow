@@ -3,6 +3,7 @@ import { NonRetriableError } from "inngest";
 import ky, { type Options as KyOptions } from "ky";
 import  Handlebars  from "handlebars";
 import { httpRequestChannel } from "@/inngest/channels/http-request";
+import { tr } from "date-fns/locale";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -58,7 +59,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async( {
     );
     throw new NonRetriableError("HTTP Request node: No HTTP method configured");
   }
-
+try {
   const result = await step.run("http-request",
     async () => {
       const endpoint = Handlebars.compile(data.endpoint)(context); // Process endpoint with Handlebars to allow dynamic URLs based on context variables. This enables users to include placeholders in the endpoint that will be replaced with actual values from the execution context at runtime.
@@ -98,4 +99,13 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async( {
     }),
   );
   return result;
+} catch (error) {
+  await publish(
+    httpRequestChannel().status({
+      nodeId,
+      status: "error",
+    }),
+  );
+  throw error;
+  }
 };

@@ -126,4 +126,5 @@ enum NodeType {
   INITIAL // the starting node of a workflow
   MANUAL_TRIGGER // a node that triggers the workflow manually
   HTTP_REQUEST // a node that makes an HTTP request
+  GOOGLE_FORM_TRIGGER // a node that triggers the workflow when a Google Form is submitted
 }
