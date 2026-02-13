@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "ngrok:dev": "ngrok http --url=denominatively-weldless-cameron.ngrok-free.dev 3000",
     "lint": "eslint",
     "db:studio": "prisma studio"
   },

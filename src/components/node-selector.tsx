@@ -31,10 +31,16 @@ const triggerNodes: NodeTypeOption[] = [ // triggerNodes are nodes that start a 
     type: NodeType.MANUAL_TRIGGER,
   },
   {
-    label: "Google Form Trigger",
+    label: "Google Form",
     icon: '/logos/googleform.svg',
     description: "Runs the flow when a Google Form is submitted",
     type: NodeType.GOOGLE_FORM_TRIGGER,
+  },
+  {
+    label: "RazorPay Event",
+    icon: '/logos/razorpay.svg',
+    description: "Runs the flow when a RazorPay event is captured",
+    type: NodeType.RAZORPAY_TRIGGER,
   },
 ];
 

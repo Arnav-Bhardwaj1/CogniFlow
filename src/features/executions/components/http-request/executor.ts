@@ -11,10 +11,21 @@ Handlebars.registerHelper("json", (context) => {
   return safeString;
 });
 
+// Helper to access object properties with bracket notation
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+Handlebars.registerHelper("get", function(obj: any, key: string) {
+  return obj?.[key];
+});
+
+function preprocessTemplate(template: string): string {
+  // Convert {{path.to.object["key with spaces"]}} to {{get path.to.object "key with spaces"}}
+  return template.replace(/\{\{([a-zA-Z0-9_.]+)\[["']([^"']+)["']\]\}\}/g, '{{get $1 "$2"}}');
+}
+
 type HttpRequestData = {
-  variableName: string;
-  endpoint: string;  
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  variableName?: string;
+  endpoint?: string;  
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
 }
 
@@ -32,42 +43,42 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async( {
     }),
   );
   
-  if (!data.endpoint) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      }),
-    );
-  throw new NonRetriableError("HTTP Request node: No endpoint configured");
-  }
-  if(!data.variableName) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      }),
-    );
-    throw new NonRetriableError("HTTP Request node: No variable name configured");
-  }
-  if(!data.method){
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      }),
-    );
-    throw new NonRetriableError("HTTP Request node: No HTTP method configured");
-  }
 try {
   const result = await step.run("http-request",
     async () => {
-      const endpoint = Handlebars.compile(data.endpoint)(context); // Process endpoint with Handlebars to allow dynamic URLs based on context variables. This enables users to include placeholders in the endpoint that will be replaced with actual values from the execution context at runtime.
+      if (!data.endpoint) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          }),
+        );
+      throw new NonRetriableError("HTTP Request node: No endpoint configured");
+      }
+      if(!data.variableName) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          }),
+        );
+        throw new NonRetriableError("HTTP Request node: No variable name configured");
+      }
+      if(!data.method){
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          }),
+        );
+        throw new NonRetriableError("HTTP Request node: No HTTP method configured");
+      }
+      const endpoint = Handlebars.compile(preprocessTemplate(data.endpoint))(context); // Process endpoint with Handlebars to allow dynamic URLs based on context variables. This enables users to include placeholders in the endpoint that will be replaced with actual values from the execution context at runtime.
       const method = data.method;
       const options: KyOptions = { method }; // KyOptions = typed request configuration for ky. configuration means the options that can be passed to ky when making a request. method is the HTTP method to use for the request (e.g., GET, POST, etc.). By default, it will use "GET" if no method is specified in the data.
 
       if (["POST", "PUT", "PATCH"]. includes (method)) {
-        const resolved = Handlebars.compile(data.body || "{}") (context);
+        const resolved = Handlebars.compile(preprocessTemplate(data.body || "{}")) (context);
         JSON.parse(resolved); // Validate that the body is valid JSON after processing with Handlebars. This ensures that any dynamic content in the body is correctly formatted as JSON before sending the request. If the body is not valid JSON, this will throw an error, preventing the request from being sent with an invalid payload.
         options.body = resolved; // Attach request payload if present. Prevent sending body for methods that typically don't have it (e.g., GET, DELETE).
         options.headers = { "Content-Type": "application/json" }; // Set content type for JSON payloads. This is important for the server to correctly parse the request body.

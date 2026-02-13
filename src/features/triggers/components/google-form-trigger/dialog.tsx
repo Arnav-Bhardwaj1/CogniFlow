@@ -74,8 +74,7 @@ export const GoogleFormTriggerDialog = ({open, onOpenChange }: Props) => {
                         <ol className='text-xs sm:text-sm text-muted-foreground space-y-1 list-decimal list-inside pl-1'>
                             <li className='break-words'>Open your Google Form</li>
                             <li className='break-words'>Click three dots menu → Apps Script</li>
-                            <li className='break-words'>Copy and paste the script below</li>
-                            <li className='break-words'>Replace WEBHOOK_URL with your webhook URL above</li>
+                            <li className='break-words'>Copy and paste the script below (URL is already included in the script)</li>
                             <li className='break-words'>Save and click &quot;Triggers&quot; → Add Trigger</li>
                             <li className='break-words'>Choose: From form → On form submit → Save</li>
                         </ol>
