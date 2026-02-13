@@ -1,6 +1,7 @@
 import { NodeType } from "@/app/generated/prisma";
 import { InitialNode } from "@/components/initial-node";
 import { HttpRequestNode } from "@/features/executions/components/http-request/node";
+import { GoogleFormTrigger } from "@/features/triggers/components/google-form-trigger/node";
 import { ManualTriggerNode } from "@/features/triggers/components/manual-trigger/node";
 import type { NodeTypes } from "@xyflow/react";
 
@@ -8,6 +9,7 @@ export const nodeComponents = { // this is an object, NOT a function. It acts li
   [NodeType.INITIAL]: InitialNode,
   [NodeType.MANUAL_TRIGGER]: ManualTriggerNode,
   [NodeType.HTTP_REQUEST]: HttpRequestNode,
+  [NodeType.GOOGLE_FORM_TRIGGER]: GoogleFormTrigger,
 } as const satisfies NodeTypes;
 
 export type RegisteredNodeType = keyof typeof nodeComponents; // this type represents all valid node types that have been registered in the nodeComponents object. example: 'InitialNode'

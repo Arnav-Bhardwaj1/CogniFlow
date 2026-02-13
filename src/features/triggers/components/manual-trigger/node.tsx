@@ -3,10 +3,20 @@ import { memo, useState } from "react";
 import { BaseTriggerNode } from "../base-trigger-node";
 import { MousePointerIcon } from "lucide-react";
 import { ManualTriggerDialog } from "./dialog";
+import { MANUAL_TRIGGER_CHANNEL_NAME } from "@/inngest/channels/manual-trigger";
+import { useNodeStatus } from "@/features/executions/hooks/use-node-status";
+import { fetchManualTriggerToken } from "./actions";
 
 export const ManualTriggerNode = memo((props: NodeProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const nodeStatus = "loading"; 
+
+  const nodeStatus = useNodeStatus({
+    nodeId: props.id,
+    channel: MANUAL_TRIGGER_CHANNEL_NAME,
+    topic: "status",
+    refreshToken: fetchManualTriggerToken,
+  });
+
   const handleOpenSettings = () => {
     setIsDialogOpen(true);
   }

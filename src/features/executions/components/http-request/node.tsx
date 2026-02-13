@@ -5,6 +5,9 @@ import {GlobeIcon } from "lucide-react";
 import { memo, useState } from "react";
 import { BaseExecutionNode } from "../base-execution-node";
 import { HTTPRequestFormValues, HTTPRequestDialog } from "./dialog";
+import { useNodeStatus } from "../../hooks/use-node-status";
+import { HTTP_REQUEST_CHANNEL_NAME, httpRequestChannel } from "@/inngest/channels/http-request";
+import { fetchHttpRequestToken } from "./actions";
 
 type HttpRequestNodeData = {
   variableName?: string; // This allows subsequent nodes in the workflow to access the response data using this variable name.
@@ -36,7 +39,12 @@ export const HttpRequestNode = memo(
       }));
       setDialogOpen(false);
   };
-    const nodeStatus = "initial";
+    const nodeStatus = useNodeStatus({
+      nodeId: props.id,
+      channel: HTTP_REQUEST_CHANNEL_NAME,
+      topic: "status",
+      refreshToken: fetchHttpRequestToken,
+    });
     const nodeData = props.data;
     const description = nodeData?.endpoint
       ? `${nodeData.variableName || "name"}, ${nodeData.method || "GET"}: ${nodeData.endpoint}`

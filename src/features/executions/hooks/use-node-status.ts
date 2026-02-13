@@ -7,8 +7,8 @@ interface UseNodeStatusOptions {
 nodeId: string;
 channel: string;
 topic: string;
-refreshToken: () => Promise<Realtime.Subscribe.Token>;
-}
+refreshToken: () => Promise<Realtime.Subscribe.Token>; // Function to get a new subscription token when needed
+} // what is data and topic in this context? data is the payload of the message received from the subscription, and topic is a string that categorizes the type of messages being subscribed to. In this context, data would contain information about the node's status, and topic would help filter messages relevant to that node. subscription is a way to listen for real-time updates from a server or service. In this case, the useInngestSubscription hook is used to subscribe to a specific channel and topic, allowing the component to receive updates about the node's status as they occur.
 
 export function useNodeStatus({
 nodeId, 
@@ -18,7 +18,7 @@ refreshToken,
 }: UseNodeStatusOptions) {
     const [status, setStatus] = useState<NodeStatus>("initial");
 
-    const { data } = useInngestSubscription({
+    const { data } = useInngestSubscription({ // Subscribe to the specified channel and topic
         refreshToken,
         enabled: true,
     });

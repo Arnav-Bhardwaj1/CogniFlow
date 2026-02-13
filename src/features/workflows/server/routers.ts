@@ -112,6 +112,19 @@ export const workflowsRouter = createTRPCRouter({
           })),
         });
 
+        // Create connections/edges
+        if (edges.length > 0) {
+          await tx.connection.createMany({
+            data: edges.map((edge) => ({
+              workflowId: id,
+              fromNodeId: edge.source,
+              toNodeId: edge.target,
+              fromOutput: edge.sourceHandle || "main",
+              toInput: edge.targetHandle || "main",
+            })),
+          });
+        }
+
         // Update workflow's updatedAt timestamp
         await tx.workflow.update({
           where: {

@@ -6,12 +6,20 @@ import { topologicalSort } from "./utils";
 import { NodeType } from "@/app/generated/prisma";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
 import { httpRequestChannel } from "./channels/http-request";
+import { manualTriggerChannel } from "./channels/manual-trigger";
+import { googleFormTriggerChannel } from "./channels/google-form-trigger";
 
 export const executeWorkflow = inngest.createFunction(
-  { id: "execute-workflow" },
+  { id: "execute-workflow",
+    retries:0,
+  },
   {
     event: "workflows/execute.workflow", // Triggered when a workflow execution is requested.
-    channels: [httpRequestChannel()], // This allows the workflow execution function to publish real-time updates to the "http-request-execution" channel, which can be listened to by the frontend to update the UI with the status of HTTP request nodes as they are executed.
+    channels: [
+      httpRequestChannel(),
+      manualTriggerChannel(),
+      googleFormTriggerChannel(),
+    ], // This allows the workflow execution function to publish real-time updates to the "http-request-execution" channel, which can be listened to by the frontend to update the UI with the status of HTTP request nodes as they are executed.
   }, 
   async ({ event, step, publish }) => {
     const workflowId = event.data.workflowId;
