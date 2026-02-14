@@ -51,6 +51,18 @@ const executionNodes: NodeTypeOption[] = [ // executionNodes are nodes that perf
     description: "Makes an HTTP request",
     type: NodeType.HTTP_REQUEST,
   },
+  {
+    label: "Gemini",
+    icon: '/logos/gemini.svg',
+    description: "Uses Google Gemini for tasks",
+    type: NodeType.GEMINI,
+  },
+  {
+    label: "OpenAI",
+    icon: '/logos/openai.svg',
+    description: "Uses OpenAI for tasks",
+    type: NodeType.OPENAI,
+  },
 ];
 
 interface NodeSelectorProps {
