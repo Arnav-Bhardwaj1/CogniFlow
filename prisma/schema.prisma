@@ -126,5 +126,8 @@ enum NodeType {
   MANUAL_TRIGGER // a node that triggers the workflow manually
   HTTP_REQUEST // a node that makes an HTTP request
   GOOGLE_FORM_TRIGGER // a node that triggers the workflow when a Google Form is submitted
-  RAZORPAY_TRIGGER // a node that triggers the workflow when a RazorPay payment occurs
+  RAZORPAY_TRIGGER // a node that triggers the workflow when a RazorPay payment/event occurs
+  ANTHROPIC
+  GEMINI
+  OPENAI
 }      
