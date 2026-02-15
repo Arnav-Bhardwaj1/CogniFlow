@@ -7,6 +7,7 @@ import { googleFormTriggerExecutor } from "@/features/triggers/components/google
 import { razorpayTriggerExecutor } from "@/features/triggers/components/razorpay-trigger/executor";
 import { geminiExecutor } from "../components/gemini/executor";
 import { openaiExecutor } from "../components/openai/executor";
+import { anthropicExecutor } from "../components/anthropic/executor";
 
 export const executorRegistry: Record<NodeType, NodeExecutor> = { // map of node types to their executors, this is an object, not a function
   [NodeType.MANUAL_TRIGGER]: manualTriggerExecutor,
@@ -14,7 +15,7 @@ export const executorRegistry: Record<NodeType, NodeExecutor> = { // map of node
   [NodeType.GOOGLE_FORM_TRIGGER]: googleFormTriggerExecutor,
   [NodeType.RAZORPAY_TRIGGER]: razorpayTriggerExecutor,
   [NodeType.GEMINI]: geminiExecutor,
-  [NodeType.ANTHROPIC]: geminiExecutor, // TODO: FIx later
+  [NodeType.ANTHROPIC]: anthropicExecutor,
   [NodeType.OPENAI]: openaiExecutor,
   [NodeType.INITIAL]: manualTriggerExecutor // never executed, but needs an executor to satisfy the type errors. why never executed? because initial node just provides initial data from the trigger, no execution needed. 
 };

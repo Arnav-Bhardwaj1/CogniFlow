@@ -6,6 +6,7 @@ export type StepTools = GetStepTools<Inngest. Any>;
 export interface NodeExecutorParams<TData = Record<string, unknown>> {
   data: TData;
   nodeId: string;
+  userId: string; // needed because some nodes like OpenAI may need to fetch user-specific credentials or data
   context: WorkflowContext;
   step: StepTools;
   publish: Realtime.PublishFn;

@@ -1,4 +1,4 @@
-import { AlertTriangleIcon, Loader2Icon, MoreVerticalIcon, PackageOpenIcon, PlusIcon, SearchIcon, Trash2Icon } from "lucide-react";
+import { AlertTriangleIcon, FolderOpenIcon, Loader2Icon, MoreVerticalIcon, PlusIcon, SearchIcon, Trash2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
@@ -15,15 +15,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
 } from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
@@ -133,7 +130,7 @@ export const EntitySearch = ({
         aria-label={placeholder}
         value={value} 
         onChange={(e) => onChange?.(e.target.value)} // onChange is used to handle input changes, e.target.value gets the current value of the input field
-        className="max-w-50 bg-background shadow-none border-border pl-8"
+        className="max-w-50 bg-background shadow-none border border-black pl-8"
       />
     </div>
   );
@@ -208,10 +205,10 @@ interface EmptyViewProps extends StateViewProps {
 
 export const EmptyView = ({ message, onNew }: EmptyViewProps) => {
   return (
-    <Empty className="border border-dashed">
+    <Empty className="border border-dashed bg-white/80">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <PackageOpenIcon />
+          <FolderOpenIcon className="size-9" />
         </EmptyMedia>
       </EmptyHeader>
       <EmptyTitle>No items</EmptyTitle>

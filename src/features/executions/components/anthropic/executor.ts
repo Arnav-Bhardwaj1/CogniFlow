@@ -1,9 +1,9 @@
 import Handlebars from 'handlebars';
 import type { NodeExecutor } from "@/features/executions/types";
 import { NonRetriableError } from "inngest";
-import { createOpenAI } from '@ai-sdk/openai';
+import { createAnthropic } from '@ai-sdk/anthropic';
 import { generateText } from 'ai';
-import { openaiChannel } from '@/inngest/channels/openai';
+import { anthropicChannel } from '@/inngest/channels/anthropic';
 import prisma from '@/lib/db';
 import { decrypt } from '@/lib/encryption';
 
@@ -14,14 +14,14 @@ Handlebars.registerHelper('json', (context) => {
     return safeString;
 });
 
-type OpenAiData = {
+type anthropicData = {
     variableName?: string;
     credentialId?: string;
     systemPrompt?: string;
     userPrompt?: string;
 };
 
-export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
+export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
     data,
     nodeId,
     userId,
@@ -31,7 +31,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
 }) => {
     // Publish 'loading' state for http request
     await publish(
-       openaiChannel().status({
+        anthropicChannel().status({
             nodeId,
             status: 'loading',
         }),
@@ -39,36 +39,36 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
 
     if (!data.variableName) {
         await publish(
-            openaiChannel().status({
+            anthropicChannel().status({
                 nodeId,
                 status: 'error',
             }),
         );
 
-        throw new NonRetriableError('OpenAI node: Variable name is missing');
+        throw new NonRetriableError('Anthropic node: Variable name is missing');
     };
 
     if (!data.credentialId) {
             await publish(
-                openaiChannel().status({
+                anthropicChannel().status({
                     nodeId,
                     status: 'error',
                 }),
             );
     
-            throw new NonRetriableError('OpenAI node: Credential is required');
+            throw new NonRetriableError('Anthropic node: Credential is required');
         };
     
 
     if (!data.userPrompt) {
         await publish(
-            openaiChannel().status({
+            anthropicChannel().status({
                 nodeId,
                 status: 'error',
             }),
         );
 
-        throw new NonRetriableError('OpenAI node: User prompt is missing');
+        throw new NonRetriableError('Anthropic node: User prompt is missing');
     };
 
     const systemPrompt = data.systemPrompt
@@ -77,7 +77,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
     const userPrompt = Handlebars.compile(data.userPrompt)(context);
 
     const credential = await step.run('get-credential', async () => {
-
+        
         return prisma.credential.findUnique({
             where: {
                 id: data.credentialId,
@@ -88,24 +88,26 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
 
     if (!credential) {
         await publish(
-            openaiChannel().status({
+            anthropicChannel().status({
                 nodeId,
                 status: 'error',
             }),
         );
+        
         throw new NonRetriableError('Credential not found');
     };
 
-    const openai = createOpenAI({
+    const anthropic = createAnthropic({
         apiKey: decrypt(credential.value),
+        
     });
 
     try {
         const { steps } = await step.ai.wrap(
-            'openai-generate-text',
+            'anthropic-generate-text',
             generateText,
             {
-                model: openai('gpt-4'),
+                model: anthropic('claude-sonnet-4-5'),
                 system: systemPrompt,
                 prompt: userPrompt,
                 experimental_telemetry: {
@@ -122,7 +124,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
             : '';
         
         await publish(
-            openaiChannel().status({
+            anthropicChannel().status({
                 nodeId,
                 status: 'success',
             }),
@@ -136,7 +138,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
         }
     } catch (error) {
         await publish(
-            openaiChannel().status({
+            anthropicChannel().status({
                 nodeId,
                 status: 'error',
             }),

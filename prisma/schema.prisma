@@ -25,6 +25,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   workflows     Workflow[]
+  credentials   Credential[] // a user can have multiple credentials, for example, one for OpenAI, one for Anthropic, etc.
 
   @@unique([email])
   @@map("user") // means the table name in the database is "user"
@@ -90,6 +91,26 @@ model Workflow {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Credential {
+  id String @id @default(cuid())
+  name String
+  value String
+  type CredentialType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  Node Node[]
+}
+
+enum CredentialType {
+  OPENAI
+  ANTHROPIC
+  GEMINI
+}
+
 model Node {
   id                String       @id @default(cuid())
   name              String
@@ -99,6 +120,8 @@ model Node {
   position          Json
   data              Json         @default("{}") // why default "{}": to avoid null values
   workflowId        String
+  credentialId String?  
+  credential Credential? @relation(fields: [credentialId], references: [id])
   outputConnections Connection[] @relation("FromNode") // These are the Connection records where this node is the source (fromNodeId). This field pairs with Connection.fromNode via the relation name FromNode so Prisma knows which foreign key to use.
   inputConnections  Connection[] @relation("ToNode") // These are the Connection records where this node is the target (toNodeId). This field pairs with Connection.toNode via the relation name ToNode so Prisma knows which foreign key to use.
   workflow          Workflow     @relation(fields: [workflowId], references: [id], onDelete: Cascade)

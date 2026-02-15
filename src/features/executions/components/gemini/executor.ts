@@ -13,7 +13,7 @@ Handlebars.registerHelper('json', (context) => {
 
     return safeString;
 });
-
+   
 type geminiData = {
     variableName?: string;
     credentialId?: string;
@@ -99,7 +99,7 @@ export const geminiExecutor: NodeExecutor<geminiData> = async ({
     });
 
     try {
-        const { steps } = await step.ai.wrap(
+        const { steps } = await step.ai.wrap( // Wrap the Gemini API call in step.ai.wrap to track it as a step in the execution
             "gemini-generate-text",
             generateText,
             {
@@ -115,9 +115,9 @@ export const geminiExecutor: NodeExecutor<geminiData> = async ({
         );
 
         const text = 
-            steps[0].content[0].type === 'text'
+            steps?.[0]?.content?.[0]?.type === 'text'
             ? steps[0].content[0].text
-            : '';
+            : "";
         
         await publish(
             geminiChannel().status({

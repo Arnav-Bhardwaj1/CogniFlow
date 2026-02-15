@@ -34,6 +34,7 @@ import { useEffect } from 'react';
 import { useCredentialsByType } from '@/features/credentials/hooks/use-credentials';
 import { CredentialType } from '@/app/generated/prisma';
 import Image from 'next/image';
+
 const formSchema = z.object({
     variableName: z
     .string()
@@ -46,25 +47,25 @@ const formSchema = z.object({
     userPrompt: z.string().min(1, 'User prompt is required'),
 });
 
-export type OpenAiFormValues = z.infer<typeof formSchema>;
+export type AnthropicFormValues = z.infer<typeof formSchema>;
 
 interface Props {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onSubmit: (values: z.infer<typeof formSchema>) => void;
-    defaultValues?: Partial<OpenAiFormValues>;
+    defaultValues?: Partial<AnthropicFormValues>;
 };
 
-export const OpenAiDialog = ({
+export const AnthropicDialog = ({
     open, 
     onOpenChange,
     onSubmit,
     defaultValues = {},
  }: Props) => {
     const { 
-                data: credentials,
-                isLoading: isLoadingCredentials,
-            } = useCredentialsByType(CredentialType.OPENAI);
+            data: credentials,
+            isLoading: isLoadingCredentials,
+        } = useCredentialsByType(CredentialType.ANTHROPIC);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -88,7 +89,7 @@ export const OpenAiDialog = ({
         }
     },[open, defaultValues, form]);
 
-    const watchVariableName = form.watch('variableName') || 'name';
+    const watchVariableName = form.watch('variableName') || 'myAnthropic';
 
     const handleSubmit = (values: z.infer<typeof formSchema>) => {
         console.log('Form values: ', values);
@@ -100,7 +101,7 @@ export const OpenAiDialog = ({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-h-[90vh] overflow-y-auto max-w-[95vw] sm:max-w-[600px] md:max-w-[700px]">
                 <DialogHeader>
-                    <DialogTitle>OpenAI Configuration</DialogTitle>
+                    <DialogTitle>Anthropic Configuration</DialogTitle>
                     <DialogDescription>
                         Configure the AI model and prompts for this node.
                     </DialogDescription>
@@ -134,7 +135,7 @@ export const OpenAiDialog = ({
                             name="credentialId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>OpenAI Credential</FormLabel>
+                                    <FormLabel>Anthropic Credential</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
@@ -145,7 +146,7 @@ export const OpenAiDialog = ({
                                     >
                                         <FormControl>
                                             <SelectTrigger className="w-full">
-                                                <SelectValue />
+                                                <SelectValue placeholder="Select a credential" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -156,8 +157,8 @@ export const OpenAiDialog = ({
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <Image
-                                                            src={'/logos/openai.svg'}
-                                                            alt={'OpenAI'}
+                                                            src={'/logos/anthropic.svg'}
+                                                            alt={'Anthropic'}
                                                             width={16}
                                                             height={16}
                                                         />
