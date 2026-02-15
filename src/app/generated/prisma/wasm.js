@@ -176,6 +176,16 @@ exports.Prisma.WorkflowScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.CredentialScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  value: 'value',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.NodeScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -184,7 +194,8 @@ exports.Prisma.NodeScalarFieldEnum = {
   type: 'type',
   position: 'position',
   data: 'data',
-  workflowId: 'workflowId'
+  workflowId: 'workflowId',
+  credentialId: 'credentialId'
 };
 
 exports.Prisma.ConnectionScalarFieldEnum = {
@@ -222,6 +233,12 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.CredentialType = exports.$Enums.CredentialType = {
+  OPENAI: 'OPENAI',
+  ANTHROPIC: 'ANTHROPIC',
+  GEMINI: 'GEMINI'
+};
+
 exports.NodeType = exports.$Enums.NodeType = {
   INITIAL: 'INITIAL',
   MANUAL_TRIGGER: 'MANUAL_TRIGGER',
@@ -239,6 +256,7 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Workflow: 'Workflow',
+  Credential: 'Credential',
   Node: 'Node',
   Connection: 'Connection'
 };

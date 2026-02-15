@@ -63,6 +63,12 @@ const executionNodes: NodeTypeOption[] = [ // executionNodes are nodes that perf
     description: "Uses OpenAI for tasks",
     type: NodeType.OPENAI,
   },
+  {
+    label: "Anthropic",
+    icon: '/logos/anthropic.svg',
+    description: "Uses Anthropic for tasks",
+    type: NodeType.ANTHROPIC,
+  },
 ];
 
 interface NodeSelectorProps {

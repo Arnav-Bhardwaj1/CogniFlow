@@ -11,6 +11,7 @@ import { googleFormTriggerChannel } from "./channels/google-form-trigger";
 import { razorpayTriggerChannel } from "./channels/razorpay-trigger";
 import { geminiChannel } from "./channels/gemini";
 import { openaiChannel } from "./channels/openai";
+import { anthropicChannel } from "./channels/anthropic";
 
 export const executeWorkflow = inngest.createFunction(
   { id: "execute-workflow",
@@ -25,6 +26,7 @@ export const executeWorkflow = inngest.createFunction(
       razorpayTriggerChannel(),
       geminiChannel(),
       openaiChannel(),
+      anthropicChannel(),
     ], // This allows the workflow execution function to publish real-time updates to the "http-request-execution" channel, which can be listened to by the frontend to update the UI with the status of HTTP request nodes as they are executed.
   }, 
   async ({ event, step, publish }) => {

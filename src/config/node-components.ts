@@ -1,5 +1,6 @@
 import { NodeType } from "@/app/generated/prisma";
 import { InitialNode } from "@/components/initial-node";
+import { AnthropicNode } from "@/features/executions/components/anthropic/node";
 import { GeminiNode } from "@/features/executions/components/gemini/node";
 import { HttpRequestNode } from "@/features/executions/components/http-request/node";
 import { OpenAiNode } from "@/features/executions/components/openai/node";
@@ -16,6 +17,7 @@ export const nodeComponents = { // this is an object, NOT a function. It acts li
   [NodeType.RAZORPAY_TRIGGER]: RazorPayTriggerNode,
   [NodeType.GEMINI]: GeminiNode,
   [NodeType.OPENAI]: OpenAiNode,
+  [NodeType.ANTHROPIC]: AnthropicNode,
 } as const satisfies NodeTypes;
 
 export type RegisteredNodeType = keyof typeof nodeComponents; // this type represents all valid node types that have been registered in the nodeComponents object. example: 'InitialNode'
