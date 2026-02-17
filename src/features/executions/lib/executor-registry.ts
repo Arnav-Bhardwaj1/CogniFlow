@@ -8,6 +8,8 @@ import { razorpayTriggerExecutor } from "@/features/triggers/components/razorpay
 import { geminiExecutor } from "../components/gemini/executor";
 import { openaiExecutor } from "../components/openai/executor";
 import { anthropicExecutor } from "../components/anthropic/executor";
+import { discordExecutor } from "../components/discord/executor";
+import { slackExecutor } from "../components/slack/executor";
 
 export const executorRegistry: Record<NodeType, NodeExecutor> = { // map of node types to their executors, this is an object, not a function
   [NodeType.MANUAL_TRIGGER]: manualTriggerExecutor,
@@ -17,6 +19,8 @@ export const executorRegistry: Record<NodeType, NodeExecutor> = { // map of node
   [NodeType.GEMINI]: geminiExecutor,
   [NodeType.ANTHROPIC]: anthropicExecutor,
   [NodeType.OPENAI]: openaiExecutor,
+  [NodeType.DISCORD]: discordExecutor,
+  [NodeType.SLACK]: slackExecutor,
   [NodeType.INITIAL]: manualTriggerExecutor // never executed, but needs an executor to satisfy the type errors. why never executed? because initial node just provides initial data from the trigger, no execution needed. 
 };
 

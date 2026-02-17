@@ -99,7 +99,7 @@ export const AnthropicDialog = ({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-h-[90vh] overflow-y-auto max-w-[95vw] sm:max-w-[600px] md:max-w-[700px]">
+            <DialogContent className="max-h-[90vh] overflow-y-auto max-w-[95vw] ssm:max-w-150 md:max-w-175">
                 <DialogHeader>
                     <DialogTitle>Anthropic Configuration</DialogTitle>
                     <DialogDescription>

@@ -69,6 +69,18 @@ const executionNodes: NodeTypeOption[] = [ // executionNodes are nodes that perf
     description: "Uses Anthropic for tasks",
     type: NodeType.ANTHROPIC,
   },
+  {
+    label: "Discord",
+    icon: '/logos/discord.svg',
+    description: "Sends messages to Discord channels",
+    type: NodeType.DISCORD,
+  },
+  {
+    label: "Slack",
+    icon: '/logos/slack.svg',
+    description: "Sends messages to Slack channels",
+    type: NodeType.SLACK,
+  },
 ];
 
 interface NodeSelectorProps {

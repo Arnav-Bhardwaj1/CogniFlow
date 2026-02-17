@@ -89,6 +89,7 @@ model Workflow {
   connections Connection[]
   nodes       Node[] // does not store anything in the database, just a relation field to get all nodes related to this workflow. syntax to get the nodes of a workflow: workflow.nodes. To access workflow.nodes, you must explicitly include it in the Prisma query using include: { nodes: true }
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  executions Execution[]
 }
 
 model Credential {
@@ -121,7 +122,7 @@ model Node {
   data              Json         @default("{}") // why default "{}": to avoid null values
   workflowId        String
   credentialId String?  
-  credential Credential? @relation(fields: [credentialId], references: [id])
+  credential Credential? @relation(fields: [credentialId], references: [id], onDelete: SetNull)
   outputConnections Connection[] @relation("FromNode") // These are the Connection records where this node is the source (fromNodeId). This field pairs with Connection.fromNode via the relation name FromNode so Prisma knows which foreign key to use.
   inputConnections  Connection[] @relation("ToNode") // These are the Connection records where this node is the target (toNodeId). This field pairs with Connection.toNode via the relation name ToNode so Prisma knows which foreign key to use.
   workflow          Workflow     @relation(fields: [workflowId], references: [id], onDelete: Cascade)
@@ -144,6 +145,24 @@ model Connection { // represents the edge/connection between two nodes in a work
 }
 // fromNode means the source node of the connection, toNode means the target node of the connection, toNodeId means the id of the target node of the connection
 
+model Execution {
+  id String @id @default (cuid())
+  workflowId String
+  workflow Workflow @relation (fields: [workflowId], references: [id], onDelete: Cascade)
+  status ExecutionStatus @default(RUNNING)
+  error String? @db.Text // to store error message if the execution fails
+  errorStack String? @db.Text // to store error stack trace if the execution fails
+  startedAt DateTime @default (now())
+  completedAt DateTime?
+  inngestEventId String @unique
+  output Json?
+}
+enum ExecutionStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
 enum NodeType { 
   INITIAL // the starting node of a workflow
   MANUAL_TRIGGER // a node that triggers the workflow manually
@@ -153,4 +172,6 @@ enum NodeType {
   ANTHROPIC
   GEMINI
   OPENAI
+  DISCORD
+  SLACK
 }      
