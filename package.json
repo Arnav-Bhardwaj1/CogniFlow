@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "prisma generate && next build --turbopack",
     "start": "next start",
     "ngrok:dev": "ngrok http --url=denominatively-weldless-cameron.ngrok-free.dev 3000",
     "lint": "eslint",

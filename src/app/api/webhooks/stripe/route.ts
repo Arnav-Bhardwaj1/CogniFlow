@@ -1,5 +1,7 @@
-import { sendWorkflowExecution } from "@/inngest/utils";
 import { type NextRequest, NextResponse } from "next/server";
+
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
     try {
@@ -25,6 +27,7 @@ export async function POST(request: NextRequest) {
         };
 
         // Trigger an Inngest job
+        const { sendWorkflowExecution } = await import("@/inngest/utils");
         await sendWorkflowExecution({
             workflowId,
             initialData: {

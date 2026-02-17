@@ -50,7 +50,7 @@ export const ExecutionView = ({executionId}: {executionId: string}) => {
         : null;
     
     return (
-        <Card className="shadow-none">
+        <Card className="shadow-none w-full max-w-full overflow-hidden">
             <CardHeader>
                 <div className="flex items-center gap-3">
                     {getStatusIcon(execution.status)}
@@ -104,7 +104,7 @@ export const ExecutionView = ({executionId}: {executionId: string}) => {
                   
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">Event ID</p>
-                            <p className="text-sm">{execution.inngestEventId}</p>
+                            <p className="text-sm break-all">{execution.inngestEventId}</p>
                         </div>
                     </div>
 
@@ -114,7 +114,7 @@ export const ExecutionView = ({executionId}: {executionId: string}) => {
                                     <p className="text-sm font-medium text-red-900 mb-2">
                                         Error
                                     </p>
-                                    <p className="text-sm text-red-800 font-mono">{execution.error}</p>
+                                    <p className="text-sm text-red-800 font-mono break-all">{execution.error}</p>
                                 </div>
 
                                 {execution.errorStack && (
@@ -135,7 +135,7 @@ export const ExecutionView = ({executionId}: {executionId: string}) => {
                                             </Button>
                                         </CollapsibleTrigger>
                                         <CollapsibleContent>
-                                                <pre className="text-xs mt-2 p-2 bg-red-100 rounded text-red-800 font-mono overflow-auto">
+                                                <pre className="text-xs mt-2 p-2 bg-red-100 rounded text-red-800 font-mono overflow-auto max-w-full whitespace-pre-wrap break-words">
                                                     {execution.errorStack}
                                                 </pre>
                                         </CollapsibleContent>
@@ -147,7 +147,7 @@ export const ExecutionView = ({executionId}: {executionId: string}) => {
                         {execution.output && (
                             <div className="mt-6 p-4 bg-muted rounded-md">
                                 <p className="text-sm font-medium mb-2">Output</p>
-                                <pre className="text-xs font-mono overflow-auto">
+                                <pre className="text-xs font-mono overflow-auto max-w-full whitespace-pre-wrap break-words">
                                     {JSON.stringify(execution.output, null, 2)}
                                 </pre>
                             </div>

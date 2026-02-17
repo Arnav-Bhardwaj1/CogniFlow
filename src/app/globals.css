@@ -187,3 +187,12 @@ body {
 .react-flow__node.selected #base-node{
   @apply ring-3 ring-muted-foreground/25 shadow-lg;
 }
+
+/* Custom cursor for React Flow canvas */
+.react-flow__pane {
+  cursor: grab;
+}
+
+.react-flow__pane:active {
+  cursor: grabbing;
+}

@@ -42,6 +42,31 @@ export function LoginForm() {
       password: "",
     },
   });
+    const signInGithub = async () => {
+         await authClient.signIn.social({
+            provider: "github"
+        }, {
+            onSuccess: () => {
+                router.push('/');
+            },
+            onError: () => {
+                toast.error('Something went wrong');
+            },
+        })
+    };
+
+    const signInGoogle = async () => {
+        await authClient.signIn.social({
+           provider: "google",
+       }, {
+           onSuccess: () => {
+               router.push('/');
+           },
+           onError: () => {
+               toast.error('Something went wrong');
+           },
+       })
+   };
     const onSubmit = async (values: LoginFormValues) => {
         await authClient.signIn.email({
             email: values.email,
@@ -74,7 +99,7 @@ export function LoginForm() {
                                         className="w-full cursor-pointer"
                                         type="button"
                                         disabled={isPending}
-                                        // onClick={() => handleSocialLogin("github")}
+                                        onClick={() => signInGithub()}
                                     >
                                         <Image src="/logos/github.svg" alt="GitHub" width={22} height={22} />
                                         Continue with GitHub
@@ -83,7 +108,7 @@ export function LoginForm() {
                                         className="w-full cursor-pointer"
                                         type="button"
                                         disabled={isPending}
-                                        // onClick={() => handleSocialLogin("google")}
+                                        onClick={() => signInGoogle()}
                                     >
                                         <Image src="/logos/google.svg" alt="Google" width={20} height={20} />
                                         Continue with Google
