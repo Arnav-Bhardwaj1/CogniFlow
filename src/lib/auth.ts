@@ -11,8 +11,9 @@ export const auth = betterAuth({
     }),
     trustedOrigins: [
       "http://localhost:3000",
-      process.env.NEXT_PUBLIC_APP_URL ?? "",
-    ].filter(Boolean),
+      "https://thecogniflow.in",
+      "https://www.thecogniflow.in",
+    ],
     emailAndPassword:{
       enabled: true,
       autoSignIn: true,
