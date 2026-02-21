@@ -1,27 +1,28 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import zod, {z} from "zod";
+import zod, { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 // import { authClient } from "@/lib/auth-client";
@@ -29,24 +30,27 @@ import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 
 const loginSchema = z.object({
-  email: z.email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
+    email: z.email("Please enter a valid email address"),
+    password: z.string().min(1, "Password is required"),
 });
 type LoginFormValues = z.infer<typeof loginSchema>;
 export function LoginForm() {
-  const router = useRouter(); // to navigate after login
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema), // resolver means it will use zod to validate
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+    const router = useRouter(); // to navigate after login
+    const queryClient = useQueryClient();
+    const form = useForm<LoginFormValues>({
+        resolver: zodResolver(loginSchema), // resolver means it will use zod to validate
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
     const signInGithub = async () => {
-         await authClient.signIn.social({
+        await authClient.signIn.social({
             provider: "github"
         }, {
             onSuccess: () => {
+                queryClient.clear();
+                router.refresh();
                 router.push('/');
             },
             onError: () => {
@@ -57,33 +61,37 @@ export function LoginForm() {
 
     const signInGoogle = async () => {
         await authClient.signIn.social({
-           provider: "google",
-       }, {
-           onSuccess: () => {
-               router.push('/');
-           },
-           onError: () => {
-               toast.error('Something went wrong');
-           },
-       })
-   };
+            provider: "google",
+        }, {
+            onSuccess: () => {
+                queryClient.clear();
+                router.refresh();
+                router.push('/');
+            },
+            onError: () => {
+                toast.error('Something went wrong');
+            },
+        })
+    };
     const onSubmit = async (values: LoginFormValues) => {
         await authClient.signIn.email({
             email: values.email,
             password: values.password,
             callbackURL: "/",
-        }, 
-        {
-            onSuccess: () => {
-            router.push("/");
-            },
-            onError: (ctx) => {
-            toast.error(ctx.error.message);
-            },
-        });
-  };
-  const isPending = form.formState.isSubmitting;
-  return (
+        },
+            {
+                onSuccess: () => {
+                    queryClient.clear();
+                    router.refresh();
+                    router.push("/");
+                },
+                onError: (ctx) => {
+                    toast.error(ctx.error.message);
+                },
+            });
+    };
+    const isPending = form.formState.isSubmitting;
+    return (
         <div className="flex flex-col gap-6 mx-auto min-w-sm">
             <Card>
                 <CardHeader className="text-center">
@@ -122,11 +130,11 @@ export function LoginForm() {
                                             <FormItem>
                                                 <FormLabel>Email</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} 
+                                                    <Input {...field}
                                                         type="email"
-                                                        placeholder="example@gmail.com" 
+                                                        placeholder="example@gmail.com"
                                                         className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2" />
-                                                        
+
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -141,8 +149,8 @@ export function LoginForm() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="password"
-                                                        placeholder="*********" 
-                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+                                                        placeholder="*********"
+                                                        className="border-2 border-muted-foreground/40 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

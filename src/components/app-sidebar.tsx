@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import {
   CreditCardIcon,
   JoystickIcon,
@@ -46,6 +47,7 @@ const menuItems = [
 export const AppSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
   return (
     <Sidebar collapsible="icon">
@@ -61,45 +63,45 @@ export const AppSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-            {menuItems.map((menuItem) => (
-              <SidebarMenuItem key={menuItem.title}>
-                <SidebarMenuButton
-                  tooltip={menuItem.title}
-                  isActive={menuItem.url === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(menuItem.url)
-                  }
-                  asChild
-                  className="gap-x-4 h-10 px-4"
-                >
-                  <Link href={menuItem.url} prefetch>
-                    <menuItem.icon className="size-4" />
-                    <span>{menuItem.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+              {menuItems.map((menuItem) => (
+                <SidebarMenuItem key={menuItem.title}>
+                  <SidebarMenuButton
+                    tooltip={menuItem.title}
+                    isActive={menuItem.url === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(menuItem.url)
+                    }
+                    asChild
+                    className="gap-x-4 h-10 px-4"
+                  >
+                    <Link href={menuItem.url} prefetch>
+                      <menuItem.icon className="size-4" />
+                      <span>{menuItem.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-        {!hasActiveSubscription && !isLoading && (
+          {!hasActiveSubscription && !isLoading && (
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip="Upgrade to Pro"
+                asChild
+                className="gap-x-4 h-10 px-4"
+                onClick={() => authClient.checkout({ slug: "CogniFlow-Pro" })}
+              >
+                <Link href="/" prefetch>
+                  <StarIcon className="h-4 w-4" />
+                  <span>Upgrade to Pro</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>)}
           <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip="Upgrade to Pro"
-              asChild
-              className="gap-x-4 h-10 px-4"
-              onClick={() => authClient.checkout({ slug: "CogniFlow-Pro" })}
-            >
-              <Link href="/" prefetch>
-                <StarIcon className="h-4 w-4" />
-                <span>Upgrade to Pro</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem> )}
-                    <SidebarMenuItem> 
             <SidebarMenuButton
               tooltip={hasActiveSubscription ? "View Billing" : "Upgrade to Pro"}
               asChild
@@ -119,9 +121,11 @@ export const AppSidebar = () => {
               className="gap-x-4 h-10 px-4"
               onClick={() => authClient.signOut({ // sign-out with redirect easily
                 fetchOptions: {
-                    onSuccess: () => {
-                        router.push("/login")
-                    }
+                  onSuccess: () => {
+                    queryClient.clear();
+                    router.refresh();
+                    router.push("/login")
+                  }
                 }
               })}
             >
