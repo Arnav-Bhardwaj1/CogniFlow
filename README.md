@@ -5,7 +5,7 @@ A full-stack workflow automation platform with a drag-and-drop editor, multi-tri
 ## Features
 
 - **Visual Workflow Editor** — Drag-and-drop canvas built with React Flow for creating and connecting workflow nodes
-- **AI Workflow Planner** — Describe an automation in natural language and get a draft workflow generated using an AI Agent, rendered directly on the canvas
+- **AI Workflow Generator** — Describe an automation in natural language and get a draft workflow generated using an AI Agent, rendered directly on the canvas
 - **Multi-Trigger Support** — Manual triggers, Google Form submissions, and RazorPay payment events
 - **Action Nodes** — HTTP requests, OpenAI/Anthropic/Gemini text generation, Slack and Discord messaging
 - **Background Job Orchestration** — Workflow execution powered by Inngest with real-time status updates
@@ -37,7 +37,7 @@ A full-stack workflow automation platform with a drag-and-drop editor, multi-tri
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL database (or [Neon](https://neon.tech) free tier)
+- PostgreSQL database
 
 ### Setup
 
@@ -76,9 +76,6 @@ npm run dev
 ```bash
 npx inngest-cli@latest dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) to access the app.
-
 ## Scripts
 
 | Command | Description |
@@ -89,9 +86,9 @@ Open [http://localhost:3000](http://localhost:3000) to access the app.
 | `npm run db:studio` | Open Prisma Studio |
 | `npm run lint` | Run ESLint |
 
-## AI Workflow Planner
+## AI Workflow Generator
 
-The AI Workflow Planner lets you describe an automation in plain English and generates a draft workflow:
+The AI Workflow Generator lets you describe an automation in plain English and generates a draft workflow:
 
 1. Open any workflow in the editor
 2. Use the input bar in the top-left corner of the canvas
