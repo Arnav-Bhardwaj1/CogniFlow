@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { SidebarTrigger} from "@/components/ui/sidebar";
-import { SaveIcon } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Loader2Icon, SaveIcon } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -35,9 +35,12 @@ export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
 
   return (
     <div className="ml-auto">
-      <Button size="sm" onClick={handleSave} disabled={saveWorkflow.isPending}> {/* isPending is an inbuilt prop of useMutation */}
-        <SaveIcon className="size-4" />
-        Save
+      <Button size="sm" onClick={handleSave} disabled={saveWorkflow.isPending}>
+        {saveWorkflow.isPending ? (
+          <><Loader2Icon className="size-4 animate-spin" /> Saving...</>
+        ) : (
+          <><SaveIcon className="size-4" /> Save</>
+        )}
       </Button>
     </div>
   );
@@ -65,7 +68,7 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
   }, [isEditing]);
 
   const handleSave = async () => {
-    if (name === workflow.name) { 
+    if (name === workflow.name) {
       setIsEditing(false);
       return;
     }
@@ -119,8 +122,8 @@ export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-        {/* The below line will now work like next.js link (as its child is <Link>) */}
-          <BreadcrumbLink asChild> 
+          {/* The below line will now work like next.js link (as its child is <Link>) */}
+          <BreadcrumbLink asChild>
             <Link prefetch href="/workflows">
               Workflows
             </Link>
@@ -133,7 +136,7 @@ export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
   );
 };
 
-export const EditorHeader = ({workflowId}: {workflowId: string}) => {
+export const EditorHeader = ({ workflowId }: { workflowId: string }) => {
   return (
     <header className="flex h-14 shrink-0 items-center gap-2
     border-b px-4 bg-background">

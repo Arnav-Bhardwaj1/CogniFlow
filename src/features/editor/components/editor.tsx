@@ -11,6 +11,7 @@ import { useSetAtom } from "jotai";
 import { editorAtom } from "../store/atom";
 import { NodeType } from "@/app/generated/prisma";
 import { ExecuteWorkflowButton } from "./execute-workflow-button";
+import { AiPlannerBar } from "@/features/ai-planner/components/ai-planner-bar";
 
 export const EditorLoading = () => {
   return <LoadingView message="Loading editor..." />;
@@ -27,7 +28,7 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
 
   const [nodes, setNodes] = useState<Node[]>(workflow.nodes); // initialize with workflow nodes
   const [edges, setEdges] = useState<Edge[]>(workflow.edges);
-      
+
   const onNodesChange = useCallback( // useCallback to memoize the function, preventing unnecessary re-renders
     (changes: NodeChange[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
@@ -63,23 +64,27 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         fitView
         snapGrid={[10, 10]}
         snapToGrid
-        panOnScroll 
+        panOnScroll
         proOptions={{ hideAttribution: true }}
-        // panOnDrag={false} // this prevents panning when dragging nodes. panning means moving the whole canvas
-        // selectionOnDrag // this selects multiple nodes when dragging on empty space
+      // panOnDrag={false} // this prevents panning when dragging nodes. panning means moving the whole canvas
+      // selectionOnDrag // this selects multiple nodes when dragging on empty space
       >
-      <Background style={{ backgroundColor: "#f0f0f0" }}/>
-      <Controls />
-      <MiniMap />
-      <Panel position="top-right">
-        <AddNodeButton />
-      </Panel>
-      {hasManualTrigger && (
-        <Panel position="bottom-center">
-          <ExecuteWorkflowButton workflowId={workflowId} hasUnsavedChanges={hasUnsavedChanges} />
+        <Background style={{ backgroundColor: "#f0f0f0" }} />
+        <Controls />
+        <MiniMap />
+        <Panel position="top-left">
+          <AiPlannerBar setNodes={setNodes} setEdges={setEdges} />
         </Panel>
-      )}
+        <Panel position="top-right">
+          <AddNodeButton />
+        </Panel>
+        {hasManualTrigger && (
+          <Panel position="bottom-center">
+            <ExecuteWorkflowButton workflowId={workflowId} hasUnsavedChanges={hasUnsavedChanges} />
+          </Panel>
+        )}
       </ReactFlow>
     </div>
   );
 };
+

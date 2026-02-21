@@ -34,6 +34,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
+import { Loader2Icon } from 'lucide-react';
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -68,7 +69,7 @@ interface CredentialFormProps {
         name: string;
         type: CredentialType;
         value: string;
-    };   
+    };
 };
 
 export const CredentialForm = ({
@@ -202,12 +203,16 @@ export const CredentialForm = ({
                                         updateCredential.isPending
                                     }
                                 >
-                                    {isEdit ? 'Update' : 'Create'}
+                                    {(createCredential.isPending || updateCredential.isPending) ? (
+                                        <><Loader2Icon className="size-4 animate-spin" /> {isEdit ? 'Saving...' : 'Creating...'}</>
+                                    ) : (
+                                        isEdit ? 'Update' : 'Create'
+                                    )}
                                 </Button>
                                 <Button
                                     type="button"
                                     variant={'outline'}
-                                    asChild                                 
+                                    asChild
                                 >
                                     <Link href='/credentials' prefetch>
                                         Cancel
@@ -222,8 +227,8 @@ export const CredentialForm = ({
     )
 };
 
-export const CredentialView = ({ credentialId }: {credentialId: string}) => {
-    
+export const CredentialView = ({ credentialId }: { credentialId: string }) => {
+
     const { data: credential } = useSuspenseCredential(credentialId);
 
     return <CredentialForm initialData={credential} />

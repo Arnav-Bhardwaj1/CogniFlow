@@ -31,11 +31,11 @@ type EntityHeaderProps = {
   newButtonLabel?: string;
   disabled?: boolean;
   isCreating?: boolean;
-} & ( 
-  | { onNew: () => void; newButtonHref?: never } // onNew defines what function runs when “New” is clicked, while newButtonHref defines where the user navigates when it’s clicked.
-  | { newButtonHref: string; onNew?: never }
-  | { onNew?: never; newButtonHref?: never }
-);
+} & (
+    | { onNew: () => void; newButtonHref?: never } // onNew defines what function runs when “New” is clicked, while newButtonHref defines where the user navigates when it’s clicked.
+    | { newButtonHref: string; onNew?: never }
+    | { onNew?: never; newButtonHref?: never }
+  );
 
 export const EntityHeader = ({
   title,
@@ -60,25 +60,28 @@ export const EntityHeader = ({
       </div>
       {onNew && !newButtonHref && (
         <Button
-          disabled={isCreating || disabled} // means? if either isCreating or disabled is true, the button is disabled
+          disabled={isCreating || disabled}
           size="sm"
           onClick={onNew}
         >
-          <PlusIcon className="size-4" />
-          {newButtonLabel}
+          {isCreating ? (
+            <><Loader2Icon className="size-4 animate-spin" /> Creating...</>
+          ) : (
+            <><PlusIcon className="size-4" /> {newButtonLabel}</>
+          )}
         </Button>
-  )}
-    {newButtonHref && !onNew && (
-    <Button
-      size="sm"
-      asChild
-    >
-      <Link href={newButtonHref} prefetch>
-        <PlusIcon className="size-4" />
-        {newButtonLabel}
-      </Link>
-    </Button>
-  )}
+      )}
+      {newButtonHref && !onNew && (
+        <Button
+          size="sm"
+          asChild
+        >
+          <Link href={newButtonHref} prefetch>
+            <PlusIcon className="size-4" />
+            {newButtonLabel}
+          </Link>
+        </Button>
+      )}
     </div>
   );
 };
@@ -128,7 +131,7 @@ export const EntitySearch = ({
         type="text"
         placeholder={placeholder}
         aria-label={placeholder}
-        value={value} 
+        value={value}
         onChange={(e) => onChange?.(e.target.value)} // onChange is used to handle input changes, e.target.value gets the current value of the input field
         className="max-w-50 bg-background shadow-none border border-black pl-8"
       />
@@ -288,7 +291,7 @@ export const EntityItem = ({
       return;
     }
 
-    if (onRemove){
+    if (onRemove) {
       await onRemove();
     }
   };

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { TRPCReactProvider } from "../trpc/client";
 import { Toaster } from "@/components/ui/sonner";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Exo_2, Roboto_Slab, Fira_Code } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Provider } from 'jotai';
@@ -36,10 +37,11 @@ export default function RootLayout({
       <body className="antialiased">
         <TRPCReactProvider>
           <NuqsAdapter>
-          <Provider>
-            {children}
-            <Toaster />
-          </Provider>
+            <Provider>
+              {children}
+              <Toaster />
+              <SpeedInsights />
+            </Provider>
           </NuqsAdapter>
         </TRPCReactProvider>
       </body>

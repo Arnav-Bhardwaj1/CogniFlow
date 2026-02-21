@@ -5,6 +5,7 @@ import {
   CreditCardIcon,
   JoystickIcon,
   KeyIcon,
+  Loader2Icon,
   LogOutIcon,
   StarIcon,
   FolderOpenIcon,
@@ -12,6 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -48,6 +50,7 @@ export const AppSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
   return (
     <Sidebar collapsible="icon">
@@ -118,15 +121,20 @@ export const AppSidebar = () => {
             <SidebarMenuButton
               tooltip="Sign Out"
               className="gap-x-4 h-10 px-4 cursor-pointer"
+              disabled={isSigningOut}
               onClick={async () => {
+                setIsSigningOut(true);
                 await authClient.signOut();
                 queryClient.clear();
                 router.refresh();
                 router.push("/login");
               }}
             >
-              <LogOutIcon className="h-4 w-4" />
-              <span>Sign Out</span>
+              {isSigningOut ? (
+                <><Loader2Icon className="h-4 w-4 animate-spin" /><span>Signing out...</span></>
+              ) : (
+                <><LogOutIcon className="h-4 w-4" /><span>Sign Out</span></>
+              )}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

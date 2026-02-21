@@ -5,9 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import zod, { z } from "zod";
+import { z } from "zod";
+import { Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -35,33 +37,39 @@ const loginSchema = z.object({
 });
 type LoginFormValues = z.infer<typeof loginSchema>;
 export function LoginForm() {
-    const router = useRouter(); // to navigate after login
+    const router = useRouter();
     const queryClient = useQueryClient();
+    const [isGithubLoading, setIsGithubLoading] = useState(false);
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const form = useForm<LoginFormValues>({
-        resolver: zodResolver(loginSchema), // resolver means it will use zod to validate
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: "",
         },
     });
     const signInGithub = async () => {
+        setIsGithubLoading(true);
         await authClient.signIn.social({
             provider: "github",
             callbackURL: "/",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
+                setIsGithubLoading(false);
             },
         })
     };
 
     const signInGoogle = async () => {
+        setIsGoogleLoading(true);
         await authClient.signIn.social({
             provider: "google",
             callbackURL: "/",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
+                setIsGoogleLoading(false);
             },
         })
     };
@@ -83,6 +91,7 @@ export function LoginForm() {
             });
     };
     const isPending = form.formState.isSubmitting;
+    const anyLoading = isPending || isGithubLoading || isGoogleLoading;
     return (
         <div className="flex flex-col gap-6 mx-auto min-w-sm">
             <Card>
@@ -98,20 +107,26 @@ export function LoginForm() {
                                     <Button variant="outline"
                                         className="w-full cursor-pointer"
                                         type="button"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         onClick={() => signInGithub()}
                                     >
-                                        <Image src="/logos/github.svg" alt="GitHub" width={22} height={22} />
-                                        Continue with GitHub
+                                        {isGithubLoading ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
+                                        ) : (
+                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} /> Continue with GitHub</>
+                                        )}
                                     </Button>
                                     <Button variant="outline"
                                         className="w-full cursor-pointer"
                                         type="button"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         onClick={() => signInGoogle()}
                                     >
-                                        <Image src="/logos/google.svg" alt="Google" width={20} height={20} />
-                                        Continue with Google
+                                        {isGoogleLoading ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
+                                        ) : (
+                                            <><Image src="/logos/google.svg" alt="Google" width={20} height={20} /> Continue with Google</>
+                                        )}
                                     </Button>
                                 </div>
                                 <div className="grid gap-6 w-full">
@@ -149,9 +164,13 @@ export function LoginForm() {
                                         )}
                                     />
                                     <Button type="submit"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         className="w-full cursor-pointer"
-                                    >Login</Button>
+                                    >
+                                        {isPending ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
+                                        ) : "Login"}
+                                    </Button>
                                 </div>
                                 <div className="text-center text-sm">
                                     Don&apos;t have an account?{" "}

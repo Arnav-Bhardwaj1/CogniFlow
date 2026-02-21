@@ -5,9 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import zod, { z } from "zod";
+import { z } from "zod";
+import { Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -39,10 +41,12 @@ const registerSchema = z.object({
     });
 type RegisterFormValues = z.infer<typeof registerSchema>;
 export function RegisterForm() {
-    const router = useRouter(); // to navigate after login
+    const router = useRouter();
     const queryClient = useQueryClient();
+    const [isGithubLoading, setIsGithubLoading] = useState(false);
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const form = useForm<RegisterFormValues>({
-        resolver: zodResolver(registerSchema), // resolver means it will use zod to validate
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             email: "",
             password: "",
@@ -50,23 +54,27 @@ export function RegisterForm() {
         },
     });
     const signInGithub = async () => {
+        setIsGithubLoading(true);
         await authClient.signIn.social({
             provider: "github",
             callbackURL: "/",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
+                setIsGithubLoading(false);
             },
         })
     };
 
     const signInGoogle = async () => {
+        setIsGoogleLoading(true);
         await authClient.signIn.social({
             provider: "google",
             callbackURL: "/",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
+                setIsGoogleLoading(false);
             },
         })
     };
@@ -91,6 +99,7 @@ export function RegisterForm() {
         )
     };
     const isPending = form.formState.isSubmitting;
+    const anyLoading = isPending || isGithubLoading || isGoogleLoading;
     return (
         <div className="flex flex-col gap-6 mx-auto min-w-sm">
             <Card>
@@ -106,20 +115,26 @@ export function RegisterForm() {
                                     <Button variant="outline"
                                         className="w-full cursor-pointer"
                                         type="button"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         onClick={() => signInGithub()}
                                     >
-                                        <Image src="/logos/github.svg" alt="GitHub" width={22} height={22} />
-                                        Continue with GitHub
+                                        {isGithubLoading ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
+                                        ) : (
+                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} /> Continue with GitHub</>
+                                        )}
                                     </Button>
                                     <Button variant="outline"
                                         className="w-full cursor-pointer"
                                         type="button"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         onClick={() => signInGoogle()}
                                     >
-                                        <Image src="/logos/google.svg" alt="Google" width={20} height={20} />
-                                        Continue with Google
+                                        {isGoogleLoading ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
+                                        ) : (
+                                            <><Image src="/logos/google.svg" alt="Google" width={20} height={20} /> Continue with Google</>
+                                        )}
                                     </Button>
                                 </div>
                                 <div className="grid gap-6 w-full">
@@ -172,9 +187,13 @@ export function RegisterForm() {
                                         )}
                                     />
                                     <Button type="submit"
-                                        disabled={isPending}
+                                        disabled={anyLoading}
                                         className="w-full cursor-pointer"
-                                    >Sign Up</Button>
+                                    >
+                                        {isPending ? (
+                                            <><Loader2Icon className="size-5 animate-spin" /> Signing up...</>
+                                        ) : "Sign Up"}
+                                    </Button>
                                 </div>
                                 <div className="text-center text-sm">
                                     Already have an account?{" "}
