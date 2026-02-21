@@ -117,22 +117,16 @@ export const AppSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip="Sign Out"
-              asChild
-              className="gap-x-4 h-10 px-4"
-              onClick={() => authClient.signOut({ // sign-out with redirect easily
-                fetchOptions: {
-                  onSuccess: () => {
-                    queryClient.clear();
-                    router.refresh();
-                    router.push("/login")
-                  }
-                }
-              })}
+              className="gap-x-4 h-10 px-4 cursor-pointer"
+              onClick={async () => {
+                await authClient.signOut();
+                queryClient.clear();
+                router.refresh();
+                router.push("/login");
+              }}
             >
-              <Link href="/login" prefetch>
-                <LogOutIcon className="h-4 w-4" />
-                <span>Sign Out</span>
-              </Link>
+              <LogOutIcon className="h-4 w-4" />
+              <span>Sign Out</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
