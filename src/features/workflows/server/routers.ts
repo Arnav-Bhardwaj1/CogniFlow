@@ -1,12 +1,12 @@
 import { generateSlug } from "random-word-slugs";
 import prisma from "@/lib/db";
-import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, freeTierProcedure, protectedProcedure } from "@/trpc/init";
 import z from "zod";
-import { PAGINATION } from "@/config/constants";
+import { FREE_TIER_LIMITS, PAGINATION } from "@/config/constants";
 import { NodeType } from "@/app/generated/prisma/wasm";
 import { Edge, Node } from "@xyflow/react";
-import { inngest } from "@/inngest/client";
 import { sendWorkflowExecution } from "@/inngest/utils";
+import { TRPCError } from "@trpc/server";
 
 export const workflowsRouter = createTRPCRouter({
   execute: protectedProcedure
@@ -24,7 +24,22 @@ export const workflowsRouter = createTRPCRouter({
     return workflow;
   }),
 
-  create: premiumProcedure.mutation(({ ctx }) => {
+  create: freeTierProcedure.mutation(async ({ ctx }) => {
+    // Check if user has active subscription
+    if (!ctx.hasActiveSubscription) {
+      // Check free tier limits
+      const workflowCount = await prisma.workflow.count({
+        where: { userId: ctx.auth.user.id },
+      });
+
+      if (workflowCount >= FREE_TIER_LIMITS.MAX_WORKFLOWS) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Free tier is limited to ${FREE_TIER_LIMITS.MAX_WORKFLOWS} workflows`,
+        });
+      }
+    }
+
     return prisma.workflow.create({
       data: {
         name: generateSlug(3),

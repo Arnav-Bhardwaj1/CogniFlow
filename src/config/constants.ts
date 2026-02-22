@@ -4,3 +4,8 @@ export const PAGINATION = {
     MIN_PAGE_SIZE: 1,
     DEFAULT_PAGE: 1,
 };
+
+export const FREE_TIER_LIMITS = {
+    MAX_WORKFLOWS: 2,
+    MAX_CREDENTIALS: 2,
+};

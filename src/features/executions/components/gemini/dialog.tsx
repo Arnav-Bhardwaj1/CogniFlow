@@ -35,6 +35,11 @@ import {
     SelectValue,
     SelectContent
 } from '@/components/ui/select';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import Image from "next/image";
 
 const formSchema = z.object({
@@ -133,35 +138,46 @@ export const GeminiDialog = ({
                 render={({ field }) => (
                     <FormItem>
                         <FormLabel>Gemini Credential</FormLabel>
-                        <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            disabled={isLoadingCredentials || credentials?.length === 0}
-                        >
-                            <FormControl>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select a credential" />
-                                </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                                {credentials?.map((credential) => (
-                                    <SelectItem
-                                        key={credential.id}
-                                        value={credential.id}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        disabled={isLoadingCredentials || credentials?.length === 0}
                                     >
-                                        <div className="flex items-center gap-2">
-                                            <Image
-                                                src= "/logos/gemini.svg"
-                                                alt="Gemini"
-                                                width={16}
-                                                height={16}
-                                            />
-                                            {credential.name}
-                                        </div>
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                                        <FormControl>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select a credential" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {credentials?.map((credential) => (
+                                                <SelectItem
+                                                    key={credential.id}
+                                                    value={credential.id}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <Image
+                                                            src= "/logos/gemini.svg"
+                                                            alt="Gemini"
+                                                            width={16}
+                                                            height={16}
+                                                        />
+                                                        {credential.name}
+                                                    </div>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </TooltipTrigger>
+                            {!isLoadingCredentials && credentials?.length === 0 && (
+                                <TooltipContent>
+                                    <p>No Gemini credentials available. Please add a credential first.</p>
+                                </TooltipContent>
+                            )}
+                        </Tooltip>
                         <FormMessage />
                     </FormItem>
                 )}
@@ -218,3 +234,6 @@ export const GeminiDialog = ({
     </Dialog>
   );
 };
+
+
+

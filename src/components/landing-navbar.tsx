@@ -11,9 +11,11 @@ import React from 'react';
 export function LandingNavbar() {
   const { data: session, isPending: isSessionPending } = authClient.useSession();
   const [isNavigating, startTransition] = React.useTransition();
+  const [loadingButton, setLoadingButton] = React.useState<string | null>(null);
   const router = useRouter();
 
-  const handleNavigation = (href: string) => {
+  const handleNavigation = (href: string, buttonId: string) => {
+    setLoadingButton(buttonId);
     startTransition(() => {
       router.push(href);
     });
@@ -64,32 +66,40 @@ export function LandingNavbar() {
 
       <div className="flex items-center gap-4">
         {isSessionPending ? (
-          <Loader2Icon className="animate-spin text-muted-foreground size-5" />
+          <Button
+            disabled
+            className="rounded-full shadow-md bg-primary text-primary-foreground min-w-[140px]"
+          >
+            <Loader2Icon className="size-4 animate-spin mr-2" />
+            Loading...
+          </Button>
         ) : session ? (
           <Button
-            onClick={() => handleNavigation("/workflows")}
+            onClick={() => handleNavigation("/workflows", "nav-dashboard")}
             disabled={isNavigating}
             className="rounded-full shadow-md hover:shadow-lg transition-shadow bg-primary text-primary-foreground min-w-[100px]"
           >
-            {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Dashboard"}
+            {loadingButton === "nav-dashboard" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+            Dashboard
           </Button>
         ) : (
           <>
             <Button
               variant="ghost"
-              onClick={() => handleNavigation("/login")}
+              onClick={() => handleNavigation("/login", "nav-login")}
               disabled={isNavigating}
               className="hidden sm:flex text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:bg-transparent p-0 h-auto"
             >
-              {isNavigating ? <Loader2Icon className="size-4 animate-spin mr-2" /> : null}
+              {loadingButton === "nav-login" && <Loader2Icon className="size-4 animate-spin mr-2" />}
               Log in
             </Button>
             <Button
-              onClick={() => handleNavigation("/signup")}
+              onClick={() => handleNavigation("/signup", "nav-signup")}
               disabled={isNavigating}
               className="rounded-full shadow-md hover:shadow-lg transition-shadow bg-primary text-primary-foreground min-w-[140px]"
             >
-              {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Get Started Free"}
+              {loadingButton === "nav-signup" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+              Get Started Free
             </Button>
           </>
         )}

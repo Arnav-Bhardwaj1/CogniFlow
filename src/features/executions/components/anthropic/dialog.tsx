@@ -24,6 +24,11 @@ import {
     SelectValue,
     SelectContent
 } from '@/components/ui/select';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -136,38 +141,49 @@ export const AnthropicDialog = ({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Anthropic Credential</FormLabel>
-                                    <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        disabled={
-                                            isLoadingCredentials ||
-                                            !credentials?.length
-                                        }
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select a credential" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {credentials?.map((credential) => (
-                                                <SelectItem
-                                                    key={credential.id}
-                                                    value={credential.id}
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <div>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    defaultValue={field.value}
+                                                    disabled={
+                                                        isLoadingCredentials ||
+                                                        !credentials?.length
+                                                    }
                                                 >
-                                                    <div className="flex items-center gap-2">
-                                                        <Image
-                                                            src={'/logos/anthropic.svg'}
-                                                            alt={'Anthropic'}
-                                                            width={16}
-                                                            height={16}
-                                                        />
-                                                        {credential.name}
-                                                    </div>
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                                    <FormControl>
+                                                        <SelectTrigger className="w-full">
+                                                            <SelectValue placeholder="Select a credential" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {credentials?.map((credential) => (
+                                                            <SelectItem
+                                                                key={credential.id}
+                                                                value={credential.id}
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <Image
+                                                                        src={'/logos/anthropic.svg'}
+                                                                        alt={'Anthropic'}
+                                                                        width={16}
+                                                                        height={16}
+                                                                    />
+                                                                    {credential.name}
+                                                                </div>
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </TooltipTrigger>
+                                        {!isLoadingCredentials && !credentials?.length && (
+                                            <TooltipContent>
+                                                <p>No Anthropic credentials available. Please add a credential first.</p>
+                                            </TooltipContent>
+                                        )}
+                                    </Tooltip>
                                     <FormMessage />
                                 </FormItem>
                             )}

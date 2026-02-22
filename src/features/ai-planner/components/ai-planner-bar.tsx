@@ -107,7 +107,7 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
   return (
     <div className="flex flex-col gap-2">
       <div className={`flex items-center gap-2 rounded-lg p-2 shadow-md ${canvasLightMode
-        ? "bg-white border border-slate-200"
+        ? "bg-white border-2 border-slate-300"
         : "glass"
         }`}>
         <Input
@@ -115,7 +115,7 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
           onChange={(e) => setIntent(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Describe your automation…"
-          className={`w-[320px] h-8 text-sm ${canvasLightMode ? "!bg-slate-50 !text-slate-900 !border-slate-200 placeholder:!text-slate-400 !caret-slate-900 focus-visible:!ring-slate-300" : ""}`}
+          className={`w-[320px] h-8 text-sm ${canvasLightMode ? "!bg-slate-50 !text-slate-900 !border-2 !border-slate-300 placeholder:!text-slate-400 !caret-slate-900 focus-visible:!ring-slate-300" : ""}`}
           disabled={generatePlan.isPending}
         />
         <Button
@@ -138,7 +138,11 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
         </Button>
       </div>
       {showDraftBadge && (
-        <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white border border-zinc-700 rounded-md px-3 py-1.5 text-xs font-medium shadow-lg w-fit">
+        <div className={`rounded-md px-3 py-1.5 text-xs font-medium shadow-lg w-fit ${
+          canvasLightMode
+            ? "bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 text-slate-900 border-2 border-slate-300"
+            : "bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white border border-zinc-700"
+        }`}>
           AI Draft — Review Before Running
         </div>
       )}

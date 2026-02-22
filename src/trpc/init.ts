@@ -39,6 +39,22 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => { /
   return next({ ctx: { ...ctx, auth: session } });
 });
 
+export const freeTierProcedure = protectedProcedure.use(
+  async ({ ctx, next }) => {
+    const customer = await polarClient.customers.getStateExternal({
+      externalId: ctx.auth.user.id,
+    });
+
+    const hasActiveSubscription = 
+      customer.activeSubscriptions && 
+      customer.activeSubscriptions.length > 0;
+
+    return next({
+      ctx: { ...ctx, customer, hasActiveSubscription },
+    });
+  }
+);
+
 export const premiumProcedure = protectedProcedure.use(
   async ({ ctx, next }) => {
     const customer = await polarClient.customers.getStateExternal({

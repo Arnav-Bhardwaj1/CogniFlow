@@ -11,6 +11,8 @@ import { AlertDialog,
 }
 from "@/components/ui/alert-dialog";
 import { authClient } from "@/lib/auth-client";
+import { FREE_TIER_LIMITS } from "@/config/constants";
+import { CheckIcon } from "lucide-react";
 
 interface UpgradeModalProps {
     open: boolean;
@@ -20,16 +22,55 @@ interface UpgradeModalProps {
 export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
     return (
         <AlertDialog open={open} onOpenChange={onOpenChange}>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-md">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Upgrade to Pro</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        You are currently using the free plan. Upgrade to Pro to unlock all features.
+                    <AlertDialogDescription className="space-y-4">
+                        <p>You&apos;ve reached the free tier limit. Upgrade to Pro to unlock unlimited access!</p>
+                        
+                        <div className="space-y-3 pt-2">
+                            <div className="text-sm">
+                                <span className="font-semibold text-foreground">Free Plan:</span>
+                                <ul className="mt-2 space-y-1.5 text-muted-foreground">
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-xs mt-0.5">•</span>
+                                        <span>Up to {FREE_TIER_LIMITS.MAX_WORKFLOWS} workflows</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-xs mt-0.5">•</span>
+                                        <span>Up to {FREE_TIER_LIMITS.MAX_CREDENTIALS} credentials</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div className="text-sm">
+                                <span className="font-semibold text-foreground">Pro Plan:</span>
+                                <ul className="mt-2 space-y-1.5 text-muted-foreground">
+                                    <li className="flex items-center gap-2">
+                                        <CheckIcon className="h-4 w-4 text-green-600" />
+                                        <span>Unlimited workflows</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <CheckIcon className="h-4 w-4 text-green-600" />
+                                        <span>Unlimited credentials</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <CheckIcon className="h-4 w-4 text-green-600" />
+                                        <span>Priority support</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => authClient.checkout({ slug: "CogniFlow-Pro" })}>Upgrade</AlertDialogAction>
+                    <AlertDialogAction 
+                        onClick={() => authClient.checkout({ slug: "CogniFlow-Pro" })}
+                        className="bg-gradient-to-r from-orange-500 via-orange-600 to-orange-500 hover:from-orange-600 hover:via-orange-700 hover:to-orange-600 text-white shadow-lg shadow-orange-500/50 hover:shadow-xl hover:shadow-orange-600/60 transition-all duration-200 hover:scale-105 font-semibold"
+                    >
+                        Upgrade to Pro
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

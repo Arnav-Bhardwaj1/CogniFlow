@@ -13,9 +13,11 @@ import { useRouter } from 'next/navigation'
 export default function LandingPage() {
   const { data: session, isPending: isSessionPending } = authClient.useSession();
   const [isNavigating, startTransition] = useTransition();
+  const [loadingButton, setLoadingButton] = React.useState<string | null>(null);
   const router = useRouter();
 
-  const handleNavigation = (href: string) => {
+  const handleNavigation = (href: string, buttonId: string) => {
+    setLoadingButton(buttonId);
     startTransition(() => {
       router.push(href);
     });
@@ -50,34 +52,35 @@ export default function LandingPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               {isSessionPending ? (
-                <Loader2Icon className="animate-spin text-primary size-8" />
+                <Button
+                  disabled
+                  size="lg"
+                  className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 min-w-[220px]"
+                >
+                  <Loader2Icon className="size-5 animate-spin mr-2" />
+                  Loading...
+                </Button>
               ) : session ? (
                 <Button
-                  onClick={() => handleNavigation("/workflows")}
+                  onClick={() => handleNavigation("/workflows", "hero-dashboard")}
                   disabled={isNavigating}
                   size="lg"
                   className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[200px]"
                 >
-                  {isNavigating ? <Loader2Icon className="size-5 animate-spin" /> : (
-                    <>
-                      Go to Dashboard
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </>
-                  )}
+                  {loadingButton === "hero-dashboard" && <Loader2Icon className="size-5 animate-spin mr-2" />}
+                  Go to Dashboard
+                  {loadingButton !== "hero-dashboard" && <ArrowRightIcon className="ml-2 size-4" />}
                 </Button>
               ) : (
                 <Button
-                  onClick={() => handleNavigation("/signup")}
+                  onClick={() => handleNavigation("/signup", "hero-signup")}
                   disabled={isNavigating}
                   size="lg"
                   className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[220px]"
                 >
-                  {isNavigating ? <Loader2Icon className="size-5 animate-spin" /> : (
-                    <>
-                      Start Building Free
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </>
-                  )}
+                  {loadingButton === "hero-signup" && <Loader2Icon className="size-5 animate-spin mr-2" />}
+                  Start Building Free
+                  {loadingButton !== "hero-signup" && <ArrowRightIcon className="ml-2 size-4" />}
                 </Button>
               )}
               <Link href="#features" className="w-full sm:w-auto">
@@ -245,12 +248,13 @@ export default function LandingPage() {
                   <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> Standard community support</li>
                 </ul>
                 <Button
-                  onClick={() => handleNavigation("/signup")}
+                  onClick={() => handleNavigation("/signup", "pricing-free")}
                   disabled={isNavigating}
                   variant="outline"
                   className="w-full rounded-full border-white/10 hover:bg-white/10 mt-auto"
                 >
-                  {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Get Started Forever Free"}
+                  {loadingButton === "pricing-free" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+                  Get Started Forever Free
                 </Button>
               </div>
 
@@ -272,11 +276,12 @@ export default function LandingPage() {
                   <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> AI Workflow Generator</li>
                 </ul>
                 <Button
-                  onClick={() => handleNavigation("/signup")}
+                  onClick={() => handleNavigation("/signup", "pricing-pro")}
                   disabled={isNavigating}
                   className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
                 >
-                  {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Upgrade to Pro"}
+                  {loadingButton === "pricing-pro" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+                  Upgrade to Pro
                 </Button>
               </div>
 
@@ -297,24 +302,33 @@ export default function LandingPage() {
               Join developers building scalable automations with CogniFlow.
             </p>
             {isSessionPending ? (
-              <Loader2Icon className="animate-spin text-primary size-8 mx-auto" />
+              <Button
+                disabled
+                size="lg"
+                className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] min-w-[240px]"
+              >
+                <Loader2Icon className="size-4 animate-spin mr-2" />
+                Loading...
+              </Button>
             ) : session ? (
               <Button
-                onClick={() => handleNavigation("/workflows")}
+                onClick={() => handleNavigation("/workflows", "cta-dashboard")}
                 disabled={isNavigating}
                 size="lg"
                 className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 min-w-[200px]"
               >
-                {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Go to Dashboard"}
+                {loadingButton === "cta-dashboard" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+                Go to Dashboard
               </Button>
             ) : (
               <Button
-                onClick={() => handleNavigation("/signup")}
+                onClick={() => handleNavigation("/signup", "cta-signup")}
                 disabled={isNavigating}
                 size="lg"
                 className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 min-w-[240px]"
               >
-                {isNavigating ? <Loader2Icon className="size-4 animate-spin" /> : "Create your free workspace"}
+                {loadingButton === "cta-signup" && <Loader2Icon className="size-4 animate-spin mr-2" />}
+                Create your free workspace
               </Button>
             )}
           </div>
