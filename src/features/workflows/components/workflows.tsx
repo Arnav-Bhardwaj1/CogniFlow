@@ -18,7 +18,7 @@ export const WorkflowsSearch = () => {
   });
 
   return (
-    <EntitySearch 
+    <EntitySearch
       value={searchValue}
       onChange={onSearchChange}
       placeholder="Search Workflows"
@@ -38,8 +38,8 @@ export const WorkflowsList = () => {
   )
 };
 
-export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) =>
-{ const createWorkflow = useCreateWorkflow();
+export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) => {
+  const createWorkflow = useCreateWorkflow();
   const router = useRouter();
   const { modal, handleError } = useUpgradeModal();
   const handleCreate = () => {
@@ -51,13 +51,13 @@ export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) =>
         handleError(error);
       },
     });
-  }  
+  }
 
   return (
     <>
       {modal}
       <EntityHeader
-        title="Workflows" 
+        title="Workflows"
         description="Create and manage your workflows"
         onNew={handleCreate}
         newButtonLabel="New Workflow"
@@ -76,12 +76,12 @@ export const WorkflowsPagination = () => {
       totalPages={workflows.data.totalPages}
       page={workflows.data.page}
       onPageChange={(page) => setParams({ ...params, page })}
-  /> )
+    />)
 };
 
 // A function that returns JSX is a React component
 
-export const WorkflowsContainer = ( {
+export const WorkflowsContainer = ({
   children // children is a special prop in React that: children is whatever JSX you place inside a component when you use it.
 }: {
   children: React.ReactNode; // ReactNode is a type that represents any valid React child, including elements, strings, numbers, fragments, portals, etc.
@@ -91,7 +91,7 @@ export const WorkflowsContainer = ( {
       header={<WorkflowsHeader />}
       search={<WorkflowsSearch />}
       pagination={<WorkflowsPagination />}
-      >
+    >
       {children}
     </EntityContainer>
   )
@@ -119,10 +119,10 @@ export const WorkflowsEmpty = () => {
     });
   };
   return (
-      <>      
-       {modal}   {/* Render the upgrade modal, may or may not be visible based on state */}
+    <>
+      {modal}   {/* Render the upgrade modal, may or may not be visible based on state */}
       <EmptyView
-        onNew={handleCreate} 
+        onNew={handleCreate}
         message="No Workflows Found. Get started by
         creating a new workflow."
       />
@@ -137,24 +137,22 @@ export const WorkflowItem = ({
 }) => {
   const removeWorkflow = useRemoveWorkflow();
   const handleRemove = () => {
-    removeWorkflow.mutate({id: data.id});
+    removeWorkflow.mutate({ id: data.id });
   };
   return (
     <EntityItem
       href={`/workflows/${data.id}`}
       title={data.name}
 
-      subtitle={ 
+      subtitle={
         <>
           Updated {formatDistanceToNow(data.updatedAt, { addSuffix: true })}{""}
           &bull; Created{" "}
           {formatDistanceToNow(data.createdAt, { addSuffix: true })} {/* how long ago it was created, relative to now */}
         </>
-      } 
+      }
       image={
-        <div className="size-8 flex items-center justify-center">
-          <WorkflowIcon className="size-5 text-muted-foreground" />
-        </div>
+        <WorkflowIcon className="size-5 text-white/70" />
       }
       onRemove={handleRemove}
       isRemoving={removeWorkflow.isPending}

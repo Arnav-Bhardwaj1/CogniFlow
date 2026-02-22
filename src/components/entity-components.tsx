@@ -133,7 +133,7 @@ export const EntitySearch = ({
         aria-label={placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)} // onChange is used to handle input changes, e.target.value gets the current value of the input field
-        className="max-w-50 bg-background shadow-none border border-black pl-8"
+        className="max-w-50 glass shadow-none pl-8 focus:border-[#f97316]/60"
       />
     </div>
   );
@@ -163,6 +163,7 @@ export const EntityPagination = ({
           variant="outline"
           size="sm"
           onClick={() => onPageChange?.(Math.max(1, page - 1))}
+          className="glass border-white/10 text-white/70 hover:text-white hover:border-[#f97316]/30 hover:bg-[#f97316]/10"
         >
           Previous
         </Button>
@@ -171,6 +172,7 @@ export const EntityPagination = ({
           onClick={() => onPageChange?.(Math.min(totalPages, page + 1))}
           size="sm"
           variant="outline"
+          className="glass border-white/10 text-white/70 hover:text-white hover:border-[#f97316]/30 hover:bg-[#f97316]/10"
         >
           Next
         </Button>
@@ -204,11 +206,12 @@ export const ErrorView = ({ message }: StateViewProps) => {
 
 interface EmptyViewProps extends StateViewProps {
   onNew?: () => void;
+  isLoading?: boolean;
 }
 
-export const EmptyView = ({ message, onNew }: EmptyViewProps) => {
+export const EmptyView = ({ message, onNew, isLoading }: EmptyViewProps) => {
   return (
-    <Empty className="border border-dashed bg-white/80">
+    <Empty className="border border-dashed glass">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <FolderOpenIcon className="size-9" />
@@ -218,7 +221,13 @@ export const EmptyView = ({ message, onNew }: EmptyViewProps) => {
       {!!message && <EmptyDescription>{message}</EmptyDescription>}
       {!!onNew && (
         <EmptyContent>
-          <Button onClick={onNew}>Add item</Button>
+          <Button onClick={onNew} disabled={isLoading}>
+            {isLoading ? (
+              <Loader2Icon className="size-4 animate-spin" />
+            ) : (
+              "Add item"
+            )}
+          </Button>
         </EmptyContent>
       )}
     </Empty>
@@ -300,14 +309,14 @@ export const EntityItem = ({
     <Link href={href || "#"} prefetch>
       <Card
         className={cn(
-          "h-full p-4 sm:p-6 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-200 border-border/50",
+          "h-full p-4 sm:p-6 glass cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_32px_rgba(249,115,22,0.2)] hover:border-[#f97316]/30",
           isRemoving && "opacity-50 cursor-not-allowed"
         )}
       >
         <CardContent className="flex flex-col h-full p-0">
           <div className="flex items-start gap-4 flex-1">
             {image && (
-              <div className="shrink-0">
+              <div className="shrink-0 flex items-center justify-center size-10 rounded-md border border-white/10 bg-white/5 shadow-sm">
                 {image}
               </div>
             )}

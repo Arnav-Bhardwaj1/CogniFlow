@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Loader2Icon, SaveIcon } from "lucide-react";
+import { Loader2Icon, SaveIcon, SunIcon, MoonIcon } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,7 +15,8 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useSuspenseWorkflow, useUpdateWorkflow, useUpdateWorkflowName } from "@/features/workflows/hooks/use-workflows";
 import { editorAtom } from "../store/atom";
-import { useAtomValue } from "jotai";
+import { canvasLightModeAtom } from "../store/canvas-theme-atom";
+import { useAtomValue, useAtom } from "jotai";
 
 export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
   const editor = useAtomValue(editorAtom);
@@ -34,7 +35,7 @@ export const EditorSaveButton = ({ workflowId }: { workflowId: string }) => {
   };
 
   return (
-    <div className="ml-auto">
+    <div>
       <Button size="sm" onClick={handleSave} disabled={saveWorkflow.isPending}>
         {saveWorkflow.isPending ? (
           <><Loader2Icon className="size-4 animate-spin" /> Saving...</>
@@ -53,6 +54,7 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(workflow.name);
   const inputRef = useRef<HTMLInputElement>(null); // reference to the input element
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
 
   useEffect(() => {
     if (workflow.name) {
@@ -95,7 +97,7 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
     return (
       <BreadcrumbItem
         onClick={() => setIsEditing(true)} // calls the return statement written below
-        className="cursor-pointer hover:text-foreground transition-colors"
+        className={`cursor-pointer transition-colors ${canvasLightMode ? "!text-slate-900 hover:!text-slate-700" : "hover:text-foreground"}`}
       >
         {workflow.name}
       </BreadcrumbItem>
@@ -111,25 +113,27 @@ export const EditorNameInput = ({ workflowId }: { workflowId: string }) => {
         onKeyDown={handleKeyDown}
         onChange={(e) => setName(e.target.value)}
         onBlur={handleSave} // is onBlur an inbuilt prop? yes, called when input loses focus
-        className="h-7 w-auto min-w-[100px] px-2"
+        className={`h-7 w-auto min-w-[100px] px-2 ${canvasLightMode ? "!text-slate-900 !bg-white border-slate-300" : ""}`}
       />
     </BreadcrumbItem>
   );
 };
 
 export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           {/* The below line will now work like next.js link (as its child is <Link>) */}
-          <BreadcrumbLink asChild>
+          <BreadcrumbLink asChild className={canvasLightMode ? "!text-slate-600 hover:!text-slate-900" : ""}>
             <Link prefetch href="/workflows">
               Workflows
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator className={canvasLightMode ? "text-slate-400" : ""} />
         <EditorNameInput workflowId={workflowId} />
       </BreadcrumbList>
     </Breadcrumb>
@@ -137,13 +141,30 @@ export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
 };
 
 export const EditorHeader = ({ workflowId }: { workflowId: string }) => {
+  const [canvasLightMode, setCanvasLightMode] = useAtom(canvasLightModeAtom);
+
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2
-    border-b px-4 bg-background">
-      <SidebarTrigger />
+    <header className={`flex h-14 shrink-0 items-center gap-2 border-b px-4 transition-colors ${canvasLightMode ? "bg-slate-100 border-slate-300" : "bg-background"
+      }`}>
+      <SidebarTrigger className={canvasLightMode ? "!text-slate-600 hover:!bg-slate-200" : ""} />
       <div className="flex flex-row gap-x-4 w-full items-center">
         <EditorBreadcrumbs workflowId={workflowId} />
-        <EditorSaveButton workflowId={workflowId} />
+        <div className="ml-auto flex items-center gap-2">
+          <EditorSaveButton workflowId={workflowId} />
+          <Button
+            size="icon"
+            variant="outline"
+            className="size-9 shrink-0 border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40"
+            onClick={() => setCanvasLightMode((prev) => !prev)}
+            title={canvasLightMode ? "Switch canvas to dark mode" : "Switch canvas to light mode"}
+          >
+            {canvasLightMode ? (
+              <MoonIcon className="size-[18px]" />
+            ) : (
+              <SunIcon className="size-[18px]" />
+            )}
+          </Button>
+        </div>
       </div>
     </header>
   );

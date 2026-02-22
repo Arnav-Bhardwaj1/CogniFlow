@@ -1,13 +1,13 @@
 'use client';
 
 import { EmptyView, EntityContainer, EntityHeader, EntityItem, EntityList, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
-import {  useRemoveCredential, useSuspenseCredentials,  } from "../hooks/use-credentials";
+import { useRemoveCredential, useSuspenseCredentials, } from "../hooks/use-credentials";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useCredentialsParams } from "../hooks/use-credentials-params";
 import { useEntitySearch } from "@/hooks/use-entity-search";
 import type { Credential } from '@/app/generated/prisma';
-import  {  CredentialType } from '@/app/generated/prisma';
+import { CredentialType } from '@/app/generated/prisma';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -30,24 +30,33 @@ export const CredentialsSearch = () => {
 export const CredentialsList = () => {
     const credentials = useSuspenseCredentials();
 
-    return <EntityList 
-                items={credentials.data.items} 
-                renderItem={(credential) => <CredentialItem data={credential} />} 
-                getKey={(credential) => credential.id}
-                emptyView={<CredentialsEmpty />}
-            />;
+    return <EntityList
+        items={credentials.data.items}
+        renderItem={(credential) => <CredentialItem data={credential} />}
+        getKey={(credential) => credential.id}
+        emptyView={<CredentialsEmpty />}
+    />;
 };
 
 export const CredentialsHeader = ({ disabled }: { disabled?: boolean }) => {
-  
-    return (      
-        <EntityHeader 
+    const [isPending, startTransition] = React.useTransition();
+    const router = useRouter();
+
+    const handleNew = () => {
+        startTransition(() => {
+            router.push("/credentials/new");
+        });
+    };
+
+    return (
+        <EntityHeader
             title="Credentials"
             description="Create and manage your credentials"
             disabled={disabled}
-            newButtonHref={'/credentials/new'}
+            onNew={handleNew}
             newButtonLabel="New credentials"
-        /> 
+            isCreating={isPending}
+        />
     );
 };
 
@@ -56,7 +65,7 @@ export const CredentialsPagination = () => {
     const [params, setParams] = useCredentialsParams();
 
     return (
-        <EntityPagination 
+        <EntityPagination
             disabled={credentials.isFetching}
             totalPages={credentials.data.totalPages}
             page={credentials.data.page}
@@ -76,7 +85,7 @@ export const CredentialsContainer = ({ children }: { children: React.ReactNode }
         </EntityContainer>
     );
 };
-        
+
 
 export const CredentialsLoading = () => {
     return <LoadingView message='Loading credentials...' />
@@ -88,18 +97,21 @@ export const CredentialsError = () => {
 
 export const CredentialsEmpty = () => {
     const router = useRouter();
-
+    const [isPending, startTransition] = React.useTransition();
 
     const handleCreate = () => {
-        router.push('/credentials/new');
-        };
+        startTransition(() => {
+            router.push('/credentials/new');
+        });
+    };
 
     return (
-            <EmptyView
-                onNew={handleCreate}
-                message="You haven't created any credentials yet. Get
+        <EmptyView
+            onNew={handleCreate}
+            isLoading={isPending}
+            message="You haven't created any credentials yet. Get
                 started by creating your first credential."
-            />
+        />
     );
 };
 
@@ -111,11 +123,11 @@ const credentialLogos: Record<CredentialType, string> = {
 
 export const CredentialItem = ({
     data,
-}: {data: Credential}) => {
+}: { data: Credential }) => {
     const removeCredential = useRemoveCredential();
 
     const handleRemove = () => {
-        removeCredential.mutate({id: data.id});
+        removeCredential.mutate({ id: data.id });
     };
 
     const logo = credentialLogos[data.type] || 'logos/gemini.svg';
@@ -132,13 +144,11 @@ export const CredentialItem = ({
                 </>
             }
             image={
-                <div className="size-8 flex items-center justify-center">
-                    <Image src={logo} alt={data.type} width={20} height={20} />
-                </div>
+                <Image src={logo} alt={data.type} width={22} height={22} className="object-contain" />
             }
             onRemove={handleRemove}
             isRemoving={removeCredential.isPending}
-         />
+        />
     )
 };
 

@@ -3,6 +3,8 @@ import { forwardRef, HTMLAttributes, type ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { NodeStatus } from "./node-status-indicator";
 import { CheckCircle2Icon, Loader2Icon, XCircleIcon } from "lucide-react";
+import { useAtomValue } from "jotai";
+import { canvasLightModeAtom } from "@/features/editor/store/canvas-theme-atom";
 
 interface BaseNodeProps extends HTMLAttributes<HTMLDivElement> {
   status?: NodeStatus;
@@ -10,29 +12,36 @@ interface BaseNodeProps extends HTMLAttributes<HTMLDivElement> {
 export const BaseNode = forwardRef<
   HTMLDivElement,
   BaseNodeProps
->(({ className, status, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "relative rounded-sm border border-muted-foreground bg-card text-card-foreground",
-      "transition-all duration-200 hover:scale-[1.02] hover:ring-2 hover:ring-primary/50 hover:shadow-lg",
-      className,
-    )}
-    tabIndex={0}
-    {...props}
-  >
-    {props.children}
-    {status === "error" && (
-      <XCircleIcon className="absolute bottom-0.5 right-0.5 size-2 text-red-700 stroke-3" />
-    )}
-    {status === "success" && (
-      <CheckCircle2Icon className="absolute bottom-0.5 right-0.5 size-2 text-green-700 stroke-3" />
-    )}
-    {status === "loading" && (
-      <Loader2Icon className="absolute -bottom-0.5 -right-0.5 size-2 text-blue-700 stroke-3 animate-spin" />
-    )}
+>(({ className, status, ...props }, ref) => {
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "relative rounded-sm border text-card-foreground",
+        "transition-all duration-200 hover:scale-[1.02]",
+        canvasLightMode
+          ? "bg-white border-slate-900 shadow-sm hover:shadow-md"
+          : "bg-card dark:bg-[rgba(255,255,255,0.05)] dark:border-white/[0.15] dark:backdrop-blur-md border-border hover:shadow-lg dark:hover:shadow-[0_0_20px_rgba(249,115,22,0.25)] dark:hover:border-white/30",
+        className,
+      )}
+      tabIndex={0}
+      {...props}
+    >
+      {props.children}
+      {status === "error" && (
+        <XCircleIcon className="absolute bottom-0.5 right-0.5 size-2 text-red-700 stroke-3" />
+      )}
+      {status === "success" && (
+        <CheckCircle2Icon className="absolute bottom-0.5 right-0.5 size-2 text-green-700 stroke-3" />
+      )}
+      {status === "loading" && (
+        <Loader2Icon className="absolute -bottom-0.5 -right-0.5 size-2 text-blue-700 stroke-3 animate-spin" />
+      )}
     </div>
-));
+  )
+});
 BaseNode.displayName = "BaseNode";
 
 /**

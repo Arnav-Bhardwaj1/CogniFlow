@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -51,14 +51,20 @@ export const AppSidebar = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [navigatingUrl, setNavigatingUrl] = useState<string | null>(null);
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
+
+  useEffect(() => {
+    setNavigatingUrl(null);
+  }, [pathname]);
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <SidebarMenuButton asChild className="gap-x-4 h-12 px-4">
-          <Link href="/workflows" prefetch>
+        <SidebarMenuButton asChild className="gap-x-4 h-12 px-4 bg-white/[0.04] border-b border-white/[0.06]">
+          <Link href="/" prefetch>
             <Image src="/logos/logo.svg" alt="CogniFlow" width={32} height={32} />
-            <span className="text-sm font-semibold">CogniFlow</span>
+            <span className="text-sm font-bold text-white tracking-wide">CogniFlow</span>
           </Link>
         </SidebarMenuButton>
       </SidebarHeader>
@@ -77,8 +83,20 @@ export const AppSidebar = () => {
                     asChild
                     className="gap-x-4 h-10 px-4"
                   >
-                    <Link href={menuItem.url} prefetch>
-                      <menuItem.icon className="size-4" />
+                    <Link
+                      href={menuItem.url}
+                      prefetch
+                      onClick={() => {
+                        if (pathname !== menuItem.url) {
+                          setNavigatingUrl(menuItem.url);
+                        }
+                      }}
+                    >
+                      {navigatingUrl === menuItem.url ? (
+                        <Loader2Icon className="size-4 animate-spin" />
+                      ) : (
+                        <menuItem.icon className="size-4" />
+                      )}
                       <span>{menuItem.title}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -127,7 +145,7 @@ export const AppSidebar = () => {
                 await authClient.signOut();
                 queryClient.clear();
                 router.refresh();
-                router.push("/login");
+                router.push("/");
               }}
             >
               {isSigningOut ? (

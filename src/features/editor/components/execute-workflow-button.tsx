@@ -11,7 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const ExecuteWorkflowButton = ({
   workflowId,
@@ -22,24 +22,36 @@ export const ExecuteWorkflowButton = ({
 }) => {
   const executeWorkflow = useExecuteWorkflow();
   const [showAlert, setShowAlert] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  // Keep loading state for 5 seconds after mutation completes
+  useEffect(() => {
+    if (!isExecuting) return;
+    const timer = setTimeout(() => setIsExecuting(false), 5000);
+    return () => clearTimeout(timer);
+  }, [isExecuting]);
+
+  const isLoading = executeWorkflow.isPending || isExecuting;
 
   const handleExecute = () => {
     if (hasUnsavedChanges) {
       setShowAlert(true);
     } else {
+      setIsExecuting(true);
       executeWorkflow.mutate({ id: workflowId });
     }
   };
 
   const confirmExecute = () => {
+    setIsExecuting(true);
     executeWorkflow.mutate({ id: workflowId });
     setShowAlert(false);
   };
 
   return (
     <>
-      <Button size="lg" onClick={handleExecute} disabled={executeWorkflow.isPending}>
-        {executeWorkflow.isPending ? (
+      <Button size="lg" onClick={handleExecute} disabled={isLoading}>
+        {isLoading ? (
           <><Loader2Icon className="size-4 animate-spin" /> Executing...</>
         ) : (
           <><FlaskConicalIcon className="size-4" /> Execute workflow</>

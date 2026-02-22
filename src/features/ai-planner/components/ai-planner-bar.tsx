@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import { useGenerateWorkflowPlan } from "../hooks/use-generate-plan";
 import { useReactFlow, type Node, type Edge } from "@xyflow/react";
 import type { WorkflowPlan } from "../schema";
+import { useAtomValue } from "jotai";
+import { canvasLightModeAtom } from "@/features/editor/store/canvas-theme-atom";
 
 const NODE_SPACING = 150;
 const NODE_Y_STAGGER = 30; // slight vertical offset so edges aren't perfectly straight
@@ -22,6 +24,7 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
   const [showDraftBadge, setShowDraftBadge] = useState(false);
   const generatePlan = useGenerateWorkflowPlan();
   const reactFlowInstance = useReactFlow();
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
 
   useEffect(() => {
     if (!showDraftBadge) return;
@@ -79,6 +82,8 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
             id: `ai-edge-${index}`,
             source: edge.from,
             target: edge.to,
+            sourceHandle: "source-1",
+            targetHandle: "target-1",
           }));
 
           setNodes(rfNodes);
@@ -101,19 +106,23 @@ export const AiPlannerBar = ({ setNodes, setEdges }: AiPlannerBarProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border rounded-lg p-2 shadow-md">
+      <div className={`flex items-center gap-2 rounded-lg p-2 shadow-md ${canvasLightMode
+        ? "bg-white border border-slate-200"
+        : "glass"
+        }`}>
         <Input
           value={intent}
           onChange={(e) => setIntent(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Describe your automation…"
-          className="w-[320px] h-8 text-sm"
+          className={`w-[320px] h-8 text-sm ${canvasLightMode ? "!bg-slate-50 !text-slate-900 !border-slate-200 placeholder:!text-slate-400 !caret-slate-900 focus-visible:!ring-slate-300" : ""}`}
           disabled={generatePlan.isPending}
         />
         <Button
           size="sm"
           onClick={handleGenerate}
           disabled={generatePlan.isPending || !intent.trim()}
+          className="!text-white"
         >
           {generatePlan.isPending ? (
             <>

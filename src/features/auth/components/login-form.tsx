@@ -52,7 +52,7 @@ export function LoginForm() {
         setIsGithubLoading(true);
         await authClient.signIn.social({
             provider: "github",
-            callbackURL: "/",
+            callbackURL: "/workflows",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
@@ -65,7 +65,7 @@ export function LoginForm() {
         setIsGoogleLoading(true);
         await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/",
+            callbackURL: "/workflows",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
@@ -77,13 +77,13 @@ export function LoginForm() {
         await authClient.signIn.email({
             email: values.email,
             password: values.password,
-            callbackURL: "/",
+            callbackURL: "/workflows",
         },
             {
                 onSuccess: () => {
                     queryClient.clear();
                     router.refresh();
-                    router.push("/");
+                    router.push("/workflows");
                 },
                 onError: (ctx) => {
                     toast.error(ctx.error.message);
@@ -93,7 +93,7 @@ export function LoginForm() {
     const isPending = form.formState.isSubmitting;
     const anyLoading = isPending || isGithubLoading || isGoogleLoading;
     return (
-        <div className="flex flex-col gap-6 mx-auto min-w-sm">
+        <div className="flex flex-col gap-6 mx-auto w-full">
             <Card>
                 <CardHeader className="text-center">
                     <CardTitle>Welcome back</CardTitle>
@@ -113,7 +113,7 @@ export function LoginForm() {
                                         {isGithubLoading ? (
                                             <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
                                         ) : (
-                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} /> Continue with GitHub</>
+                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} className="dark:invert" /> Continue with GitHub</>
                                         )}
                                     </Button>
                                     <Button variant="outline"

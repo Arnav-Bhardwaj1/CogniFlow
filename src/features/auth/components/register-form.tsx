@@ -57,7 +57,7 @@ export function RegisterForm() {
         setIsGithubLoading(true);
         await authClient.signIn.social({
             provider: "github",
-            callbackURL: "/",
+            callbackURL: "/workflows",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
@@ -70,7 +70,7 @@ export function RegisterForm() {
         setIsGoogleLoading(true);
         await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/",
+            callbackURL: "/workflows",
         }, {
             onError: () => {
                 toast.error('Something went wrong');
@@ -84,13 +84,13 @@ export function RegisterForm() {
                 name: values.email,
                 email: values.email,
                 password: values.password,
-                callbackURL: "/",
+                callbackURL: "/workflows",
             },
             {
                 onSuccess: () => {
                     queryClient.clear();
                     router.refresh();
-                    router.push("/");
+                    router.push("/workflows");
                 },
                 onError: (ctx) => {
                     toast.error(ctx.error.message || "Something went wrong during registration");
@@ -101,7 +101,7 @@ export function RegisterForm() {
     const isPending = form.formState.isSubmitting;
     const anyLoading = isPending || isGithubLoading || isGoogleLoading;
     return (
-        <div className="flex flex-col gap-6 mx-auto min-w-sm">
+        <div className="flex flex-col gap-6 mx-auto w-full">
             <Card>
                 <CardHeader className="text-center">
                     <CardTitle>Get Started</CardTitle>
@@ -110,8 +110,8 @@ export function RegisterForm() {
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <div className="grid gap-6">
-                                <div className="flex flex-col gap-4">
+                            <div className="grid gap-4">
+                                <div className="flex flex-col gap-2">
                                     <Button variant="outline"
                                         className="w-full cursor-pointer"
                                         type="button"
@@ -121,7 +121,7 @@ export function RegisterForm() {
                                         {isGithubLoading ? (
                                             <><Loader2Icon className="size-5 animate-spin" /> Signing in...</>
                                         ) : (
-                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} /> Continue with GitHub</>
+                                            <><Image src="/logos/github.svg" alt="GitHub" width={22} height={22} className="dark:invert" /> Continue with GitHub</>
                                         )}
                                     </Button>
                                     <Button variant="outline"
@@ -137,7 +137,7 @@ export function RegisterForm() {
                                         )}
                                     </Button>
                                 </div>
-                                <div className="grid gap-6 w-full">
+                                <div className="grid gap-3 w-full">
                                     <FormField
                                         control={form.control}
                                         name="email"

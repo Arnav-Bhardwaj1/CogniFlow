@@ -17,7 +17,8 @@ export const useSuspenseWorkflows = () => {
 export const useSuspenseWorkflow = (id: string) => {
   const trpc = useTRPC();
   return useSuspenseQuery(trpc.workflows.getOne.queryOptions({
-  id }));
+    id
+  }));
 };
 
 export const useCreateWorkflow = () => {
@@ -83,11 +84,11 @@ export const useUpdateWorkflow = () => {
   return useMutation(
     trpc.workflows.update.mutationOptions({
       onSuccess: (data) => {
-        toast.success( `Workflow "${data.name}" saved`);
-        queryClient. invalidateQueries (
+        toast.success(`Workflow "${data.name}" saved`);
+        queryClient.invalidateQueries(
           trpc.workflows.getMany.queryOptions({}),
         );
-        queryClient.invalidateQueries (
+        queryClient.invalidateQueries(
           trpc.workflows.getOne.queryOptions({ id: data.id }),
         );
       },
@@ -106,15 +107,18 @@ export const useExecuteWorkflow = () => {
   const queryClient = useQueryClient();
   return useMutation(
     trpc.workflows.execute.mutationOptions({
-        onSuccess: (data) => {
-          toast.success( `Workflow "${data.name}" executed`);
-          // Invalidate executions list so the new execution appears immediately
-          queryClient.invalidateQueries({ queryKey: [["executions"]] });
-        },
-        onError: (error) =>{
-          toast.error(`Failed to execute workflow: ${error.
+      onSuccess: (data) => {
+        // Delay the toast so it appears when nodes actually start showing loading UI
+        setTimeout(() => {
+          toast.success(`Workflow "${data.name}" execution started`);
+        }, 3000);
+        // Invalidate executions list so the new execution appears immediately
+        queryClient.invalidateQueries({ queryKey: [["executions"]] });
+      },
+      onError: (error) => {
+        toast.error(`Failed to execute workflow: ${error.
           message}`);
-        },
+      },
     }),
   );
 };

@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { NodeType } from "@/app/generated/prisma";
+import { useAtomValue } from "jotai";
+import { canvasLightModeAtom } from "@/features/editor/store/canvas-theme-atom";
 
 export type NodeTypeOption = {
   label: string;
@@ -139,13 +141,15 @@ export function NodeSelector({
     onOpenChange,
   ]);
 
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
+      <SheetContent side="right" className={`w-full sm:max-w-md overflow-y-auto ${canvasLightMode ? "!bg-white !text-slate-900 !border-slate-200 node-selector-light" : ""}`}>
         <SheetHeader>
-          <SheetTitle>What triggers this workflow?</SheetTitle>
-          <SheetDescription>
+          <SheetTitle className={canvasLightMode ? "!text-slate-900" : ""}>What triggers this workflow?</SheetTitle>
+          <SheetDescription className={canvasLightMode ? "!text-slate-500" : ""}>
             A trigger is a step that starts the workflow.
           </SheetDescription>
         </SheetHeader>
@@ -159,19 +163,21 @@ export function NodeSelector({
                 onClick={() => handleNodeSelect(node)}
               >
                 <div className="flex items-center gap-6 w-full overflow-hidden">
-                  {typeof Icon === "string" ? ( // check if Icon is a string (URL) or a component
-                    /* eslint-disable @next/next/no-img-element */
-                    <img // used img instead of Next.js Image component because the icon is tiny (its not an "image" that needs optimization)
-                      src={Icon}
-                      alt={node.label}
-                      className="size-5 object-contain rounded-sm"
-                    />
-                  ) : (
-                    <Icon className="size-5" /> // render the icon component
-                  )}
+                  <div className={`flex items-center justify-center size-8 rounded-md shrink-0 ${canvasLightMode ? "border border-slate-200 bg-slate-50" : "border border-white/10 bg-white/5"}`}>
+                    {typeof Icon === "string" ? (
+                      /* eslint-disable @next/next/no-img-element */
+                      <img
+                        src={Icon}
+                        alt={node.label}
+                        className="size-5 object-contain rounded-sm dark:invert-0"
+                      />
+                    ) : (
+                      <Icon className="size-5" />
+                    )}
+                  </div>
                   <div className="flex flex-col items-start text-left">
-                    <span className="text-sm font-medium">{node.label}</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className={`text-sm font-medium ${canvasLightMode ? "text-slate-900" : ""}`}>{node.label}</span>
+                    <span className={`text-xs ${canvasLightMode ? "text-slate-500" : "text-muted-foreground"}`}>
                       {node.description}
                     </span>
                   </div>
@@ -192,18 +198,20 @@ export function NodeSelector({
                 onClick={() => handleNodeSelect(node)}
               >
                 <div className="flex items-center gap-6 w-full overflow-hidden">
-                  {typeof Icon === "string" ? (
-                    <img
-                      src={Icon}
-                      alt={node.label}
-                      className="size-5 object-contain rounded-sm"
-                    />
-                  ) : (
-                    <Icon className="size-5" />
-                  )}
+                  <div className={`flex items-center justify-center size-8 rounded-md shrink-0 ${canvasLightMode ? "border border-slate-200 bg-slate-50" : "border border-white/10 bg-white/5"}`}>
+                    {typeof Icon === "string" ? (
+                      <img
+                        src={Icon}
+                        alt={node.label}
+                        className="size-5 object-contain rounded-sm dark:invert-0"
+                      />
+                    ) : (
+                      <Icon className="size-5" />
+                    )}
+                  </div>
                   <div className="flex flex-col items-start text-left">
-                    <span className="text-sm font-medium">{node.label}</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className={`text-sm font-medium ${canvasLightMode ? "text-slate-900" : ""}`}>{node.label}</span>
+                    <span className={`text-xs ${canvasLightMode ? "text-slate-500" : "text-muted-foreground"}`}>
                       {node.description}
                     </span>
                   </div>

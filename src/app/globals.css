@@ -1,9 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *):not(.canvas-light-mode *):not(.canvas-light-mode));
 
-:root {
+/* ===== GlassGem Design System ===== */
+
+/* ---------- Light Mode ---------- */
+:root,
+.canvas-light-mode {
   font-size: 110%;
   --background: oklch(1.0000 0 0);
   --foreground: oklch(0.1405 0.0044 285.8238);
@@ -21,7 +25,7 @@
   --accent-foreground: oklch(1.0000 0 0);
   --destructive: oklch(0.6368 0.2078 25.3259);
   --destructive-foreground: oklch(1.0000 0 0);
-  --border: oklch(0.9197 0.0040 286.3200);  
+  --border: oklch(0.9197 0.0040 286.3200);
   --input: oklch(0.9197 0.0040 286.3200);
   --ring: oklch(0.5101 0.2499 288.4179);
   --chart-1: oklch(0.5101 0.2499 288.4179);
@@ -41,77 +45,68 @@
   --font-serif: 'Roboto Slab', serif;
   --font-mono: 'Fira Code', monospace;
   --radius: 0.3rem;
-  --shadow-x: 0px;
-  --shadow-y: 8px;
-  --shadow-blur: 15px;
-  --shadow-spread: -5px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(259 80% 55%);
-  --shadow-2xs: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.05);
-  --shadow-xs: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.05);
-  --shadow-sm: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.10), 0px 1px 2px -6px hsl(259 80% 55.0000% / 0.10);
-  --shadow: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.10), 0px 1px 2px -6px hsl(259 80% 55.0000% / 0.10);
-  --shadow-md: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.10), 0px 2px 4px -6px hsl(259 80% 55.0000% / 0.10);
-  --shadow-lg: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.10), 0px 4px 6px -6px hsl(259 80% 55.0000% / 0.10);
-  --shadow-xl: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.10), 0px 8px 10px -6px hsl(259 80% 55.0000% / 0.10);
-  --shadow-2xl: 0px 8px 15px -5px hsl(259 80% 55.0000% / 0.25);
+  --shadow-2xs: 0px 8px 15px -5px hsl(259 80% 55% / 0.05);
+  --shadow-xs: 0px 8px 15px -5px hsl(259 80% 55% / 0.05);
+  --shadow-sm: 0px 8px 15px -5px hsl(259 80% 55% / 0.10), 0px 1px 2px -6px hsl(259 80% 55% / 0.10);
+  --shadow: 0px 8px 15px -5px hsl(259 80% 55% / 0.10), 0px 1px 2px -6px hsl(259 80% 55% / 0.10);
+  --shadow-md: 0px 8px 15px -5px hsl(259 80% 55% / 0.10), 0px 2px 4px -6px hsl(259 80% 55% / 0.10);
+  --shadow-lg: 0px 8px 15px -5px hsl(259 80% 55% / 0.10), 0px 4px 6px -6px hsl(259 80% 55% / 0.10);
+  --shadow-xl: 0px 8px 15px -5px hsl(259 80% 55% / 0.10), 0px 8px 10px -6px hsl(259 80% 55% / 0.10);
+  --shadow-2xl: 0px 8px 15px -5px hsl(259 80% 55% / 0.25);
   --tracking-normal: 0.02em;
   --spacing: 0.25rem;
 }
 
+/* ---------- Dark Mode ---------- */
 .dark {
-  --background: oklch(0.1300 0.0280 261.6920);
-  --foreground: oklch(1.0000 0 0);
-  --card: oklch(0.1405 0.0044 285.8238);
-  --card-foreground: oklch(1.0000 0 0);
-  --popover: oklch(0.1405 0.0044 285.8238);
-  --popover-foreground: oklch(1.0000 0 0);
-  --primary: oklch(0.7050 0.2130 47.6040);
-  --primary-foreground: oklch(1.0000 0 0);
-  --secondary: oklch(0.4320 0.2320 292.7590);
-  --secondary-foreground: oklch(1.0000 0 0);
-  --muted: oklch(0.2648 0.0054 286.0285);
-  --muted-foreground: oklch(0.7119 0.0129 286.0684);
-  --accent: oklch(0.2820 0.0910 267.9350);
-  --accent-foreground: oklch(1.0000 0 0);
-  --destructive: oklch(0.3959 0.1331 25.7205);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --border: oklch(0.2741 0.0055 286.0329);
-  --input: oklch(0.2741 0.0055 286.0329);
-  --ring: oklch(0.6033 0.2054 293.9454);
-  --chart-1: oklch(0.5101 0.2499 288.4179);
-  --chart-2: oklch(0.5680 0.1541 248.3385);
-  --chart-3: oklch(0.7212 0.1711 154.6896);
-  --chart-4: oklch(0.8421 0.1666 87.3239);
-  --chart-5: oklch(0.6532 0.2114 353.9392);
-  --sidebar: oklch(0.1507 0.0082 285.3802);
-  --sidebar-foreground: oklch(1.0000 0 0);
-  --sidebar-primary: oklch(0.5101 0.2499 288.4179);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.5101 0.2499 288.4179);
-  --sidebar-accent-foreground: oklch(1.0000 0 0);
-  --sidebar-border: oklch(0.2741 0.0055 286.0329);
-  --sidebar-ring: oklch(0.6033 0.2054 293.9454);
+  --background: #090912;
+  /* base dark value for Tailwind utilities */
+  --foreground: #f1f5f9;
+  --card: #12121f;
+  --card-foreground: #f1f5f9;
+  --popover: #12121f;
+  --popover-foreground: #f1f5f9;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+  --secondary: #03dac5;
+  --secondary-foreground: #0f172a;
+  --muted: #1a1a2e;
+  --muted-foreground: #94a3b8;
+  --accent: rgba(249, 115, 22, 0.12);
+  --accent-foreground: #fdba74;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #2d2d4a;
+  --input: #2d2d4a;
+  --ring: #f97316;
+  --chart-1: #f97316;
+  --chart-2: #03dac5;
+  --chart-3: #fb923c;
+  --chart-4: #00b4a0;
+  --chart-5: #fdba74;
+  --sidebar: rgba(255, 255, 255, 0.04);
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #f97316;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(249, 115, 22, 0.15);
+  --sidebar-accent-foreground: #fdba74;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #f97316;
   --font-sans: 'Exo 2', sans-serif;
   --font-serif: 'Roboto Slab', serif;
   --font-mono: 'Fira Code', monospace;
-  --radius: 0.3rem;
-  --shadow-x: 0px;
-  --shadow-y: 10px;
-  --shadow-blur: 25px;
-  --shadow-spread: -8px;
-  --shadow-opacity: 0.2;
-  --shadow-color: hsl(259 80% 70%);
-  --shadow-2xs: 0px 10px 25px -8px hsl(259 80% 70% / 0.10);
-  --shadow-xs: 0px 10px 25px -8px hsl(259 80% 70% / 0.10);
-  --shadow-sm: 0px 10px 25px -8px hsl(259 80% 70% / 0.20), 0px 1px 2px -9px hsl(259 80% 70% / 0.20);
-  --shadow: 0px 10px 25px -8px hsl(259 80% 70% / 0.20), 0px 1px 2px -9px hsl(259 80% 70% / 0.20);
-  --shadow-md: 0px 10px 25px -8px hsl(259 80% 70% / 0.20), 0px 2px 4px -9px hsl(259 80% 70% / 0.20);
-  --shadow-lg: 0px 10px 25px -8px hsl(259 80% 70% / 0.20), 0px 4px 6px -9px hsl(259 80% 70% / 0.20);
-  --shadow-xl: 0px 10px 25px -8px hsl(259 80% 70% / 0.20), 0px 8px 10px -9px hsl(259 80% 70% / 0.20);
-  --shadow-2xl: 0px 10px 25px -8px hsl(259 80% 70% / 0.50);
+  --radius: 0.625rem;
+  --shadow-2xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 24px 56px rgba(0, 0, 0, 0.6);
 }
 
+/* ---------- Tailwind Theme Mapping ---------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -172,27 +167,467 @@
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
+/* ---------- Base ---------- */
 body {
   letter-spacing: var(--tracking-normal);
 }
 
 @layer base {
+
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
   }
 }
 
-/* React Flow node selection styles */
-.react-flow__node.selected #base-node{
-  @apply ring-3 ring-muted-foreground/25 shadow-lg;
+/* ---------- Glassmorphism ---------- */
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .dark .glass {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .glass-strong {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
 }
 
-/* Custom cursor for React Flow canvas */
+/* ---------- Glow Effects ---------- */
+@layer utilities {
+  .glow-orange {
+    box-shadow: 0 0 24px hsl(259 80% 55% / 0.3), 0 0 48px hsl(259 80% 55% / 0.1);
+  }
+
+  .glow-orange-sm {
+    box-shadow: 0 0 12px hsl(259 80% 55% / 0.4);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 24px hsl(259 80% 55% / 0.25), 0 0 48px hsl(259 80% 55% / 0.08);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, white, oklch(0.5101 0.2499 288.4179), oklch(0.5680 0.1541 248.3385));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ---------- Ambient Background Effects ---------- */
+.ambient-orange {
+  position: fixed;
+  top: -100px;
+  right: -100px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, hsl(259 80% 55% / 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-teal {
+  position: fixed;
+  bottom: -100px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, hsl(259 80% 55% / 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Animations ---------- */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px hsl(259 80% 55% / 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px hsl(259 80% 55% / 0.6);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.9676 0.0013 286.3752);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.8 0.005 286);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.65 0.01 286);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0d0d1a;
+}
+
+/* ---------- React Flow ---------- */
+.react-flow__node.selected #base-node {
+  box-shadow: 0 0 0 3px hsl(259 80% 55% / 0.35), 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
 .react-flow__pane {
   cursor: grab;
 }
 
 .react-flow__pane:active {
   cursor: grabbing;
+}
+
+/* Minimap — dark theme */
+:is(.dark) .react-flow__minimap {
+  background-color: #12121f !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+:is(.dark) .react-flow__minimap-mask {
+  fill: rgba(249, 115, 22, 0.08) !important;
+  stroke: rgba(249, 115, 22, 0.3) !important;
+}
+
+:is(.dark) .react-flow__minimap-node {
+  fill: rgba(249, 115, 22, 0.5) !important;
+  stroke: none !important;
+}
+
+/* Controls — dark theme */
+:is(.dark) .react-flow__controls {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Light mode: Premium primary buttons */
+:root [data-slot="button"].bg-primary {
+  background: linear-gradient(135deg, oklch(0.5101 0.2499 288.4179), oklch(0.58 0.22 288)) !important;
+  border: none !important;
+  transition: all 0.2s ease;
+}
+
+:root [data-slot="button"].bg-primary:hover {
+  background: linear-gradient(135deg, oklch(0.45 0.25 288), oklch(0.5101 0.2499 288.4179)) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(259 80% 55% / 0.2) !important;
+}
+
+:is(.dark) .react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  fill: white !important;
+  color: white !important;
+  transition: all 0.15s ease;
+}
+
+:is(.dark) .react-flow__controls-button svg,
+:is(.dark) .react-flow__controls-button svg path {
+  fill: white !important;
+}
+
+:is(.dark) .react-flow__controls-button:hover {
+  background: rgba(249, 115, 22, 0.15) !important;
+}
+
+:is(.dark) .react-flow__controls-button:hover svg,
+:is(.dark) .react-flow__controls-button:hover svg path {
+  fill: #f97316 !important;
+}
+
+/* Edges — white on dark */
+:is(.dark) .react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ---------- Sidebar — dark theme ---------- */
+:is(.dark) [data-sidebar="sidebar"] {
+  background: #0a0a16 !important;
+  border-right-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Sidebar icons */
+:is(.dark) [data-sidebar="menu-button"] svg {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+:is(.dark) [data-sidebar="menu-button"]:hover svg {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+:is(.dark) [data-sidebar="menu-button"][data-active="true"] svg {
+  color: #f97316;
+}
+
+/* Sidebar text */
+:is(.dark) [data-sidebar="menu-button"] span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+:is(.dark) [data-sidebar="menu-button"]:hover span {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+:is(.dark) [data-sidebar="menu-button"][data-active="true"] span {
+  color: #fdba74;
+}
+
+/* Sidebar trigger — subtle orange accent */
+:is(.dark) [data-sidebar="trigger"] {
+  color: white;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.1);
+  background: rgba(249, 115, 22, 0.05);
+}
+
+:is(.dark) [data-sidebar="trigger"]:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.2);
+  background: rgba(249, 115, 22, 0.1);
+}
+
+/* ---------- Dark mode: Inputs ---------- */
+:is(.dark) input,
+:is(.dark) textarea {
+  color: white !important;
+}
+
+:is(.dark) .canvas-light-mode input,
+:is(.dark) .canvas-light-mode textarea {
+  color: #0f172a !important;
+  /* slate-900 */
+}
+
+:is(.dark) input::placeholder,
+:is(.dark) textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+:is(.dark) .canvas-light-mode input::placeholder,
+:is(.dark) .canvas-light-mode textarea::placeholder {
+  color: #64748b !important;
+  /* slate-500 */
+}
+
+:is(.dark) input:focus,
+:is(.dark) textarea:focus {
+  border-color: rgba(249, 115, 22, 0.4) !important;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.2) !important;
+  outline: none !important;
+}
+
+/* ---------- Dark mode: Labels ---------- */
+:is(.dark) label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ---------- Dark mode: Sheets / Dialogs ---------- */
+:is(.dark) [data-slot="sheet-content"]:not(.canvas-light-mode),
+:is(.dark) [role="dialog"]:not(.canvas-light-mode) {
+  background: #0d0d1a !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Light mode overrides for portaled components */
+.canvas-light-mode label,
+.canvas-light-mode .font-medium,
+.canvas-light-mode .font-semibold,
+.canvas-light-mode .font-bold {
+  color: #0f172a !important;
+  /* slate-900 */
+}
+
+/* ---------- Dark mode: Scrollbar (toned down) ---------- */
+:is(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+:is(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- Dark mode: Premium gradient buttons ---------- */
+:is(.dark) [data-slot="button"].bg-primary {
+  background: linear-gradient(135deg, #9a3412, #c2410c, #ea580c) !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.2s ease;
+}
+
+:is(.dark) [data-slot="button"].bg-primary:hover {
+  background: linear-gradient(135deg, #7c2d12, #9a3412, #c2410c) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ---------- Dark mode: Invert dark SVG logos ---------- */
+:is(.dark) img[src*="openai"] {
+  filter: invert(1) brightness(1.5);
+}
+
+/* ======== Canvas Light Mode Overrides ======== */
+/* When the canvas is toggled to light mode (via canvasLightModeAtom),
+   the ReactFlow container gets the .canvas-light-mode class.
+   These rules override the dark-theme React Flow styles ONLY within that container. */
+
+/* Controls — light canvas */
+.canvas-light-mode .react-flow__controls {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.canvas-light-mode .react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  fill: #334155 !important;
+  color: #334155 !important;
+}
+
+.canvas-light-mode .react-flow__controls-button svg,
+.canvas-light-mode .react-flow__controls-button svg path {
+  fill: #334155 !important;
+}
+
+.canvas-light-mode .react-flow__controls-button:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.canvas-light-mode .react-flow__controls-button:hover svg,
+.canvas-light-mode .react-flow__controls-button:hover svg path {
+  fill: #f97316 !important;
+}
+
+/* Minimap — light canvas */
+.canvas-light-mode .react-flow__minimap {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.canvas-light-mode .react-flow__minimap-mask {
+  fill: rgba(249, 115, 22, 0.08) !important;
+  stroke: rgba(249, 115, 22, 0.5) !important;
+}
+
+.canvas-light-mode .react-flow__minimap-node {
+  fill: #f97316 !important;
+  stroke: none !important;
+}
+
+/* Edges — dark on light canvas */
+.canvas-light-mode .react-flow__edge-path {
+  stroke: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Edge connection/selection — keep defaults but ensure visibility */
+.canvas-light-mode .react-flow__selectionpane {
+  background-color: rgba(14, 165, 233, 0.08) !important;
+  border: 1px solid rgba(14, 165, 233, 0.8) !important;
+}
+
+/* Ensure mouse cursor is visible on the canvas */
+.canvas-light-mode .react-flow__pane {
+  cursor: grab !important;
+}
+
+.canvas-light-mode .react-flow__pane.dragging {
+  cursor: grabbing !important;
+}
+
+/* Node text — dark text on light canvas nodes */
+.canvas-light-mode .react-flow__node [data-slot="base-node-title"] {
+  color: #1e293b !important;
+}
+
+.canvas-light-mode .react-flow__node [data-slot="base-node-content"] {
+  color: #334155 !important;
+}
+
+.canvas-light-mode .react-flow__node .text-muted-foreground {
+  color: #64748b !important;
+}
+
+.canvas-light-mode .react-flow__node .text-foreground {
+  color: #1e293b !important;
+}
+
+/* OpenAI logo — no invert in light mode. We need higher specificity than the dark rule. */
+:is(.dark) .canvas-light-mode img[src*="openai"],
+:is(.dark) .node-selector-light img[src*="openai"] {
+  filter: none !important;
 }

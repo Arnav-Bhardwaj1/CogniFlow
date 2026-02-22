@@ -2,13 +2,14 @@
 
 import { ErrorView, LoadingView } from "@/components/entity-components";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/use-workflows";
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Node, Edge, NodeChange, EdgeChange, Connection, Background, Controls, MiniMap, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { nodeComponents } from "@/config/node-components";
 import { AddNodeButton } from "./add-node-button";
-import { useSetAtom } from "jotai";
+import { useSetAtom, useAtomValue } from "jotai";
 import { editorAtom } from "../store/atom";
+import { canvasLightModeAtom } from "../store/canvas-theme-atom";
 import { NodeType } from "@/app/generated/prisma";
 import { ExecuteWorkflowButton } from "./execute-workflow-button";
 import { AiPlannerBar } from "@/features/ai-planner/components/ai-planner-bar";
@@ -23,6 +24,14 @@ export const EditorError = () => {
 
 export const Editor = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useSuspenseWorkflow(workflowId);
+  const setCanvasLightMode = useSetAtom(canvasLightModeAtom);
+  const canvasLightMode = useAtomValue(canvasLightModeAtom);
+
+  useEffect(() => {
+    return () => {
+      setCanvasLightMode(false);
+    };
+  }, [setCanvasLightMode]);
 
   const setEditor = useSetAtom(editorAtom); // to store the ReactFlow instance in Jotai atom. means other components can access the editor instance via the atom. Instance means the ReactFlow state reference
 
@@ -52,7 +61,7 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
   }, [nodes, edges, workflow.nodes, workflow.edges]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%' }} data-canvas-light={canvasLightMode ? "true" : undefined}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -66,10 +75,11 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         snapToGrid
         panOnScroll
         proOptions={{ hideAttribution: true }}
+        className={canvasLightMode ? "canvas-light-mode" : ""}
       // panOnDrag={false} // this prevents panning when dragging nodes. panning means moving the whole canvas
       // selectionOnDrag // this selects multiple nodes when dragging on empty space
       >
-        <Background style={{ backgroundColor: "#f0f0f0" }} />
+        <Background className={canvasLightMode ? "!bg-[#fcfcfd]" : "!bg-[#fcfcfd] dark:!bg-[#0d0d1a]"} />
         <Controls />
         <MiniMap />
         <Panel position="top-left">
