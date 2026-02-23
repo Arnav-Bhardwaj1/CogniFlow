@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { LandingNavbar } from '@/components/landing-navbar'
 import { FloatingNodes } from '@/components/floating-nodes'
-import { ArrowRightIcon, ZapIcon, LayersIcon, Zap, BotIcon, ShieldCheckIcon, Code2Icon, WorkflowIcon, Loader2Icon } from 'lucide-react'
+import { ArrowRightIcon, ZapIcon, LayersIcon, Zap, ShieldCheckIcon, Code2Icon, WorkflowIcon, Loader2Icon, Shapes } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 
@@ -121,7 +121,7 @@ export default function LandingPage() {
               {/* Feature 1 */}
               <div className="group relative p-8 rounded-2xl glass-strong dark:bg-white/5 border border-white/10 hover:border-primary/50 transition-colors duration-500 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <WorkflowIcon className="size-8 text-primary mb-6" />
+                <Shapes className="size-8 text-primary mb-6" />
                 <h3 className="text-xl font-semibold text-white mb-3">Intuitive Visual Editor</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   Drag and drop nodes to build complex logic. Our React Flow canvas makes debugging visual and intuitive.
@@ -131,7 +131,7 @@ export default function LandingPage() {
               {/* Feature 2 */}
               <div className="group relative p-8 rounded-2xl glass-strong dark:bg-white/5 border border-white/10 hover:border-teal-500/50 transition-colors duration-500 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Zap className="size-8 text-teal-400 mb-6" />
+                <Image src="/logos/automation.png" alt="Automation" width={32} height={32} className="mb-6 invert" />
                 <h3 className="text-xl font-semibold text-white mb-3">Multi-Trigger Support</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   Start workflows via HTTP Webhooks, Google Forms, Stripe Events, Razorpay, or simply on a schedule.
@@ -141,7 +141,7 @@ export default function LandingPage() {
               {/* Feature 3 */}
               <div className="group relative p-8 rounded-2xl glass-strong dark:bg-white/5 border border-white/10 hover:border-purple-500/50 transition-colors duration-500 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <BotIcon className="size-8 text-purple-400 mb-6" />
+                <Image src="/logos/chatbot.png" alt="AI Chatbot" width={32} height={32} className="mb-6" />
                 <h3 className="text-xl font-semibold text-white mb-3">Native AI Integrations</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   Seamlessly chain OpenAI, Google Gemini, and Anthropic Claude nodes. Prompt engineering made visual.
@@ -276,7 +276,13 @@ export default function LandingPage() {
                   <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> AI Workflow Generator</li>
                 </ul>
                 <Button
-                  onClick={() => handleNavigation("/signup", "pricing-pro")}
+                  onClick={() => {
+                    if (session) {
+                      authClient.checkout({ slug: "CogniFlow-Pro" });
+                    } else {
+                      handleNavigation("/signup", "pricing-pro");
+                    }
+                  }}
                   disabled={isNavigating}
                   className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
                 >
@@ -344,9 +350,8 @@ export default function LandingPage() {
               <span className="font-semibold text-lg tracking-tight text-white">CogniFlow</span>
             </div>
             <div className="flex gap-8 text-sm text-muted-foreground">
-              <Link href="#" className="hover:text-white transition-colors">Documentation</Link>
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="/docs" className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium text-muted-foreground hover:text-white">Documentation</Link>
+              <Link href="/privacy" className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium text-muted-foreground hover:text-white">Privacy Policy</Link>
             </div>
           </div>
           <div className="mt-8 text-center text-sm text-muted-foreground/50">
