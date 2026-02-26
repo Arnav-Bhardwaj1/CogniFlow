@@ -6,6 +6,12 @@ import { Exo_2, Roboto_Slab, Fira_Code } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Provider } from 'jotai';
 import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "CogniFlow",
+  description: "CogniFlow",
+};
 
 const exo2 = Exo_2({
   subsets: ["latin"],

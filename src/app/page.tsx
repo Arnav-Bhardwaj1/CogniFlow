@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { LandingNavbar } from '@/components/landing-navbar'
 import { FloatingNodes } from '@/components/floating-nodes'
-import { ArrowRightIcon, ZapIcon, LayersIcon, Zap, ShieldCheckIcon, Code2Icon, WorkflowIcon, Loader2Icon, Shapes } from 'lucide-react'
+import { ArrowRightIcon, ZapIcon, LayersIcon, Zap, ShieldCheckIcon, Code2Icon, WorkflowIcon, Loader2Icon, Shapes, ChevronDown } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 
@@ -30,7 +30,7 @@ export default function LandingPage() {
       <main className="flex-1">
 
         {/* ─── Hero Section ─── */}
-        <section className="relative pt-16 pb-20 md:pt-20 md:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[80vh]">
+        <section className="relative pt-16 pb-8 md:pt-20 md:pb-12 overflow-hidden flex flex-col items-center justify-center min-h-[65vh]">
           {/* Background Ambient Orbs */}
           <div className="absolute top-0 -translate-y-1/4 translate-x-1/4 right-0 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(99,40,180,0.15)_0%,transparent_60%)] rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 translate-y-1/4 -translate-x-1/4 left-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(249,115,22,0.1)_0%,transparent_60%)] rounded-full blur-3xl pointer-events-none" />
@@ -50,44 +50,66 @@ export default function LandingPage() {
               The premium, type-safe visual editor built for modern developers. Connect native APIs, LLMs, and triggers in minutes—not days.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-              {isSessionPending ? (
-                <Button
-                  disabled
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 min-w-[220px]"
-                >
-                  <Loader2Icon className="size-5 animate-spin mr-2" />
-                  Loading...
-                </Button>
-              ) : session ? (
-                <Button
-                  onClick={() => handleNavigation("/workflows", "hero-dashboard")}
-                  disabled={isNavigating}
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[200px]"
-                >
-                  {loadingButton === "hero-dashboard" && <Loader2Icon className="size-5 animate-spin mr-2" />}
-                  Go to Dashboard
-                  {loadingButton !== "hero-dashboard" && <ArrowRightIcon className="ml-2 size-4" />}
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => handleNavigation("/signup", "hero-signup")}
-                  disabled={isNavigating}
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[220px]"
-                >
-                  {loadingButton === "hero-signup" && <Loader2Icon className="size-5 animate-spin mr-2" />}
-                  Start Building Free
-                  {loadingButton !== "hero-signup" && <ArrowRightIcon className="ml-2 size-4" />}
-                </Button>
-              )}
-              <Link href="#features" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full h-14 px-8 text-base border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all">
-                  Explore Features
-                </Button>
-              </Link>
+            <div className="flex items-center gap-8 w-full sm:w-auto relative">
+              {/* Left Scroll Indicator */}
+              <div
+                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                className="hidden md:flex absolute -left-16 flex-col items-center text-white/50 hover:text-white transition-colors cursor-pointer z-20 top-1/2 translate-y-[calc(-50%-0.18rem)]"
+              >
+                <ChevronDown className="size-6 animate-arrow-flash" style={{ animationDelay: '0s' }} />
+                <ChevronDown className="size-6 animate-arrow-flash -mt-4" style={{ animationDelay: '0.2s' }} />
+                <ChevronDown className="size-6 animate-arrow-flash -mt-4" style={{ animationDelay: '0.4s' }} />
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                {isSessionPending ? (
+                  <Button
+                    disabled
+                    size="lg"
+                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 min-w-[220px]"
+                  >
+                    <Loader2Icon className="size-5 animate-spin mr-2" />
+                    Loading...
+                  </Button>
+                ) : session ? (
+                  <Button
+                    onClick={() => handleNavigation("/workflows", "hero-dashboard")}
+                    disabled={isNavigating}
+                    size="lg"
+                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[200px]"
+                  >
+                    {loadingButton === "hero-dashboard" && <Loader2Icon className="size-5 animate-spin mr-2" />}
+                    Go to Dashboard
+                    {loadingButton !== "hero-dashboard" && <ArrowRightIcon className="ml-2 size-4" />}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleNavigation("/signup", "hero-signup")}
+                    disabled={isNavigating}
+                    size="lg"
+                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[220px]"
+                  >
+                    {loadingButton === "hero-signup" && <Loader2Icon className="size-5 animate-spin mr-2" />}
+                    Start Building Free
+                    {loadingButton !== "hero-signup" && <ArrowRightIcon className="ml-2 size-4" />}
+                  </Button>
+                )}
+                <Link href="#features" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full h-14 px-8 text-base border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all">
+                    Explore Features
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Right Scroll Indicator */}
+              <div
+                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                className="hidden md:flex absolute -right-16 flex-col items-center text-white/50 hover:text-white transition-colors cursor-pointer z-20 top-1/2 translate-y-[calc(-50%-0.18rem)]"
+              >
+                <ChevronDown className="size-6 animate-arrow-flash" style={{ animationDelay: '0s' }} />
+                <ChevronDown className="size-6 animate-arrow-flash -mt-4" style={{ animationDelay: '0.2s' }} />
+                <ChevronDown className="size-6 animate-arrow-flash -mt-4" style={{ animationDelay: '0.4s' }} />
+              </div>
             </div>
 
             <div className="mt-16 pt-8 border-t border-white/5 w-full max-w-3xl flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground font-medium">
