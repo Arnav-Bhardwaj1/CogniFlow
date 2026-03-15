@@ -1,0 +1,42 @@
+name: CI
+
+# WHEN to run: on any push to main, or any pull request targeting main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# WHAT to run:
+jobs:
+  ci:
+    runs-on: ubuntu-latest    # use a free Linux VM from GitHub
+
+    steps:
+      # 1. Download your code onto the VM
+      - uses: actions/checkout@v4
+
+      # 2. Install Node.js 20 and cache npm packages for speed
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. Install dependencies (clean, reproducible install)
+      - run: npm ci
+
+      # 4. Generate Prisma client (so TypeScript knows your DB types)
+      - run: npx prisma generate
+
+      # 5. Run ESLint
+      - run: npm run lint
+
+      # 6. Run TypeScript type-checker
+      - run: npx tsc --noEmit
+
+      # 7. Build the production app
+      - run: npm run build
+        env:
+          # These come from GitHub Secrets (set up in Step 3)
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
