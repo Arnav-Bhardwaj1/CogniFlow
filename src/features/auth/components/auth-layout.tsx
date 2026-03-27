@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { ChevronLeft } from 'lucide-react'
 
 /* ── Decorative node that mimics the real workflow nodes ── */
 function DecoNode({
@@ -176,6 +177,15 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           filter: 'blur(60px)',
         }}
       />
+
+      {/* ─── Back to Dashboard Button ─── */}
+      <Link 
+        href="/" 
+        className="absolute top-6 left-6 md:top-10 md:left-10 z-50 flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/10 backdrop-blur-sm"
+      >
+        <ChevronLeft className="w-4 h-4" />
+        Back to Dashboard
+      </Link>
 
       {/* ─── Glassmorphic foreground content ─── */}
       <div className="flex w-full max-w-sm flex-col gap-6 relative z-10">

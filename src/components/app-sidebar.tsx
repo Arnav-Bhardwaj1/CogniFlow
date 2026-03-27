@@ -9,6 +9,7 @@ import {
   LogOutIcon,
   StarIcon,
   FolderOpenIcon,
+  HomeIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +30,11 @@ import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/subscriptions/hooks/use-subscription";
 
 const menuItems = [
+  {
+    title: "Home",
+    url: "/",
+    icon: HomeIcon,
+  },
   {
     title: "Workflows",
     url: "/workflows",
