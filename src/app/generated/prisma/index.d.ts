@@ -1777,6 +1777,9 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    razorpayCustomerId: string | null
+    razorpaySubscriptionId: string | null
+    subscriptionStatus: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1787,6 +1790,9 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    razorpayCustomerId: string | null
+    razorpaySubscriptionId: string | null
+    subscriptionStatus: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1797,6 +1803,9 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
+    razorpayCustomerId: number
+    razorpaySubscriptionId: number
+    subscriptionStatus: number
     _all: number
   }
 
@@ -1809,6 +1818,9 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    razorpayCustomerId?: true
+    razorpaySubscriptionId?: true
+    subscriptionStatus?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1819,6 +1831,9 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    razorpayCustomerId?: true
+    razorpaySubscriptionId?: true
+    subscriptionStatus?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1829,6 +1844,9 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    razorpayCustomerId?: true
+    razorpaySubscriptionId?: true
+    subscriptionStatus?: true
     _all?: true
   }
 
@@ -1912,6 +1930,9 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
+    razorpayCustomerId: string | null
+    razorpaySubscriptionId: string | null
+    subscriptionStatus: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1939,6 +1960,9 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    razorpayCustomerId?: boolean
+    razorpaySubscriptionId?: boolean
+    subscriptionStatus?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     workflows?: boolean | User$workflowsArgs<ExtArgs>
@@ -1954,6 +1978,9 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    razorpayCustomerId?: boolean
+    razorpaySubscriptionId?: boolean
+    subscriptionStatus?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1964,6 +1991,9 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    razorpayCustomerId?: boolean
+    razorpaySubscriptionId?: boolean
+    subscriptionStatus?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1991,6 +2021,9 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
+      razorpayCustomerId: string | null
+      razorpaySubscriptionId: string | null
+      subscriptionStatus: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2395,6 +2428,9 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly razorpayCustomerId: FieldRef<"User", 'String'>
+    readonly razorpaySubscriptionId: FieldRef<"User", 'String'>
+    readonly subscriptionStatus: FieldRef<"User", 'String'>
   }
     
 
@@ -10704,7 +10740,10 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     image: 'image',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    razorpayCustomerId: 'razorpayCustomerId',
+    razorpaySubscriptionId: 'razorpaySubscriptionId',
+    subscriptionStatus: 'subscriptionStatus'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -10988,6 +11027,9 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    razorpayCustomerId?: StringNullableFilter<"User"> | string | null
+    razorpaySubscriptionId?: StringNullableFilter<"User"> | string | null
+    subscriptionStatus?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     workflows?: WorkflowListRelationFilter
@@ -11002,6 +11044,9 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    razorpayCustomerId?: SortOrderInput | SortOrder
+    razorpaySubscriptionId?: SortOrderInput | SortOrder
+    subscriptionStatus?: SortOrderInput | SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
     workflows?: WorkflowOrderByRelationAggregateInput
@@ -11019,6 +11064,9 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    razorpayCustomerId?: StringNullableFilter<"User"> | string | null
+    razorpaySubscriptionId?: StringNullableFilter<"User"> | string | null
+    subscriptionStatus?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     workflows?: WorkflowListRelationFilter
@@ -11033,6 +11081,9 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    razorpayCustomerId?: SortOrderInput | SortOrder
+    razorpaySubscriptionId?: SortOrderInput | SortOrder
+    subscriptionStatus?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -11049,6 +11100,9 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    razorpayCustomerId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    razorpaySubscriptionId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    subscriptionStatus?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type SessionWhereInput = {
@@ -11649,6 +11703,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     workflows?: WorkflowCreateNestedManyWithoutUserInput
@@ -11663,6 +11720,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
@@ -11677,6 +11737,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUpdateManyWithoutUserNestedInput
@@ -11691,6 +11754,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
@@ -11705,6 +11771,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -11715,6 +11784,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -11725,6 +11797,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SessionCreateInput = {
@@ -12463,6 +12538,9 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    razorpaySubscriptionId?: SortOrder
+    subscriptionStatus?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -12473,6 +12551,9 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    razorpaySubscriptionId?: SortOrder
+    subscriptionStatus?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -12483,6 +12564,9 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    razorpaySubscriptionId?: SortOrder
+    subscriptionStatus?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -14126,6 +14210,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     workflows?: WorkflowCreateNestedManyWithoutUserInput
     credentials?: CredentialCreateNestedManyWithoutUserInput
@@ -14139,6 +14226,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
@@ -14168,6 +14258,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUpdateManyWithoutUserNestedInput
     credentials?: CredentialUpdateManyWithoutUserNestedInput
@@ -14181,6 +14274,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
@@ -14194,6 +14290,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     workflows?: WorkflowCreateNestedManyWithoutUserInput
     credentials?: CredentialCreateNestedManyWithoutUserInput
@@ -14207,6 +14306,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
@@ -14236,6 +14338,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUpdateManyWithoutUserNestedInput
     credentials?: CredentialUpdateManyWithoutUserNestedInput
@@ -14249,6 +14354,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
@@ -14328,6 +14436,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     credentials?: CredentialCreateNestedManyWithoutUserInput
@@ -14341,6 +14452,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
@@ -14463,6 +14577,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     credentials?: CredentialUpdateManyWithoutUserNestedInput
@@ -14476,6 +14593,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
@@ -14520,6 +14640,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     workflows?: WorkflowCreateNestedManyWithoutUserInput
@@ -14533,6 +14656,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    razorpayCustomerId?: string | null
+    razorpaySubscriptionId?: string | null
+    subscriptionStatus?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
@@ -14598,6 +14724,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUpdateManyWithoutUserNestedInput
@@ -14611,6 +14740,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    subscriptionStatus?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput

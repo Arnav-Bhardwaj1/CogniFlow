@@ -129,7 +129,10 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  razorpayCustomerId: 'razorpayCustomerId',
+  razorpaySubscriptionId: 'razorpaySubscriptionId',
+  subscriptionStatus: 'subscriptionStatus'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {

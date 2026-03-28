@@ -1,5 +1,5 @@
 import { auth } from '@/lib/auth';
-import { polarClient } from '@/lib/polar';
+import prisma from '@/lib/db';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { headers } from 'next/headers';
 import { cache } from 'react';
@@ -41,30 +41,25 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => { /
 
 export const freeTierProcedure = protectedProcedure.use(
   async ({ ctx, next }) => {
-    const customer = await polarClient.customers.getStateExternal({
-      externalId: ctx.auth.user.id,
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.auth.user.id },
     });
 
-    const hasActiveSubscription = 
-      customer.activeSubscriptions && 
-      customer.activeSubscriptions.length > 0;
+    const hasActiveSubscription = user?.subscriptionStatus === "active";
 
     return next({
-      ctx: { ...ctx, customer, hasActiveSubscription },
+      ctx: { ...ctx, user, hasActiveSubscription },
     });
   }
 );
 
 export const premiumProcedure = protectedProcedure.use(
   async ({ ctx, next }) => {
-    const customer = await polarClient.customers.getStateExternal({
-      externalId: ctx.auth.user.id,
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.auth.user.id },
     });
 
-    if (
-      !customer.activeSubscriptions ||
-      customer.activeSubscriptions.length === 0
-    ) {
+    if (user?.subscriptionStatus !== "active") {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Active subscription required",
@@ -72,7 +67,7 @@ export const premiumProcedure = protectedProcedure.use(
     }
 
     return next({
-      ctx: { ...ctx, customer },
+      ctx: { ...ctx, user },
     });
   }
 );

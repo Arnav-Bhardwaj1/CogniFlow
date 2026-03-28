@@ -28,6 +28,11 @@ model User {
   workflows     Workflow[]
   credentials   Credential[] // a user can have multiple credentials, for example, one for OpenAI, one for Anthropic, etc.
 
+  // Razorpay fields
+  razorpayCustomerId      String?
+  razorpaySubscriptionId  String?
+  subscriptionStatus      String?
+
   @@unique([email])
   @@map("user") // means the table name in the database is "user"
 }
