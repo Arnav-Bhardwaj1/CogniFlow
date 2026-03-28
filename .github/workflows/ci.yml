@@ -40,3 +40,8 @@ jobs:
           # These come from GitHub Secrets (set up in Step 3)
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          # Dummy variables required to pass Next.js static evaluation during CI build
+          RAZORPAY_KEY_ID: "dummy_key_id"
+          RAZORPAY_KEY_SECRET: "dummy_key_secret"
+          BETTER_AUTH_SECRET: "dummy_better_auth_secret"
+          BETTER_AUTH_URL: "http://localhost:3000"

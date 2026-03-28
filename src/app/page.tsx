@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { LandingNavbar } from '@/components/landing-navbar'
 import { FloatingNodes } from '@/components/floating-nodes'
-import { ArrowRightIcon, ZapIcon, LayersIcon, Zap, ShieldCheckIcon, Code2Icon, WorkflowIcon, Loader2Icon, Shapes, ChevronDown } from 'lucide-react'
+import { ArrowRightIcon, ZapIcon, LayersIcon, ShieldCheckIcon, Code2Icon, Loader2Icon, Shapes, ChevronDown } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 
@@ -21,6 +21,79 @@ export default function LandingPage() {
     startTransition(() => {
       router.push(href);
     });
+  };
+
+  const handleUpgradeModal = async () => {
+    setLoadingButton("pricing-pro");
+    try {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+
+      await new Promise((resolve, reject) => {
+        script.onload = resolve;
+        script.onerror = reject;
+      });
+
+      const res = await fetch("/api/razorpay/checkout", { method: "POST" });
+      const data = await res.json();
+
+      if (data.error) {
+        console.error(data.error);
+        setLoadingButton(null);
+        return;
+      }
+
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "CogniFlow Pro",
+        description: "Unlimited access to CogniFlow",
+        order_id: data.orderId,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        handler: async function (response: any) {
+          try {
+            const res = await fetch("/api/razorpay/verify", {
+              method: "POST",
+              body: JSON.stringify(response),
+              headers: { "Content-Type": "application/json" }
+            });
+            const result = await res.json();
+            if (result.success) {
+              window.location.reload();
+            } else {
+              console.error("Payment verification failed", result.error);
+              setLoadingButton(null);
+            }
+          } catch (err) {
+            console.error("Verification request failed", err);
+            setLoadingButton(null);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setLoadingButton(null);
+          }
+        },
+        theme: {
+          color: "#ea580c",
+        },
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rzp = new (window as any).Razorpay(options);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      rzp.on('payment.failed', function (response: any) {
+        console.error("Payment failed", response.error);
+        setLoadingButton(null);
+      });
+      rzp.open();
+    } catch (error) {
+      console.error("Payment initialization failed", error);
+      setLoadingButton(null);
+    }
   };
 
   return (
@@ -300,12 +373,12 @@ export default function LandingPage() {
                 <Button
                   onClick={() => {
                     if (session) {
-                      authClient.checkout({ slug: "CogniFlow-Pro" });
+                      handleUpgradeModal();
                     } else {
                       handleNavigation("/signup", "pricing-pro");
                     }
                   }}
-                  disabled={isNavigating}
+                  disabled={isNavigating || loadingButton === "pricing-pro"}
                   className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
                 >
                   {loadingButton === "pricing-pro" && <Loader2Icon className="size-4 animate-spin mr-2" />}

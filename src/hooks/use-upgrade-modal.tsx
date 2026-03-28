@@ -19,5 +19,6 @@ export const useUpgradeModal = () => {
   return {
     modal,
     handleError,
+    openModal: () => setOpen(true),
   };
 };

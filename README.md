@@ -11,7 +11,7 @@ A full-stack workflow automation platform featuring a visual node-based editor, 
 - **Multi-Trigger Support** — Manual triggers, Google Form submissions, and RazorPay payment events
 - **Action Nodes** — HTTP requests, OpenAI/Anthropic/Gemini text generation, Slack and Discord messaging
 - **Background Job Orchestration** — Workflow execution powered by Inngest with real-time status updates
-- **SaaS Billing & Paywalls** — Subscription management via Polar Payments
+- **SaaS Billing & Paywalls** — Subscription management via Razorpay
 - **Secure Authentication** — GitHub and Google OAuth via Better Auth
 - **Type-Safe Backend** — End-to-end type safety with tRPC, Prisma, and Zod validation
 - **Error Monitoring** — Integrated Sentry for observability and diagnostics
@@ -30,7 +30,7 @@ A full-stack workflow automation platform featuring a visual node-based editor, 
 | AI | Vercel AI SDK |
 | Jobs | Inngest |
 | Auth | Better Auth |
-| Payments | Polar SDK |
+| Payments | Razorpay SDK |
 | Styling | Tailwind CSS, shadcn/ui |
 | Monitoring | Sentry |
 
@@ -70,6 +70,9 @@ DATABASE_URL="postgresql://..."
 BETTER_AUTH_URL="http://localhost:3000"
 BETTER_AUTH_SECRET="..."
 GOOGLE_GENERATIVE_AI_API_KEY="..."
+RAZORPAY_KEY_ID="..."
+RAZORPAY_KEY_SECRET="..."
+RAZORPAY_WEBHOOK_SECRET="..."
 ```
 
 3. Generate the Prisma client and run migrations:

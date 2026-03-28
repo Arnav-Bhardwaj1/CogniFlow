@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/subscriptions/hooks/use-subscription";
+import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 
 const menuItems = [
   {
@@ -59,6 +60,7 @@ export const AppSidebar = () => {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [navigatingUrl, setNavigatingUrl] = useState<string | null>(null);
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
+  const { modal, openModal } = useUpgradeModal();
 
   useEffect(() => {
     setNavigatingUrl(null);
@@ -119,28 +121,29 @@ export const AppSidebar = () => {
               <SidebarMenuButton
                 tooltip="Upgrade to Pro"
                 asChild
-                className="gap-x-4 h-10 px-4"
-                onClick={() => authClient.checkout({ slug: "CogniFlow-Pro" })}
+                className="gap-x-4 h-10 px-4 cursor-pointer"
+                onClick={() => openModal()}
               >
-                <Link href="/" prefetch>
+                <div>
                   <StarIcon className="h-4 w-4" />
                   <span>Upgrade to Pro</span>
-                </Link>
+                </div>
               </SidebarMenuButton>
             </SidebarMenuItem>)}
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip={hasActiveSubscription ? "View Billing" : "Upgrade to Pro"}
-              asChild
-              className="gap-x-4 h-10 px-4"
-              onClick={() => authClient.customer.portal()}
-            >
-              <Link href="/" prefetch>
-                <CreditCardIcon className="h-4 w-4" />
-                <span>Billing Portal</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {hasActiveSubscription && (
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip="View Billing"
+                asChild
+                className="gap-x-4 h-10 px-4"
+              >
+                <Link href="/billing" prefetch>
+                  <CreditCardIcon className="h-4 w-4" />
+                  <span>Billing Portal</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip="Sign Out"
@@ -163,6 +166,7 @@ export const AppSidebar = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+      {modal}
     </Sidebar>
   );
 };

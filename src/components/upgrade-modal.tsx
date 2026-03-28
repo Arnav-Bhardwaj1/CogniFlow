@@ -52,9 +52,26 @@ export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
                 name: "CogniFlow Pro",
                 description: "Unlimited access to CogniFlow",
                 order_id: data.orderId,
-                handler: function (response: any) {
-                    onOpenChange(false);
-                    window.location.reload();
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                handler: async function (response: any) {
+                    try {
+                        const res = await fetch("/api/razorpay/verify", {
+                            method: "POST",
+                            body: JSON.stringify(response),
+                            headers: { "Content-Type": "application/json" }
+                        });
+                        const result = await res.json();
+                        if (result.success) {
+                            onOpenChange(false);
+                            window.location.reload();
+                        } else {
+                            console.error("Payment verification failed", result.error);
+                            setIsLoading(false);
+                        }
+                    } catch (err) {
+                        console.error("Verification request failed", err);
+                        setIsLoading(false);
+                    }
                 },
                 modal: {
                     ondismiss: function () {
@@ -66,7 +83,9 @@ export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
                 },
             };
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const rzp = new (window as any).Razorpay(options);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             rzp.on('payment.failed', function (response: any) {
                 console.error("Payment failed", response.error);
                 setIsLoading(false);
