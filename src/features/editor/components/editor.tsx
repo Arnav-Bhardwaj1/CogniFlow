@@ -2,7 +2,7 @@
 
 import { ErrorView, LoadingView } from "@/components/entity-components";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/use-workflows";
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Node, Edge, NodeChange, EdgeChange, Connection, Background, Controls, MiniMap, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { nodeComponents } from "@/config/node-components";
@@ -54,11 +54,13 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
     return nodes.some((node) => node.type === NodeType.MANUAL_TRIGGER);
   }, [nodes]);
 
+  const initialSnapshotRef = useRef({ nodes: workflow.nodes, edges: workflow.edges });
+
   const hasUnsavedChanges = useMemo(() => {
-    const nodesChanged = JSON.stringify(nodes) !== JSON.stringify(workflow.nodes);
-    const edgesChanged = JSON.stringify(edges) !== JSON.stringify(workflow.edges);
-    return nodesChanged || edgesChanged;
-  }, [nodes, edges, workflow.nodes, workflow.edges]);
+    const snap = initialSnapshotRef.current;
+    if (nodes.length !== snap.nodes.length || edges.length !== snap.edges.length) return true;
+    return nodes !== snap.nodes || edges !== snap.edges;
+  }, [nodes, edges]);
 
   return (
     <div style={{ width: '100%', height: '100%' }} data-canvas-light={canvasLightMode ? "true" : undefined}>

@@ -13,21 +13,21 @@ import { CheckCircle2Icon, ClockIcon, Loader2Icon, XCircleIcon } from "lucide-re
 export const ExecutionsList = () => {
     const executions = useSuspenseExecutions();
 
-    return <EntityList 
-                items={executions.data.items} 
-                renderItem={(execution) => <ExecutionItem data={execution} />} 
-                getKey={(execution) => execution.id}
-                emptyView={<ExecutionsEmpty />}
-            />;
+    return <EntityList
+        items={executions.data.items}
+        renderItem={(execution) => <ExecutionItem data={execution} />}
+        getKey={(execution) => execution.id}
+        emptyView={<ExecutionsEmpty />}
+    />;
 };
 
 export const ExecutionsHeader = () => {
-  
-    return (      
-        <EntityHeader 
+
+    return (
+        <EntityHeader
             title="Executions"
             description="View your workflow execution history"
-        /> 
+        />
     );
 };
 
@@ -36,7 +36,7 @@ export const ExecutionsPagination = () => {
     const [params, setParams] = useExecutionsParams();
 
     return (
-        <EntityPagination 
+        <EntityPagination
             disabled={executions.isFetching}
             totalPages={executions.data.totalPages}
             page={executions.data.page}
@@ -55,7 +55,7 @@ export const ExecutionsContainer = ({ children }: { children: React.ReactNode })
         </EntityContainer>
     );
 };
-        
+
 
 export const ExecutionsLoading = () => {
     return <LoadingView message='Loading executions...' />
@@ -66,16 +66,16 @@ export const ExecutionsError = () => {
 };
 
 export const ExecutionsEmpty = () => {
-        return (
-            <EmptyView
-                message="You haven't created any executions yet. Get
+    return (
+        <EmptyView
+            message="You haven't created any executions yet. Get
                 started by running your first executions."
-            />
+        />
     );
 };
 
 const getStatusIcon = (status: ExecutionStatus) => {
-    switch(status) {
+    switch (status) {
         case ExecutionStatus.SUCCESS:
             return <CheckCircle2Icon className="size-5 text-green-600" />;
         case ExecutionStatus.FAILED:
@@ -91,7 +91,7 @@ const formatStatus = (status: ExecutionStatus) => {
     return status.charAt(0) + status.slice(1).toLowerCase();
 }
 
-export const ExecutionItem = ({
+export const ExecutionItem = React.memo(function ExecutionItem({
     data,
 }: {
     data: Execution & {
@@ -100,13 +100,13 @@ export const ExecutionItem = ({
             name: string;
         };
     };
-}) => {
+}) {
     const duration = data.completedAt
         ? Math.round(
             (new Date(data.completedAt).getTime() - new Date(data.startedAt).getTime()) / 1000,
         )
         : null;
-    
+
     const subtitle = (
         <>
             {data.workflow.name} &bull; Started{' '}
@@ -124,7 +124,7 @@ export const ExecutionItem = ({
                     {getStatusIcon(data.status)}
                 </div>
             }
-         />
+        />
     )
-};
+});
 

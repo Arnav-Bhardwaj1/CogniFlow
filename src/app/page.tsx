@@ -1,101 +1,15 @@
-"use client";
-
-import React, { useTransition } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { LandingNavbar } from '@/components/landing-navbar'
 import { FloatingNodes } from '@/components/floating-nodes'
-import { ArrowRightIcon, ZapIcon, LayersIcon, ShieldCheckIcon, Code2Icon, Loader2Icon, Shapes, ChevronDown } from 'lucide-react'
-import { authClient } from '@/lib/auth-client'
-import { useRouter } from 'next/navigation'
+import { ZapIcon, LayersIcon, ShieldCheckIcon, Code2Icon, Shapes, ChevronDown } from 'lucide-react'
+import { LandingHeroActions } from '@/components/landing-hero-actions'
+import { LandingPricingActions } from '@/components/landing-pricing-actions'
+import { LandingCTAActions } from '@/components/landing-cta-actions'
 
 export default function LandingPage() {
-  const { data: session, isPending: isSessionPending } = authClient.useSession();
-  const [isNavigating, startTransition] = useTransition();
-  const [loadingButton, setLoadingButton] = React.useState<string | null>(null);
-  const router = useRouter();
-
-  const handleNavigation = (href: string, buttonId: string) => {
-    setLoadingButton(buttonId);
-    startTransition(() => {
-      router.push(href);
-    });
-  };
-
-  const handleUpgradeModal = async () => {
-    setLoadingButton("pricing-pro");
-    try {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.async = true;
-      document.body.appendChild(script);
-
-      await new Promise((resolve, reject) => {
-        script.onload = resolve;
-        script.onerror = reject;
-      });
-
-      const res = await fetch("/api/razorpay/checkout", { method: "POST" });
-      const data = await res.json();
-
-      if (data.error) {
-        console.error(data.error);
-        setLoadingButton(null);
-        return;
-      }
-
-      const options = {
-        key: data.keyId,
-        amount: data.amount,
-        currency: data.currency,
-        name: "CogniFlow Pro",
-        description: "Unlimited access to CogniFlow",
-        order_id: data.orderId,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        handler: async function (response: any) {
-          try {
-            const res = await fetch("/api/razorpay/verify", {
-              method: "POST",
-              body: JSON.stringify(response),
-              headers: { "Content-Type": "application/json" }
-            });
-            const result = await res.json();
-            if (result.success) {
-              window.location.reload();
-            } else {
-              console.error("Payment verification failed", result.error);
-              setLoadingButton(null);
-            }
-          } catch (err) {
-            console.error("Verification request failed", err);
-            setLoadingButton(null);
-          }
-        },
-        modal: {
-          ondismiss: function () {
-            setLoadingButton(null);
-          }
-        },
-        theme: {
-          color: "#ea580c",
-        },
-      };
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const rzp = new (window as any).Razorpay(options);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      rzp.on('payment.failed', function (response: any) {
-        console.error("Payment failed", response.error);
-        setLoadingButton(null);
-      });
-      rzp.open();
-    } catch (error) {
-      console.error("Payment initialization failed", error);
-      setLoadingButton(null);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background relative flex flex-col font-sans selection:bg-primary/30">
       <LandingNavbar />
@@ -126,7 +40,6 @@ export default function LandingPage() {
             <div className="flex items-center gap-8 w-full sm:w-auto relative">
               {/* Left Scroll Indicator */}
               <div
-                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                 className="hidden md:flex absolute -left-16 flex-col items-center text-white/50 hover:text-white transition-colors cursor-pointer z-20 top-1/2 translate-y-[calc(-50%-0.18rem)]"
               >
                 <ChevronDown className="size-6 animate-arrow-flash" style={{ animationDelay: '0s' }} />
@@ -134,49 +47,16 @@ export default function LandingPage() {
                 <ChevronDown className="size-6 animate-arrow-flash -mt-4" style={{ animationDelay: '0.4s' }} />
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                {isSessionPending ? (
-                  <Button
-                    disabled
-                    size="lg"
-                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 min-w-[220px]"
-                  >
-                    <Loader2Icon className="size-5 animate-spin mr-2" />
-                    Loading...
-                  </Button>
-                ) : session ? (
-                  <Button
-                    onClick={() => handleNavigation("/workflows", "hero-dashboard")}
-                    disabled={isNavigating}
-                    size="lg"
-                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[200px]"
-                  >
-                    {loadingButton === "hero-dashboard" && <Loader2Icon className="size-5 animate-spin mr-2" />}
-                    Go to Dashboard
-                    {loadingButton !== "hero-dashboard" && <ArrowRightIcon className="ml-2 size-4" />}
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => handleNavigation("/signup", "hero-signup")}
-                    disabled={isNavigating}
-                    size="lg"
-                    className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[220px]"
-                  >
-                    {loadingButton === "hero-signup" && <Loader2Icon className="size-5 animate-spin mr-2" />}
-                    Start Building Free
-                    {loadingButton !== "hero-signup" && <ArrowRightIcon className="ml-2 size-4" />}
-                  </Button>
-                )}
-                <Link href="#features" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full h-14 px-8 text-base border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all">
-                    Explore Features
-                  </Button>
-                </Link>
-              </div>
+              <LandingHeroActions />
+
+              <Link href="#features" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full h-14 px-8 text-base border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all">
+                  Explore Features
+                </Button>
+              </Link>
 
               {/* Right Scroll Indicator */}
               <div
-                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                 className="hidden md:flex absolute -right-16 flex-col items-center text-white/50 hover:text-white transition-colors cursor-pointer z-20 top-1/2 translate-y-[calc(-50%-0.18rem)]"
               >
                 <ChevronDown className="size-6 animate-arrow-flash" style={{ animationDelay: '0s' }} />
@@ -199,7 +79,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ... (Features grid omitted) ... */}
+        {/* ─── Features Section ─── */}
         <section id="features" className="relative pt-24 pb-12 md:pt-32 md:pb-16 border-t border-white/5 bg-black/20 scroll-mt-[-1.5cm]">
           <div className="container mx-auto px-6 max-w-7xl">
             <div className="flex flex-col items-center text-center mb-16 md:mb-24">
@@ -327,66 +207,7 @@ export default function LandingPage() {
                 Start for free, upgrade when you need more power and volume.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
-
-              {/* Free Tier */}
-              <div className="p-6 md:p-8 rounded-3xl glass-strong dark:bg-white/5 border border-white/10 flex flex-col items-start">
-                <h3 className="text-2xl font-bold text-white mb-2">Hobby</h3>
-                <div className="flex items-baseline gap-1 mb-4">
-                  <span className="text-4xl font-black text-white">₹0</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6">Perfect for exploring and small projects.</p>
-                <ul className="space-y-3 mb-6 flex-1 w-full">
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> Up to 3 active workflows</li>
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> 100 executions / month</li>
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> Standard community support</li>
-                </ul>
-                <Button
-                  onClick={() => handleNavigation("/signup", "pricing-free")}
-                  disabled={isNavigating}
-                  variant="outline"
-                  className="w-full rounded-full border-white/10 hover:bg-white/10 mt-auto"
-                >
-                  {loadingButton === "pricing-free" && <Loader2Icon className="size-4 animate-spin mr-2" />}
-                  Get Started Forever Free
-                </Button>
-              </div>
-
-              {/* Pro Tier */}
-              <div className="p-6 md:p-8 rounded-3xl glass-strong dark:bg-white/5 border border-primary/40 relative flex flex-col items-start shadow-[0_0_40px_-15px_rgba(249,115,22,0.3)]">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full uppercase tracking-wider">
-                  Most Popular
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-                <div className="flex items-baseline gap-1 mb-4">
-                  <span className="text-4xl font-black text-white">₹499</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6">For serious developers and teams scaling up.</p>
-                <ul className="space-y-3 mb-6 flex-1 w-full">
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> Unlimited workflows</li>
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> 10,000 executions / month</li>
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> Access to premium AI nodes</li>
-                  <li className="flex items-center gap-3 text-sm text-white/80"><ShieldCheckIcon className="size-4 text-emerald-400" /> AI Workflow Generator</li>
-                </ul>
-                <Button
-                  onClick={() => {
-                    if (session) {
-                      handleUpgradeModal();
-                    } else {
-                      handleNavigation("/signup", "pricing-pro");
-                    }
-                  }}
-                  disabled={isNavigating || loadingButton === "pricing-pro"}
-                  className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
-                >
-                  {loadingButton === "pricing-pro" && <Loader2Icon className="size-4 animate-spin mr-2" />}
-                  Upgrade to Pro
-                </Button>
-              </div>
-
-            </div>
+            <LandingPricingActions />
           </div>
         </section>
 
@@ -402,36 +223,7 @@ export default function LandingPage() {
             <p className="text-lg text-muted-foreground mb-8">
               Join developers building scalable automations with CogniFlow.
             </p>
-            {isSessionPending ? (
-              <Button
-                disabled
-                size="lg"
-                className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] min-w-[240px]"
-              >
-                <Loader2Icon className="size-4 animate-spin mr-2" />
-                Loading...
-              </Button>
-            ) : session ? (
-              <Button
-                onClick={() => handleNavigation("/workflows", "cta-dashboard")}
-                disabled={isNavigating}
-                size="lg"
-                className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 min-w-[200px]"
-              >
-                {loadingButton === "cta-dashboard" && <Loader2Icon className="size-4 animate-spin mr-2" />}
-                Go to Dashboard
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleNavigation("/signup", "cta-signup")}
-                disabled={isNavigating}
-                size="lg"
-                className="rounded-full h-12 px-8 text-base shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 min-w-[240px]"
-              >
-                {loadingButton === "cta-signup" && <Loader2Icon className="size-4 animate-spin mr-2" />}
-                Create your free workspace
-              </Button>
-            )}
+            <LandingCTAActions />
           </div>
         </section>
       </main>

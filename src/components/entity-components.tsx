@@ -37,7 +37,7 @@ type EntityHeaderProps = {
     | { onNew?: never; newButtonHref?: never }
   );
 
-export const EntityHeader = ({
+export const EntityHeader = React.memo(function EntityHeader({
   title,
   description,
   onNew,
@@ -45,7 +45,7 @@ export const EntityHeader = ({
   newButtonLabel,
   disabled,
   isCreating,
-}: EntityHeaderProps) => {
+}: EntityHeaderProps) {
   return (
     <div className="flex flex-row items-center justify-between gap-x-4">
       <div className="flex flex-col">
@@ -84,7 +84,7 @@ export const EntityHeader = ({
       )}
     </div>
   );
-};
+});
 
 type EntityContainerProps = {
   children: React.ReactNode;
@@ -119,11 +119,11 @@ interface EntitySearchProps {
   onChange?: (value: string) => void;
 }
 
-export const EntitySearch = ({
+export const EntitySearch = React.memo(function EntitySearch({
   placeholder = "Search",
   value,
   onChange,
-}: EntitySearchProps) => {
+}: EntitySearchProps) {
   return (
     <div className="relative ml-auto">
       <SearchIcon className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -137,7 +137,7 @@ export const EntitySearch = ({
       />
     </div>
   );
-};
+});
 
 interface EntityPaginationProps {
   page: number;
@@ -146,12 +146,12 @@ interface EntityPaginationProps {
   disabled?: boolean;
 }
 
-export const EntityPagination = ({
+export const EntityPagination = React.memo(function EntityPagination({
   page,
   totalPages,
   onPageChange,
   disabled,
-}: EntityPaginationProps) => {
+}: EntityPaginationProps) {
   return (
     <div className="flex items-center justify-between gap-x-2 w-full">
       <div className="flex-1 text-sm text-muted-foreground">
@@ -179,7 +179,7 @@ export const EntityPagination = ({
       </div>
     </div>
   );
-};
+});
 
 interface StateViewProps {
   message?: string;
@@ -282,7 +282,7 @@ interface EntityItemProps {
   className?: string;
 }
 
-export const EntityItem = ({
+export const EntityItem = React.memo(function EntityItem({
   href,
   title,
   subtitle,
@@ -291,7 +291,7 @@ export const EntityItem = ({
   onRemove,
   isRemoving,
   className,
-}: EntityItemProps) => {
+}: EntityItemProps) {
   const handleRemove = async (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent the default link behavior
     e.stopPropagation(); // Stop the event from bubbling up to parent elements, which means that clicking the remove button won’t trigger any click handlers on parent elements.
@@ -364,4 +364,4 @@ export const EntityItem = ({
       </Card>
     </Link>
   );
-};
+});

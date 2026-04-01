@@ -3,6 +3,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { useReactFlow } from "@xyflow/react";
 import { GlobeIcon, MousePointerIcon } from "lucide-react";
+import Image from "next/image";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import {
@@ -165,10 +166,11 @@ export function NodeSelector({
                 <div className="flex items-center gap-6 w-full overflow-hidden">
                   <div className={`flex items-center justify-center size-8 rounded-md shrink-0 ${canvasLightMode ? "border border-slate-200 bg-slate-50" : "border border-white/10 bg-white/5"}`}>
                     {typeof Icon === "string" ? (
-                      /* eslint-disable @next/next/no-img-element */
-                      <img
+                      <Image
                         src={Icon}
                         alt={node.label}
+                        width={20}
+                        height={20}
                         className="size-5 object-contain rounded-sm dark:invert-0"
                       />
                     ) : (
@@ -200,9 +202,11 @@ export function NodeSelector({
                 <div className="flex items-center gap-6 w-full overflow-hidden">
                   <div className={`flex items-center justify-center size-8 rounded-md shrink-0 ${canvasLightMode ? "border border-slate-200 bg-slate-50" : "border border-white/10 bg-white/5"}`}>
                     {typeof Icon === "string" ? (
-                      <img
+                      <Image
                         src={Icon}
                         alt={node.label}
+                        width={20}
+                        height={20}
                         className="size-5 object-contain rounded-sm dark:invert-0"
                       />
                     ) : (

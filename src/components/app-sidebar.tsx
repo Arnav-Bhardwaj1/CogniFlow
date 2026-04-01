@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -61,6 +61,14 @@ export const AppSidebar = () => {
   const [navigatingUrl, setNavigatingUrl] = useState<string | null>(null);
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
   const { modal, openModal } = useUpgradeModal();
+
+  const handleSignOut = useCallback(async () => {
+    setIsSigningOut(true);
+    await authClient.signOut();
+    queryClient.clear();
+    router.refresh();
+    router.push("/");
+  }, [queryClient, router]);
 
   useEffect(() => {
     setNavigatingUrl(null);
@@ -149,13 +157,7 @@ export const AppSidebar = () => {
               tooltip="Sign Out"
               className="gap-x-4 h-10 px-4 cursor-pointer"
               disabled={isSigningOut}
-              onClick={async () => {
-                setIsSigningOut(true);
-                await authClient.signOut();
-                queryClient.clear();
-                router.refresh();
-                router.push("/");
-              }}
+              onClick={handleSignOut}
             >
               {isSigningOut ? (
                 <><Loader2Icon className="h-4 w-4 animate-spin" /><span>Signing out...</span></>

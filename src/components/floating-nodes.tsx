@@ -62,7 +62,7 @@ function DecoNode({ label, icon, x, y, rounded, delay = 0 }: { label: string; ic
   )
 }
 
-export function FloatingNodes() {
+export const FloatingNodes = React.memo(function FloatingNodes() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -127,3 +127,4 @@ export function FloatingNodes() {
     </div>
   )
 }
+);

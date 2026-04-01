@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { EmptyView, EntityContainer, EntityHeader, EntityItem, EntityList, EntityPagination, EntitySearch, ErrorView, LoadingView } from "@/components/entity-components";
 import { useCreateWorkflow, useRemoveWorkflow, useSuspenseWorkflows } from "../hooks/use-workflows";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
@@ -130,11 +132,11 @@ export const WorkflowsEmpty = () => {
   );
 };
 
-export const WorkflowItem = ({
+export const WorkflowItem = React.memo(function WorkflowItem({
   data,
 }: {
   data: Workflow
-}) => {
+}) {
   const removeWorkflow = useRemoveWorkflow();
   const handleRemove = () => {
     removeWorkflow.mutate({ id: data.id });
@@ -158,4 +160,4 @@ export const WorkflowItem = ({
       isRemoving={removeWorkflow.isPending}
     />
   );
-};
+});

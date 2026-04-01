@@ -1,7 +1,13 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  compress: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+};
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
