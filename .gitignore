@@ -48,5 +48,5 @@ next-env.d.ts
 
 .vercel
 
-.vercel
+razorpay.md
 .env*.local
