@@ -24,13 +24,13 @@ export default async function BillingPage() {
   const isPro = user?.subscriptionStatus === "active";
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6 h-full font-sans">
+    <div className="flex-1 space-y-4 p-4 sm:p-6 lg:p-8 pt-4 sm:pt-6 h-full font-sans">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Billing & Plan</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Billing & Plan</h2>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
-        <Card className="col-span-2 glass-strong dark:bg-black/40 border-white/10">
+      <div className="grid gap-4 mt-6 sm:mt-8">
+        <Card className="glass-strong dark:bg-black/40 border-white/10">
           <CardHeader className="flex flex-row items-center gap-4 border-b border-white/5 pb-6">
             <div className="p-3 bg-primary/10 rounded-xl">
               <CreditCardIcon className="h-6 w-6 text-primary" />

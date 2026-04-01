@@ -88,7 +88,7 @@ function ConnectionLine({
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
-      className="h-svh overflow-hidden flex flex-col justify-center items-center gap-3 p-6 pt-10 md:p-10 md:pt-14 relative"
+      className="h-svh overflow-y-auto flex flex-col justify-center items-center gap-3 p-6 pt-10 md:p-10 md:pt-14 relative"
       style={{
         background: 'linear-gradient(160deg, #07070f 0%, #0d0d1a 50%, #0f0f22 100%)',
       }}
@@ -179,13 +179,24 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       />
 
       {/* ─── Back to Dashboard Button ─── */}
-      <Link 
-        href="/" 
-        className="absolute top-6 left-6 md:top-10 md:left-10 z-50 flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/10 backdrop-blur-sm"
-      >
-        <ChevronLeft className="w-4 h-4" />
-        Back to Dashboard
-      </Link>
+      <div className="absolute top-6 left-6 md:top-10 md:left-10 z-50 hidden md:block">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/10 backdrop-blur-sm"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Link>
+      </div>
+      <div className="w-full max-w-sm relative z-50 flex justify-start md:hidden mb-2">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/10 backdrop-blur-sm w-fit"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back to Home
+        </Link>
+      </div>
 
       {/* ─── Glassmorphic foreground content ─── */}
       <div className="flex w-full max-w-sm flex-col gap-6 relative z-10">

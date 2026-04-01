@@ -25,6 +25,7 @@ import {
   SidebarHeader,
   SidebarFooter,
   SidebarMenu,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 import { useHasActiveSubscription } from "@/features/subscriptions/hooks/use-subscription";
@@ -61,14 +62,22 @@ export const AppSidebar = () => {
   const [navigatingUrl, setNavigatingUrl] = useState<string | null>(null);
   const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
   const { modal, openModal } = useUpgradeModal();
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const closeMobileSidebar = useCallback(() => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }, [isMobile, setOpenMobile]);
 
   const handleSignOut = useCallback(async () => {
     setIsSigningOut(true);
+    closeMobileSidebar();
     await authClient.signOut();
     queryClient.clear();
     router.refresh();
     router.push("/");
-  }, [queryClient, router]);
+  }, [queryClient, router, closeMobileSidebar]);
 
   useEffect(() => {
     setNavigatingUrl(null);
@@ -78,7 +87,7 @@ export const AppSidebar = () => {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenuButton asChild className="gap-x-4 h-12 px-4 bg-white/[0.04] border-b border-white/[0.06]">
-          <Link href="/" prefetch>
+          <Link href="/" prefetch onClick={closeMobileSidebar}>
             <Image src="/logos/logo.svg" alt="CogniFlow" width={32} height={32} />
             <span className="text-sm font-bold text-white tracking-wide">CogniFlow</span>
           </Link>
@@ -106,6 +115,7 @@ export const AppSidebar = () => {
                         if (pathname !== menuItem.url) {
                           setNavigatingUrl(menuItem.url);
                         }
+                        closeMobileSidebar();
                       }}
                     >
                       {navigatingUrl === menuItem.url ? (
@@ -130,7 +140,10 @@ export const AppSidebar = () => {
                 tooltip="Upgrade to Pro"
                 asChild
                 className="gap-x-4 h-10 px-4 cursor-pointer"
-                onClick={() => openModal()}
+                onClick={() => {
+                  closeMobileSidebar();
+                  openModal();
+                }}
               >
                 <div>
                   <StarIcon className="h-4 w-4" />
@@ -145,7 +158,7 @@ export const AppSidebar = () => {
                 asChild
                 className="gap-x-4 h-10 px-4"
               >
-                <Link href="/billing" prefetch>
+                <Link href="/billing" prefetch onClick={closeMobileSidebar}>
                   <CreditCardIcon className="h-4 w-4" />
                   <span>Billing Portal</span>
                 </Link>

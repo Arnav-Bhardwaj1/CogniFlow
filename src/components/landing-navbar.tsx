@@ -4,9 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
-import { Loader2Icon } from 'lucide-react';
+import { Loader2Icon, Menu, Shapes, Blocks, CreditCard, BookOpen, ChevronRight, Cpu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from '@/components/ui/sheet';
 
 export function LandingNavbar() {
   const { data: session, isPending: isSessionPending } = authClient.useSession();
@@ -67,7 +68,88 @@ export function LandingNavbar() {
         </Link>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="bg-[#07070f]/95 backdrop-blur-xl border-white/10 text-foreground w-full max-w-[320px] p-6 flex flex-col h-full overflow-y-auto">
+            <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+
+            <div className="flex items-center gap-3 mb-8 pl-1">
+              <Image src="/logos/logo.svg" alt="CogniFlow" width={32} height={32} />
+              <span className="font-semibold text-lg tracking-tight text-white">CogniFlow</span>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <SheetClose asChild>
+                <Link href="/#features" className="group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-primary/10 hover:border-primary/20 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-white/70">
+                      <Cpu className="size-5" />
+                    </div>
+                    <span className="text-base font-semibold text-white/90 group-hover:text-white">Features</span>
+                  </div>
+                  <ChevronRight className="size-4 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </Link>
+              </SheetClose>
+
+              <SheetClose asChild>
+                <Link href="/#integrations" className="group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-primary/10 hover:border-primary/20 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-white/70">
+                      <Blocks className="size-5" />
+                    </div>
+                    <span className="text-base font-semibold text-white/90 group-hover:text-white">Integrations</span>
+                  </div>
+                  <ChevronRight className="size-4 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </Link>
+              </SheetClose>
+
+              <SheetClose asChild>
+                <Link href="/#pricing" className="group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-primary/10 hover:border-primary/20 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-white/70">
+                      <CreditCard className="size-5" />
+                    </div>
+                    <span className="text-base font-semibold text-white/90 group-hover:text-white">Pricing</span>
+                  </div>
+                  <ChevronRight className="size-4 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </Link>
+              </SheetClose>
+
+              <SheetClose asChild>
+                <Link href="/docs" className="group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-primary/10 hover:border-primary/20 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-white/70">
+                      <BookOpen className="size-5" />
+                    </div>
+                    <span className="text-base font-semibold text-white/90 group-hover:text-white">Docs</span>
+                  </div>
+                  <ChevronRight className="size-4 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </Link>
+              </SheetClose>
+            </div>
+
+            <div className="mt-auto pt-8">
+              <div className="p-6 rounded-3xl bg-gradient-to-br from-primary/20 to-transparent border border-primary/20 text-center relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/20 blur-2xl rounded-full" />
+                <h4 className="text-lg font-bold text-white mb-2 relative z-10">{session ? "Explore Plans" : "Start Building"}</h4>
+                <p className="text-sm text-white/70 mb-5 relative z-10">{session ? "Check out our pricing plans." : "Create unlimited workflows with CogniFlow today."}</p>
+                <SheetClose asChild>
+                  <Button asChild className="w-full rounded-2xl bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25 relative z-10 h-12 text-base font-semibold">
+                    <a href={session ? "/#pricing" : "/signup"}>
+                      {session ? "View Plans" : "Get Started Free"}
+                    </a>
+                  </Button>
+                </SheetClose>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
         {isSessionPending ? (
           <Button
             disabled
@@ -99,7 +181,7 @@ export function LandingNavbar() {
             <Button
               onClick={() => handleNavigation("/signup", "nav-signup")}
               disabled={isNavigating}
-              className="rounded-full shadow-md hover:shadow-lg transition-shadow bg-primary text-primary-foreground min-w-[140px]"
+              className="rounded-full shadow-md hover:shadow-lg transition-shadow bg-primary text-primary-foreground min-w-[120px] sm:min-w-[140px]"
             >
               {loadingButton === "nav-signup" && <Loader2Icon className="size-4 animate-spin mr-2" />}
               Get Started Free

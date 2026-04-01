@@ -37,7 +37,7 @@ export default function LandingPage() {
               The premium, type-safe visual editor built for modern developers. Connect native APIs, LLMs, and triggers in minutes—not days.
             </p>
 
-            <div className="flex items-center gap-8 w-full sm:w-auto relative">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full sm:w-auto relative">
               {/* Left Scroll Indicator */}
               <div
                 className="hidden md:flex absolute -left-16 flex-col items-center text-white/50 hover:text-white transition-colors cursor-pointer z-20 top-1/2 translate-y-[calc(-50%-0.18rem)]"
@@ -149,7 +149,7 @@ export default function LandingPage() {
               </p>
             </div>
             {/* Simple Logo Grid for Integrations */}
-            <div className="flex flex-wrap justify-center items-center gap-12 mt-12 opacity-80">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-12 mt-12 opacity-80">
               <div className="flex flex-col items-center gap-3">
                 <div className="group size-16 rounded-2xl bg-white/5 border border-white/20 flex items-center justify-center p-3 shadow-[0_0_30px_-5px_rgba(255,255,255,0.15)] hover:bg-white/10 hover:border-[rgba(215,162,135,0.5)] hover:shadow-[0_0_20px_-5px_rgba(215,162,135,0.3)] transition-all duration-300 cursor-pointer">
                   <Image src="/logos/anthropic.svg" alt="Anthropic" width={32} height={32} className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
@@ -236,7 +236,7 @@ export default function LandingPage() {
               <Image src="/logos/logo.svg" alt="CogniFlow" width={24} height={24} className="group-hover:scale-110 transition-transform duration-300" />
               <span className="font-semibold text-lg tracking-tight text-white">CogniFlow</span>
             </div>
-            <div className="flex gap-8 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-8 text-sm text-muted-foreground">
               <Link href="/docs" className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium text-muted-foreground hover:text-white">Documentation</Link>
               <Link href="/privacy" className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium text-muted-foreground hover:text-white">Privacy Policy</Link>
             </div>

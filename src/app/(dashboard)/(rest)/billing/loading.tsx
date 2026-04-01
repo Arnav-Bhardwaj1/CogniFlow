@@ -6,7 +6,7 @@ import { CreditCardIcon } from "lucide-react";
 export default function BillingLoading() {
   return (
     <GloriousLoader
-      title="Loading Billing UI"
+      title="Loading Billing Data"
       subtitle="Fetching subscription data..."
       icon={CreditCardIcon}
       colorClass="text-amber-500"

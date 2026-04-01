@@ -47,7 +47,7 @@ export const EntityHeader = React.memo(function EntityHeader({
   isCreating,
 }: EntityHeaderProps) {
   return (
-    <div className="flex flex-row items-center justify-between gap-x-4">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-x-4">
       <div className="flex flex-col">
         <h1 className="text-lg md:text-xl font-semibold">
           {title}
@@ -125,7 +125,7 @@ export const EntitySearch = React.memo(function EntitySearch({
   onChange,
 }: EntitySearchProps) {
   return (
-    <div className="relative ml-auto">
+    <div className="relative w-full sm:w-auto sm:ml-auto">
       <SearchIcon className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="text"
@@ -133,7 +133,7 @@ export const EntitySearch = React.memo(function EntitySearch({
         aria-label={placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)} // onChange is used to handle input changes, e.target.value gets the current value of the input field
-        className="max-w-50 glass shadow-none pl-8 focus:border-[#f97316]/60"
+        className="w-full sm:max-w-50 glass shadow-none pl-8 focus:border-[#f97316]/60"
       />
     </div>
   );
@@ -153,7 +153,7 @@ export const EntityPagination = React.memo(function EntityPagination({
   disabled,
 }: EntityPaginationProps) {
   return (
-    <div className="flex items-center justify-between gap-x-2 w-full">
+    <div className="flex flex-wrap items-center justify-between gap-2 w-full">
       <div className="flex-1 text-sm text-muted-foreground">
         Page {page} of {totalPages || 1}
       </div>

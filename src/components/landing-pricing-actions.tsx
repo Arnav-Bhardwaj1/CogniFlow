@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { useHasActiveSubscription } from "@/features/subscriptions/hooks/use-subscription";
 
 export function LandingPricingActions() {
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
+  const { hasActiveSubscription, isLoading: isLoadingSubscription } = useHasActiveSubscription();
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const router = useRouter();
 
@@ -163,22 +165,28 @@ export function LandingPricingActions() {
         </ul>
         <Button
           onClick={() => {
-            if (session) {
+            if (hasActiveSubscription) {
+              handleNavigation("/billing", "pricing-pro");
+            } else if (session) {
               handleUpgradeModal();
             } else {
               handleNavigation("/signup", "pricing-pro");
             }
           }}
           onMouseEnter={() => {
-            if (!session) router.prefetch("/signup")
+            if (hasActiveSubscription) {
+              router.prefetch("/billing");
+            } else if (!session) {
+              router.prefetch("/signup");
+            }
           }}
-          disabled={loadingButton === "pricing-pro"}
+          disabled={loadingButton === "pricing-pro" || isLoadingSubscription}
           className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
         >
           {loadingButton === "pricing-pro" && (
             <Loader2Icon className="size-4 animate-spin mr-2" />
           )}
-          Upgrade to Pro
+          {hasActiveSubscription ? "Manage Billing" : "Upgrade to Pro"}
         </Button>
       </div>
     </div>

@@ -170,6 +170,15 @@
 /* ---------- Base ---------- */
 body {
   letter-spacing: var(--tracking-normal);
+  overflow-x: hidden;
+}
+
+/* Mobile: reduce base font-size to prevent oversized text */
+@media (max-width: 640px) {
+  :root,
+  .canvas-light-mode {
+    font-size: 100%;
+  }
 }
 
 @layer base {
@@ -356,6 +365,13 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 }
 
 ::-webkit-scrollbar-track {

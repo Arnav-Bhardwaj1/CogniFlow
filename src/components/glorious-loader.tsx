@@ -1,11 +1,12 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface GloriousLoaderProps {
   title: string;
-  subtitle: string;
-  icon: LucideIcon;
+  subtitle: string | string[];
+  icon: LucideIcon | LucideIcon[];
   colorClass?: string;
   gradientClass?: string;
 }
@@ -13,10 +14,25 @@ interface GloriousLoaderProps {
 export function GloriousLoader({
   title,
   subtitle,
-  icon: Icon,
+  icon,
   colorClass = "text-primary",
   gradientClass = "from-primary/30 to-blue-500/30"
 }: GloriousLoaderProps) {
+  const isArray = Array.isArray(subtitle);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!isArray || subtitle.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % subtitle.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [isArray, subtitle.length]);
+
+  const currentSubtitle = isArray ? subtitle[index] : subtitle;
+  const isIconArray = Array.isArray(icon);
+  const CurrentIcon = isIconArray ? icon[index % icon.length] : icon;
+
   return (
     <div className="flex-1 w-full h-full min-h-[80vh] flex flex-col items-center justify-center p-8">
       <div className="relative group">
@@ -27,7 +43,9 @@ export function GloriousLoader({
           {/* Animated border gradient */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.1),transparent)] -translate-x-full animate-[shimmer_2s_infinite]" />
 
-          <Icon strokeWidth={1.5} className={`size-10 md:size-12 transition-all duration-500 ${colorClass} animate-pulse`} />
+          <div key={index} className="animate-fade-in flex items-center justify-center w-full h-full">
+            <CurrentIcon strokeWidth={1.5} className={`size-10 md:size-12 ${colorClass} animate-pulse`} />
+          </div>
         </div>
       </div>
 
@@ -37,8 +55,11 @@ export function GloriousLoader({
         </h2>
 
         <div className="h-6 flex items-center justify-center overflow-hidden">
-          <p className="text-sm text-muted-foreground font-medium animate-slide-up-fade">
-            {subtitle}
+          <p
+            key={index}
+            className="text-sm text-muted-foreground font-medium animate-slide-up-fade"
+          >
+            {currentSubtitle}
           </p>
         </div>
 
