@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
@@ -9,16 +9,13 @@ import { useRouter } from "next/navigation";
 export function LandingPricingActions() {
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
-  const [isNavigating, startTransition] = useTransition();
-  const [loadingButton, setLoadingButton] = React.useState<string | null>(null);
+  const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const router = useRouter();
 
   const handleNavigation = React.useCallback(
     (href: string, buttonId: string) => {
       setLoadingButton(buttonId);
-      startTransition(() => {
-        router.push(href);
-      });
+      router.push(href);
     },
     [router]
   );
@@ -126,7 +123,7 @@ export function LandingPricingActions() {
         <Button
           onClick={() => handleNavigation("/signup", "pricing-free")}
           onMouseEnter={() => router.prefetch("/signup")}
-          disabled={isNavigating}
+          disabled={loadingButton === "pricing-free"}
           variant="outline"
           className="w-full rounded-full border-white/10 hover:bg-white/10 mt-auto"
         >
@@ -175,7 +172,7 @@ export function LandingPricingActions() {
           onMouseEnter={() => {
             if (!session) router.prefetch("/signup")
           }}
-          disabled={isNavigating || loadingButton === "pricing-pro"}
+          disabled={loadingButton === "pricing-pro"}
           className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90 mt-auto"
         >
           {loadingButton === "pricing-pro" && (

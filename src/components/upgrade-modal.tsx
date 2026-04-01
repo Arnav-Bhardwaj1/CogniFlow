@@ -102,13 +102,17 @@ export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
             <AlertDialogContent className="max-w-md">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Upgrade to Pro</AlertDialogTitle>
-                    <AlertDialogDescription className="space-y-4">
+                    <AlertDialogDescription className="sr-only">
+                        Upgrade to Pro to unlock unlimited workflows and credentials.
+                    </AlertDialogDescription>
+
+                    <div className="space-y-4 text-muted-foreground text-sm">
                         <p>You&apos;ve reached the free tier limit. Upgrade to Pro to unlock unlimited access!</p>
 
                         <div className="space-y-3 pt-2">
                             <div className="text-sm">
                                 <span className="font-semibold text-foreground">Free Plan:</span>
-                                <ul className="mt-2 space-y-1.5 text-muted-foreground">
+                                <ul className="mt-2 space-y-1.5">
                                     <li className="flex items-start gap-2">
                                         <span className="text-xs mt-0.5">•</span>
                                         <span>Up to {FREE_TIER_LIMITS.MAX_WORKFLOWS} workflows</span>
@@ -122,7 +126,7 @@ export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
 
                             <div className="text-sm">
                                 <span className="font-semibold text-foreground">Pro Plan:</span>
-                                <ul className="mt-2 space-y-1.5 text-muted-foreground">
+                                <ul className="mt-2 space-y-1.5">
                                     <li className="flex items-center gap-2">
                                         <CheckIcon className="h-4 w-4 text-green-600" />
                                         <span>Unlimited workflows</span>
@@ -138,7 +142,7 @@ export const UpgradeModal = ({ open, onOpenChange }: UpgradeModalProps) => {
                                 </ul>
                             </div>
                         </div>
-                    </AlertDialogDescription>
+                    </div>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>

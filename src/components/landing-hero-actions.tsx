@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
@@ -9,16 +9,13 @@ import { useRouter } from "next/navigation";
 export function LandingHeroActions() {
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
-  const [isNavigating, startTransition] = useTransition();
-  const [loadingButton, setLoadingButton] = React.useState<string | null>(null);
+  const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const router = useRouter();
 
   const handleNavigation = React.useCallback(
     (href: string, buttonId: string) => {
       setLoadingButton(buttonId);
-      startTransition(() => {
-        router.push(href);
-      });
+      router.push(href);
     },
     [router]
   );
@@ -38,7 +35,7 @@ export function LandingHeroActions() {
         <Button
           onClick={() => handleNavigation("/workflows", "hero-dashboard")}
           onMouseEnter={() => router.prefetch("/workflows")}
-          disabled={isNavigating}
+          disabled={loadingButton === "hero-dashboard"}
           size="lg"
           className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[200px]"
         >
@@ -54,7 +51,7 @@ export function LandingHeroActions() {
         <Button
           onClick={() => handleNavigation("/signup", "hero-signup")}
           onMouseEnter={() => router.prefetch("/signup")}
-          disabled={isNavigating}
+          disabled={loadingButton === "hero-signup"}
           size="lg"
           className="w-full sm:w-auto rounded-full h-14 px-8 text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 min-w-[220px]"
         >
